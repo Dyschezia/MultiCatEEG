@@ -1,8 +1,9 @@
 %% MultiCAT - object information in multi-object arrays
 % Experiment generation script
 % Written by: Karla Matic, kmatic94@gmail.com
+% Adapted to EEG use: Rotem Krispil
 % First written: September 2023
-% Last update: November 2023
+% Last update: XXX
 % This script creates the design matrix, run structure, and stimuli. 
 % The generated trials can be played using "experiment_player.m" script.
 
@@ -16,14 +17,14 @@ close all; clearvars;
 Experiment = struct();
 
 %%% Context 
-Experiment.Mode.mode = 'experiment'; % test, experiment
+Experiment.Mode.mode = 'test'; % test, experiment
 
 %%% Paths
 % Set main directory
 Experiment.Paths.MainPath = pwd();
 
 % Path to subject data/pregen file
-idcs = strfind(Experiment.Paths.MainPath ,'/');
+idcs = strfind(Experiment.Paths.MainPath ,'\');
 parent_dir = Experiment.Paths.MainPath (1:idcs(end)-1);
 Experiment.Paths.OutDir = fullfile(parent_dir, 'data');
 
