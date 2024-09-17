@@ -1,0 +1,93 @@
+Session 1 Category Balance:
+Number 1: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 2: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 3: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 4: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 5: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 6: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 7: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 8: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+{1: 280, 2: 280, 3: 280, 4: 280, 5: 280, 6: 280, 7: 280, 8: 280}
+==========
+Session 2 Category Balance:
+Number 1: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 2: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 3: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 4: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 5: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 6: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 7: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 8: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+{1: 280, 2: 280, 3: 280, 4: 280, 5: 280, 6: 280, 7: 280, 8: 280}
+==========
+Session 3 Category Balance:
+Number 1: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 2: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 3: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 4: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 5: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 6: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 7: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+Number 8: Top left 70, Top right: 70, bottom left 70, bottom right: 70
+{1: 280, 2: 280, 3: 280, 4: 280, 5: 280, 6: 280, 7: 280, 8: 280}
+==========
+=======================
+ ****** Session 1  ****** 
+Block 0 Category Balance:
+{1: 46, 2: 46, 3: 46, 4: 46, 5: 47, 6: 47, 7: 47, 8: 47}
+==========
+Block 1 Category Balance:
+{1: 47, 2: 47, 3: 47, 4: 47, 5: 46, 6: 46, 7: 46, 8: 46}
+==========
+Block 2 Category Balance:
+{1: 47, 2: 47, 3: 46, 4: 47, 5: 46, 6: 47, 7: 46, 8: 46}
+==========
+Block 3 Category Balance:
+{1: 46, 2: 46, 3: 47, 4: 46, 5: 47, 6: 46, 7: 47, 8: 47}
+==========
+Block 4 Category Balance:
+{1: 46, 2: 46, 3: 47, 4: 47, 5: 46, 6: 46, 7: 47, 8: 47}
+==========
+Block 5 Category Balance:
+{1: 47, 2: 47, 3: 46, 4: 46, 5: 47, 6: 47, 7: 46, 8: 46}
+==========
+ ****** Session 2  ****** 
+Block 0 Category Balance:
+{1: 47, 2: 46, 3: 47, 4: 47, 5: 46, 6: 46, 7: 47, 8: 46}
+==========
+Block 1 Category Balance:
+{1: 46, 2: 47, 3: 46, 4: 46, 5: 47, 6: 47, 7: 46, 8: 47}
+==========
+Block 2 Category Balance:
+{1: 46, 2: 47, 3: 46, 4: 46, 5: 46, 6: 47, 7: 47, 8: 47}
+==========
+Block 3 Category Balance:
+{1: 47, 2: 46, 3: 47, 4: 47, 5: 47, 6: 46, 7: 46, 8: 46}
+==========
+Block 4 Category Balance:
+{1: 46, 2: 47, 3: 46, 4: 46, 5: 46, 6: 47, 7: 47, 8: 47}
+==========
+Block 5 Category Balance:
+{1: 47, 2: 46, 3: 47, 4: 47, 5: 47, 6: 46, 7: 46, 8: 46}
+==========
+ ****** Session 3  ****** 
+Block 0 Category Balance:
+{1: 47, 2: 46, 3: 46, 4: 47, 5: 47, 6: 46, 7: 47, 8: 46}
+==========
+Block 1 Category Balance:
+{1: 46, 2: 47, 3: 47, 4: 46, 5: 46, 6: 47, 7: 46, 8: 47}
+==========
+Block 2 Category Balance:
+{1: 46, 2: 47, 3: 47, 4: 47, 5: 47, 6: 46, 7: 46, 8: 46}
+==========
+Block 3 Category Balance:
+{1: 47, 2: 46, 3: 46, 4: 46, 5: 46, 6: 47, 7: 47, 8: 47}
+==========
+Block 4 Category Balance:
+{1: 47, 2: 46, 3: 46, 4: 46, 5: 46, 6: 47, 7: 47, 8: 47}
+==========
+Block 5 Category Balance:
+{1: 46, 2: 47, 3: 47, 4: 47, 5: 47, 6: 46, 7: 46, 8: 46}
+==========
+
+Process finished with exit code 0

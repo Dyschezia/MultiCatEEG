@@ -1,0 +1,67 @@
+Session 1 number of trials: 840
+Session 1 has exactly 12 permutations of each combination
+Session 1 Category Balance:
+Number 1: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+Number 2: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+Number 3: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+Number 4: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+Number 5: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+Number 6: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+Number 7: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+Number 8: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+{1: 420, 2: 420, 3: 420, 4: 420, 5: 420, 6: 420, 7: 420, 8: 420}
+==========
+Session 2 number of trials: 840
+Session 2 has exactly 12 permutations of each combination
+Session 2 Category Balance:
+Number 1: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+Number 2: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+Number 3: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+Number 4: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+Number 5: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+Number 6: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+Number 7: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+Number 8: Top left 105, Top right: 105, bottom left 105, bottom right: 105
+{1: 420, 2: 420, 3: 420, 4: 420, 5: 420, 6: 420, 7: 420, 8: 420}
+==========
+=======================
+ ****** Session 1  ****** 
+Block 0 Category Balance:
+{1: 70, 2: 70, 3: 70, 4: 70, 5: 70, 6: 70, 7: 70, 8: 70}
+==========
+Block 1 Category Balance:
+{1: 70, 2: 70, 3: 70, 4: 70, 5: 70, 6: 70, 7: 70, 8: 70}
+==========
+Block 2 Category Balance:
+{1: 70, 2: 70, 3: 70, 4: 70, 5: 70, 6: 70, 7: 70, 8: 70}
+==========
+Block 3 Category Balance:
+{1: 70, 2: 70, 3: 70, 4: 70, 5: 70, 6: 70, 7: 70, 8: 70}
+==========
+Block 4 Category Balance:
+{1: 70, 2: 70, 3: 70, 4: 70, 5: 70, 6: 70, 7: 70, 8: 70}
+==========
+Block 5 Category Balance:
+{1: 70, 2: 70, 3: 70, 4: 70, 5: 70, 6: 70, 7: 70, 8: 70}
+==========
+ ****** Session 2  ****** 
+Block 0 Category Balance:
+{1: 70, 2: 70, 3: 70, 4: 70, 5: 70, 6: 70, 7: 70, 8: 70}
+==========
+Block 1 Category Balance:
+{1: 70, 2: 70, 3: 70, 4: 70, 5: 70, 6: 70, 7: 70, 8: 70}
+==========
+Block 2 Category Balance:
+{1: 70, 2: 70, 3: 70, 4: 70, 5: 70, 6: 70, 7: 70, 8: 70}
+==========
+Block 3 Category Balance:
+{1: 70, 2: 70, 3: 70, 4: 70, 5: 70, 6: 70, 7: 70, 8: 70}
+==========
+Block 4 Category Balance:
+{1: 70, 2: 70, 3: 70, 4: 70, 5: 70, 6: 70, 7: 70, 8: 70}
+==========
+Block 5 Category Balance:
+{1: 70, 2: 70, 3: 70, 4: 70, 5: 70, 6: 70, 7: 70, 8: 70}
+==========
+
+Process finished with exit code 0

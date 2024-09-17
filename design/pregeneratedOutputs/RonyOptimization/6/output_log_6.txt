@@ -1,0 +1,195 @@
+Session 1 number of trials: 280
+Session 1 has exactly 4 permutations of each combination
+Session 1 Category Balance:
+Number 1: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 2: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 3: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 4: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 5: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 6: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 7: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 8: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+{1: 140, 2: 140, 3: 140, 4: 140, 5: 140, 6: 140, 7: 140, 8: 140}
+==========
+Session 2 number of trials: 280
+Session 2 has exactly 4 permutations of each combination
+Session 2 Category Balance:
+Number 1: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 2: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 3: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 4: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 5: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 6: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 7: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 8: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+{1: 140, 2: 140, 3: 140, 4: 140, 5: 140, 6: 140, 7: 140, 8: 140}
+==========
+Session 3 number of trials: 280
+Session 3 has exactly 4 permutations of each combination
+Session 3 Category Balance:
+Number 1: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 2: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 3: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 4: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 5: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 6: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 7: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 8: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+{1: 140, 2: 140, 3: 140, 4: 140, 5: 140, 6: 140, 7: 140, 8: 140}
+==========
+Session 4 number of trials: 280
+Session 4 has exactly 4 permutations of each combination
+Session 4 Category Balance:
+Number 1: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 2: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 3: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 4: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 5: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 6: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 7: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 8: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+{1: 140, 2: 140, 3: 140, 4: 140, 5: 140, 6: 140, 7: 140, 8: 140}
+==========
+Session 5 number of trials: 280
+Session 5 has exactly 4 permutations of each combination
+Session 5 Category Balance:
+Number 1: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 2: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 3: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 4: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 5: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 6: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 7: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 8: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+{1: 140, 2: 140, 3: 140, 4: 140, 5: 140, 6: 140, 7: 140, 8: 140}
+==========
+Session 6 number of trials: 280
+Session 6 has exactly 4 permutations of each combination
+Session 6 Category Balance:
+Number 1: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 2: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 3: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 4: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 5: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 6: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 7: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+Number 8: Top left 35, Top right: 35, bottom left 35, bottom right: 35
+{1: 140, 2: 140, 3: 140, 4: 140, 5: 140, 6: 140, 7: 140, 8: 140}
+==========
+=======================
+ ****** Session 1  ****** 
+Block 0 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 1 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 2 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 3 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 4 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 5 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+ ****** Session 2  ****** 
+Block 0 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 1 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 2 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 3 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 4 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 5 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+ ****** Session 3  ****** 
+Block 0 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 1 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 2 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 3 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 4 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 5 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+ ****** Session 4  ****** 
+Block 0 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 1 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 2 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 3 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 4 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 5 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+ ****** Session 5  ****** 
+Block 0 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 1 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 2 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 3 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 4 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 5 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+ ****** Session 6  ****** 
+Block 0 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 1 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 2 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 3 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 4 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+Block 5 Category Balance:
+{1: 23, 2: 23, 3: 23, 4: 23, 5: 23, 6: 23, 7: 23, 8: 23}
+==========
+
+Process finished with exit code 0
