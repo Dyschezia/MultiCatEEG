@@ -1,4 +1,9 @@
 function Experiment = setupExpParam(Experiment)
+% TODO: 
+% set nSubs
+% catch N and P are not exact but I am not sure they are used. 
+
+
 % Define a structure containing all experimental parameters.
 
 %% 'Task' - choice of specific task and general parameters
@@ -7,11 +12,11 @@ function Experiment = setupExpParam(Experiment)
 Experiment.Task.nSubs = 30; % Planned number of subjects (including pilots)
 
 % Trials and blocks
-Experiment.Task.SessionsN = 3; % Total number of sessions
+Experiment.Task.SessionsN = 2; % Total number of sessions
 Experiment.Task.SetsN = 6; % Total number of balanced sets
 Experiment.Task.RunsN = 4; % Total number of runs within a set
 Experiment.Task.Trials4arrayN = 70; % Number of 4-array trials per run
-Experiment.Task.Trials1arrayN = 32; % Number of 1-array trials per run
+Experiment.Task.Trials1arrayN = 280; % Number of 1-array trials per run
 Experiment.Task.TrialsTotalN4array = Experiment.Task.Trials4arrayN * Experiment.Task.RunsN * Experiment.Task.SetsN;
 Experiment.Task.TrialsTotalN1array = Experiment.Task.Trials1arrayN * Experiment.Task.RunsN * Experiment.Task.SetsN;
 Experiment.Task.TrialsTotalN = Experiment.Task.TrialsTotalN4array + Experiment.Task.TrialsTotalN1array; % Number of all trials (all sizes, sessions, etc)
@@ -75,15 +80,15 @@ Experiment.Time.StimExpTime = 0.250;  % Stimulus array exposure time [s]
 % Response
 Experiment.Time.RespWait = 2.0; % How long to allow for the response
 Experiment.Time.FeedbackGap = 0.5; % Gap after feedback
-Experiment.Time.CatchIti1 = 2.0;
+Experiment.Time.CatchIti1 = 0.7;
 %Experiment.Time.CatchIti2 = 1.0;
 
 % ITI
-Experiment.Time.ItiMean = 3.0; % Mean ITI in seconds
-Experiment.Time.ItiRange = [2.5, 3.5]; % Range in which ITI varies
-Experiment.Time.ItiIncrement = 0.1; % Increment of ITI values
+Experiment.Time.ItiMean = 0.7; % Mean ITI in seconds
+Experiment.Time.ItiRange = [0.6, 0.8]; % Range in which ITI varies
+Experiment.Time.ItiIncrement = 0.05; % Increment of ITI values
 Experiment.Time.StartGap = 2.0; % Wait before the start of the first trial of the run
-Experiment.Time.StopGap = 6.0; % Wait after thelast trial of the run
+Experiment.Time.StopGap = 2.0; % Wait after thelast trial of the run
 
 % Localizer
 Experiment.Time.LocalizerStimOn = 0.5; % Stimulus on during localizer
