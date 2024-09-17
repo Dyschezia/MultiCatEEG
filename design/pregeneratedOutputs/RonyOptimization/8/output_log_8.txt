@@ -1,0 +1,259 @@
+Session 1 number of trials: 210
+Session 1 has exactly 3 permutations of each combination
+Session 1 Category Balance:
+Number 1: Top left 27, Top right: 26, bottom left 26, bottom right: 26
+Number 2: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+Number 3: Top left 27, Top right: 26, bottom left 26, bottom right: 26
+Number 4: Top left 26, Top right: 27, bottom left 26, bottom right: 26
+Number 5: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+Number 6: Top left 26, Top right: 27, bottom left 26, bottom right: 26
+Number 7: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+Number 8: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+{1: 105, 2: 105, 3: 105, 4: 105, 5: 105, 6: 105, 7: 105, 8: 105}
+==========
+Session 2 number of trials: 210
+Session 2 has exactly 3 permutations of each combination
+Session 2 Category Balance:
+Number 1: Top left 27, Top right: 26, bottom left 26, bottom right: 26
+Number 2: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+Number 3: Top left 27, Top right: 26, bottom left 26, bottom right: 26
+Number 4: Top left 26, Top right: 27, bottom left 26, bottom right: 26
+Number 5: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+Number 6: Top left 26, Top right: 27, bottom left 26, bottom right: 26
+Number 7: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+Number 8: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+{1: 105, 2: 105, 3: 105, 4: 105, 5: 105, 6: 105, 7: 105, 8: 105}
+==========
+Session 3 number of trials: 210
+Session 3 has exactly 3 permutations of each combination
+Session 3 Category Balance:
+Number 1: Top left 26, Top right: 27, bottom left 26, bottom right: 26
+Number 2: Top left 27, Top right: 26, bottom left 26, bottom right: 26
+Number 3: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+Number 4: Top left 27, Top right: 26, bottom left 26, bottom right: 26
+Number 5: Top left 26, Top right: 27, bottom left 26, bottom right: 26
+Number 6: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+Number 7: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+Number 8: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+{1: 105, 2: 105, 3: 105, 4: 105, 5: 105, 6: 105, 7: 105, 8: 105}
+==========
+Session 4 number of trials: 210
+Session 4 has exactly 3 permutations of each combination
+Session 4 Category Balance:
+Number 1: Top left 26, Top right: 27, bottom left 26, bottom right: 26
+Number 2: Top left 27, Top right: 26, bottom left 26, bottom right: 26
+Number 3: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+Number 4: Top left 27, Top right: 26, bottom left 26, bottom right: 26
+Number 5: Top left 26, Top right: 27, bottom left 26, bottom right: 26
+Number 6: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+Number 7: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+Number 8: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+{1: 105, 2: 105, 3: 105, 4: 105, 5: 105, 6: 105, 7: 105, 8: 105}
+==========
+Session 5 number of trials: 210
+Session 5 has exactly 3 permutations of each combination
+Session 5 Category Balance:
+Number 1: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+Number 2: Top left 26, Top right: 27, bottom left 26, bottom right: 26
+Number 3: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+Number 4: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+Number 5: Top left 27, Top right: 26, bottom left 26, bottom right: 26
+Number 6: Top left 27, Top right: 26, bottom left 26, bottom right: 26
+Number 7: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+Number 8: Top left 26, Top right: 27, bottom left 26, bottom right: 26
+{1: 105, 2: 105, 3: 105, 4: 105, 5: 105, 6: 105, 7: 105, 8: 105}
+==========
+Session 6 number of trials: 210
+Session 6 has exactly 3 permutations of each combination
+Session 6 Category Balance:
+Number 1: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+Number 2: Top left 26, Top right: 27, bottom left 26, bottom right: 26
+Number 3: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+Number 4: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+Number 5: Top left 27, Top right: 26, bottom left 26, bottom right: 26
+Number 6: Top left 27, Top right: 26, bottom left 26, bottom right: 26
+Number 7: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+Number 8: Top left 26, Top right: 27, bottom left 26, bottom right: 26
+{1: 105, 2: 105, 3: 105, 4: 105, 5: 105, 6: 105, 7: 105, 8: 105}
+==========
+Session 7 number of trials: 210
+Session 7 has exactly 3 permutations of each combination
+Session 7 Category Balance:
+Number 1: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+Number 2: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+Number 3: Top left 26, Top right: 27, bottom left 26, bottom right: 26
+Number 4: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+Number 5: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+Number 6: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+Number 7: Top left 27, Top right: 27, bottom left 25, bottom right: 26
+Number 8: Top left 27, Top right: 26, bottom left 26, bottom right: 26
+{1: 105, 2: 105, 3: 105, 4: 105, 5: 105, 6: 105, 7: 105, 8: 105}
+==========
+Session 8 number of trials: 210
+Session 8 has exactly 3 permutations of each combination
+Session 8 Category Balance:
+Number 1: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+Number 2: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+Number 3: Top left 26, Top right: 27, bottom left 26, bottom right: 26
+Number 4: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+Number 5: Top left 26, Top right: 26, bottom left 26, bottom right: 27
+Number 6: Top left 26, Top right: 26, bottom left 27, bottom right: 26
+Number 7: Top left 27, Top right: 27, bottom left 26, bottom right: 25
+Number 8: Top left 27, Top right: 26, bottom left 26, bottom right: 26
+{1: 105, 2: 105, 3: 105, 4: 105, 5: 105, 6: 105, 7: 105, 8: 105}
+==========
+=======================
+ ****** Session 1  ****** 
+Block 0 Category Balance:
+{1: 17, 2: 18, 3: 17, 4: 18, 5: 17, 6: 18, 7: 18, 8: 17}
+==========
+Block 1 Category Balance:
+{1: 18, 2: 17, 3: 18, 4: 17, 5: 18, 6: 17, 7: 17, 8: 18}
+==========
+Block 2 Category Balance:
+{1: 18, 2: 17, 3: 18, 4: 17, 5: 18, 6: 17, 7: 18, 8: 17}
+==========
+Block 3 Category Balance:
+{1: 17, 2: 18, 3: 17, 4: 18, 5: 17, 6: 18, 7: 17, 8: 18}
+==========
+Block 4 Category Balance:
+{1: 17, 2: 18, 3: 17, 4: 18, 5: 17, 6: 17, 7: 18, 8: 18}
+==========
+Block 5 Category Balance:
+{1: 18, 2: 17, 3: 18, 4: 17, 5: 18, 6: 18, 7: 17, 8: 17}
+==========
+ ****** Session 2  ****** 
+Block 0 Category Balance:
+{1: 18, 2: 18, 3: 18, 4: 18, 5: 17, 6: 17, 7: 17, 8: 17}
+==========
+Block 1 Category Balance:
+{1: 17, 2: 17, 3: 17, 4: 17, 5: 18, 6: 18, 7: 18, 8: 18}
+==========
+Block 2 Category Balance:
+{1: 18, 2: 17, 3: 18, 4: 17, 5: 18, 6: 17, 7: 17, 8: 18}
+==========
+Block 3 Category Balance:
+{1: 17, 2: 18, 3: 17, 4: 18, 5: 17, 6: 18, 7: 18, 8: 17}
+==========
+Block 4 Category Balance:
+{1: 17, 2: 18, 3: 17, 4: 17, 5: 18, 6: 18, 7: 17, 8: 18}
+==========
+Block 5 Category Balance:
+{1: 18, 2: 17, 3: 18, 4: 18, 5: 17, 6: 17, 7: 18, 8: 17}
+==========
+ ****** Session 3  ****** 
+Block 0 Category Balance:
+{1: 18, 2: 18, 3: 18, 4: 17, 5: 18, 6: 17, 7: 17, 8: 17}
+==========
+Block 1 Category Balance:
+{1: 17, 2: 17, 3: 17, 4: 18, 5: 17, 6: 18, 7: 18, 8: 18}
+==========
+Block 2 Category Balance:
+{1: 18, 2: 18, 3: 17, 4: 18, 5: 18, 6: 17, 7: 17, 8: 17}
+==========
+Block 3 Category Balance:
+{1: 17, 2: 17, 3: 18, 4: 17, 5: 17, 6: 18, 7: 18, 8: 18}
+==========
+Block 4 Category Balance:
+{1: 17, 2: 17, 3: 18, 4: 18, 5: 17, 6: 18, 7: 17, 8: 18}
+==========
+Block 5 Category Balance:
+{1: 18, 2: 18, 3: 17, 4: 17, 5: 18, 6: 17, 7: 18, 8: 17}
+==========
+ ****** Session 4  ****** 
+Block 0 Category Balance:
+{1: 17, 2: 18, 3: 18, 4: 18, 5: 18, 6: 17, 7: 17, 8: 17}
+==========
+Block 1 Category Balance:
+{1: 18, 2: 17, 3: 17, 4: 17, 5: 17, 6: 18, 7: 18, 8: 18}
+==========
+Block 2 Category Balance:
+{1: 18, 2: 17, 3: 18, 4: 17, 5: 17, 6: 18, 7: 17, 8: 18}
+==========
+Block 3 Category Balance:
+{1: 17, 2: 18, 3: 17, 4: 18, 5: 18, 6: 17, 7: 18, 8: 17}
+==========
+Block 4 Category Balance:
+{1: 17, 2: 18, 3: 17, 4: 17, 5: 17, 6: 18, 7: 18, 8: 18}
+==========
+Block 5 Category Balance:
+{1: 18, 2: 17, 3: 18, 4: 18, 5: 18, 6: 17, 7: 17, 8: 17}
+==========
+ ****** Session 5  ****** 
+Block 0 Category Balance:
+{1: 18, 2: 17, 3: 17, 4: 17, 5: 17, 6: 18, 7: 18, 8: 18}
+==========
+Block 1 Category Balance:
+{1: 17, 2: 18, 3: 18, 4: 18, 5: 18, 6: 17, 7: 17, 8: 17}
+==========
+Block 2 Category Balance:
+{1: 18, 2: 17, 3: 18, 4: 18, 5: 17, 6: 17, 7: 18, 8: 17}
+==========
+Block 3 Category Balance:
+{1: 17, 2: 18, 3: 17, 4: 17, 5: 18, 6: 18, 7: 17, 8: 18}
+==========
+Block 4 Category Balance:
+{1: 17, 2: 17, 3: 17, 4: 18, 5: 18, 6: 18, 7: 18, 8: 17}
+==========
+Block 5 Category Balance:
+{1: 18, 2: 18, 3: 18, 4: 17, 5: 17, 6: 17, 7: 17, 8: 18}
+==========
+ ****** Session 6  ****** 
+Block 0 Category Balance:
+{1: 17, 2: 17, 3: 17, 4: 18, 5: 18, 6: 18, 7: 17, 8: 18}
+==========
+Block 1 Category Balance:
+{1: 18, 2: 18, 3: 18, 4: 17, 5: 17, 6: 17, 7: 18, 8: 17}
+==========
+Block 2 Category Balance:
+{1: 18, 2: 17, 3: 18, 4: 17, 5: 17, 6: 17, 7: 18, 8: 18}
+==========
+Block 3 Category Balance:
+{1: 17, 2: 18, 3: 17, 4: 18, 5: 18, 6: 18, 7: 17, 8: 17}
+==========
+Block 4 Category Balance:
+{1: 17, 2: 18, 3: 17, 4: 17, 5: 18, 6: 18, 7: 17, 8: 18}
+==========
+Block 5 Category Balance:
+{1: 18, 2: 17, 3: 18, 4: 18, 5: 17, 6: 17, 7: 18, 8: 17}
+==========
+ ****** Session 7  ****** 
+Block 0 Category Balance:
+{1: 18, 2: 17, 3: 17, 4: 18, 5: 18, 6: 17, 7: 17, 8: 18}
+==========
+Block 1 Category Balance:
+{1: 17, 2: 18, 3: 18, 4: 17, 5: 17, 6: 18, 7: 18, 8: 17}
+==========
+Block 2 Category Balance:
+{1: 17, 2: 18, 3: 17, 4: 17, 5: 18, 6: 17, 7: 18, 8: 18}
+==========
+Block 3 Category Balance:
+{1: 18, 2: 17, 3: 18, 4: 18, 5: 17, 6: 18, 7: 17, 8: 17}
+==========
+Block 4 Category Balance:
+{1: 17, 2: 18, 3: 18, 4: 17, 5: 18, 6: 17, 7: 17, 8: 18}
+==========
+Block 5 Category Balance:
+{1: 18, 2: 17, 3: 17, 4: 18, 5: 17, 6: 18, 7: 18, 8: 17}
+==========
+ ****** Session 8  ****** 
+Block 0 Category Balance:
+{1: 18, 2: 17, 3: 18, 4: 17, 5: 18, 6: 17, 7: 18, 8: 17}
+==========
+Block 1 Category Balance:
+{1: 17, 2: 18, 3: 17, 4: 18, 5: 17, 6: 18, 7: 17, 8: 18}
+==========
+Block 2 Category Balance:
+{1: 17, 2: 17, 3: 18, 4: 17, 5: 18, 6: 18, 7: 17, 8: 18}
+==========
+Block 3 Category Balance:
+{1: 18, 2: 18, 3: 17, 4: 18, 5: 17, 6: 17, 7: 18, 8: 17}
+==========
+Block 4 Category Balance:
+{1: 18, 2: 17, 3: 17, 4: 17, 5: 18, 6: 18, 7: 18, 8: 17}
+==========
+Block 5 Category Balance:
+{1: 17, 2: 18, 3: 18, 4: 18, 5: 17, 6: 17, 7: 17, 8: 18}
+==========
+
+Process finished with exit code 0
