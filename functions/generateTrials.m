@@ -59,8 +59,11 @@ for sesidx = 1:nSess
             trial_scheme(any(trial_scheme==0, 2), :);
 
             %% ITIs
+            % RK (18/09/24): This distribution is almost uniform but makes ITIs in the
+            % middle a tiny bit more likely. I'm not sure if it makes any
+            % sense over uniform because of how small the difference is. 
             mu = (Experiment.Time.ItiRange(1)+Experiment.Time.ItiRange(2))/2; % Mean of the normal distribution of ITIs
-            sigma = 2; % SD of the normal distribution
+            sigma = Experiment.Time.ItiMean; % SD of the normal distribution. Was 2. 
             nd = makedist('Normal', 'mu', mu, 'sigma', sigma); % Create a proability distrinution
             ndt = truncate(nd, Experiment.Time.ItiRange(1), Experiment.Time.ItiRange(2)); % Truncate so it's never under/over specified
             itis = round(random(ndt, trial_length, 1), 1); % ITIs for each trial in a run, sampled from nf, rounded to 100ms
