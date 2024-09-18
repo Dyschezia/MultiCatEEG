@@ -118,16 +118,23 @@ switch usecase
         session = Experiment.Subject.WhichSession;
         set = Experiment.Subject.WhichSet;
         nRuns = length(Experiment.Session(session).Set(set).RunShuffled);
+        subjectID = Experiment.Subject.ID;
+        subjectAge = Experiment.Subject.Age;
+        subjectSex = Experiment.Subject.Sex;
         
         idx = 1;
         for run = 1:nRuns
+            % RK (18/09/24): switched a few places where the run scheme was
+            % called to the use of runTrials... just make sure it doesn't
+            % fuck anything. 
             nTrials = Experiment.Session(session).Set(set).RunShuffled(run).TrialsN;
+            runTrials = Experiment.Session(session).Set(set).RunShuffled(run);
             for trial = 1:nTrials
                 
                 % General information
-                log.Subject(idx)  = {Experiment.Subject.ID};
-                log.Age(idx)  = {Experiment.Subject.Age};
-                log.Sex(idx)  = {Experiment.Subject.Sex};
+                log.Subject(idx)  = {subjectID};
+                log.Age(idx)  = {subjectAge};
+                log.Sex(idx)  = {subjectSex};
                 
                 % Experiment information
                 log.Session(idx) = session;
@@ -136,8 +143,8 @@ switch usecase
                 log.Trial(idx) = trial;
                 
                 % Stimulus
-                array = Experiment.Session(session).Set(set).RunShuffled(run).StimArrays(trial,:);
-                log.SingleTrial(idx) = Experiment.Session(session).Set(set).RunShuffled(run).Is1Array(trial);
+                array = runTrials.StimArrays(trial,:);
+                log.SingleTrial(idx) = runTrials.Is1Array(trial);
                 if log.SingleTrial(idx)
                     log.Position(idx) = find(array ~= 0); % If it's 1-array, save location
                 else
@@ -153,9 +160,12 @@ switch usecase
                 log.StimCategory(idx) = {category};
                 
                 % Probe parameters
-                log.CatchTrial(idx) = Experiment.Session(session).Set(set).RunShuffled(run).CatchTrials(trial);
-                log.CorrectResponse(idx) = Experiment.Session(session).Set(set).RunShuffled(run).CatchType(trial);
-                log.LocationResponse(idx) = Experiment.Session(session).Set(set).RunShuffled(run).CatchResponse(trial);
+                log.CatchTrial(idx) = runTrials.CatchTrials(trial);
+                log.CorrectResponse(idx) = runTrials.CatchType(trial);
+                log.LocationResponse(idx) = runTrials.CatchResponse(trial);
+                % RK (18/09/24): Probe is sampled later; set place to save
+                % it. 
+                log.CatchProbe(idx) = NaN;
                 
                 % Given response
                 log.ResponseKey(idx) = NaN;

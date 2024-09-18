@@ -1,10 +1,27 @@
 %% MultiCAT - object information in multi-object arrays
 % Experiment player script
 % Written by: Karla Matic, kmatic94@gmail.com
+% Edits to adapt to EEG: Rotem Krispil, rotem.krispil@mail.huji.ac.il
 % First written: November 2023
-% Last update: January 2023
+% Last update: September 2024
 % This script loads the 'Experiment' structure for a given subject,
 % plays the experiment, and logs the data.
+
+%%
+% RK (18/09/24) TODO: 
+% 1. Remove preset run duration. 
+% 2. Remove environment distinction if only differentiates mac/windows. 
+% 3. Add option to run a specific set. Maybe even a specific run? (possibly
+% could already be implemented based on setupSubject.m ?)
+% 4. EEG Triggers, saving. 
+% 5. Eye tracking, saving. 
+%   a. Remember to make background color the same as the exp!
+% 6. In setupEnvironment.m, need to measure sizes and distances in the exp
+% room. 
+% 7. Make sure calculations in visualAngleCalculation.m and
+% visangle2stimsize.m are correct (run some precalculated values). 
+% 8. Run createResponses.m once with the create section uncommented to
+% create the Y/N images. 
 
 %% ----------------------------------------------------------------------
 %                           Initial setup
