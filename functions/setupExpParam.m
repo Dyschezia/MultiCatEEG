@@ -56,15 +56,13 @@ Experiment.Stim.BackgroundColor = [0.5 0.5 0.5];
 % RK (18/09/24): set the number of catch trials per run in single and multi
 % arrays (as this is what the function setupCatch.m needs; comment the old
 % parameters to find if and when they're used? 
-% Setting the number of multiarray catchtrials to be slightly more than 10%
-% so the total number of catch trials per run is divisible by 4. 
 
 %Experiment.Resp.CatchP = 0.1; % Proportion of catch trials (i.e., response trials)
 %Experiment.Resp.CatchN = round(Experiment.Resp.CatchP * Experiment.Task.TrialsTotalN);
 %Experiment.Resp.CatchNperRun = round(Experiment.Resp.CatchN / (Experiment.Task.RunsN * Experiment.Task.SetsN));
 
 Experiment.Resp.CatchNperRun1array = 28;
-Experiment.Resp.CatchNperRun4array = 8; 
+Experiment.Resp.CatchNperRun4array = 7; 
 Experiment.Resp.CatchNperRun = Experiment.Resp.CatchNperRun4array + Experiment.Resp.CatchNperRun1array;
 
 % Feedback

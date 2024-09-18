@@ -8,6 +8,9 @@ function Experiment = setupCatch(Experiment)
         % and out of those, in half YES appears on the left side of the
         % screen (3 1-arrays and 7 4-arrays). We set all this up here.
         
+        % RK (18/09/24): Use the number of catch trials set in
+        % setupExpParam.
+        
         nSessions = Experiment.Task.SessionsN;
         nRuns = Experiment.Task.RunsN;
     
@@ -29,7 +32,7 @@ function Experiment = setupCatch(Experiment)
                 catch_response = zeros(set_length, 1);
                         
                 %% First select some catch trials out of 1-arrays
-                N_catch_1array = 12; % Hard coded here, change if needed
+                N_catch_1array = Experiment.Resp.CatchNperRun1array * nRuns; % Hard coded here, change if needed
                 all1idx = find(is1array);
                 catch_idx_1 = [];
                 for run = 1:nRuns % Here we make sure we take the same number of catch trials per run
@@ -63,7 +66,7 @@ function Experiment = setupCatch(Experiment)
                 catch_response(catch_idx_no_right) = 2; % RIGHT
                 
                   %% Then do the same for 4-arrays
-                  N_catch_4array = 28; % Hard coded here, change if needed
+                  N_catch_4array = Experiment.Resp.CatchNperRun4array * nRuns; 
                   all4idx = find(is4array);
                   catch_idx_4 = [];
                   for run = 1:nRuns % Here we make sure we take the same number of catch trials per run
