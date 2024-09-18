@@ -3,7 +3,7 @@
 % Written by: Karla Matic, kmatic94@gmail.com
 % Adapted to EEG use: Rotem Krispil
 % First written: September 2023
-% Last update: XXX
+% Last update: September 2024
 % This script creates the design matrix, run structure, and stimuli. 
 % The generated trials can be played using "experiment_player.m" script.
 
