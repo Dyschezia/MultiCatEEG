@@ -9,7 +9,8 @@ function Experiment = setupCatch(Experiment)
         % screen (3 1-arrays and 7 4-arrays). We set all this up here.
         
         % RK (18/09/24): Use the number of catch trials set in
-        % setupExpParam.
+        % setupExpParam. 109-111 commented because save wrong (second
+        % session overrides first).
         
         nSessions = Experiment.Task.SessionsN;
         nRuns = Experiment.Task.RunsN;
@@ -100,9 +101,16 @@ function Experiment = setupCatch(Experiment)
                 catch_response(catch_idx_no_right) = 2; % RIGHT
                 
                 %% Then save these variables
+                % RK (18/09/24): why is it saved to TrialScheme? that
+                % structure is not split into sessions and thus the second
+                % session information overrides the first session. For now,
+                % as this is also saved just below, will comment this out
+                % to find if anything depends on it. 
+                %{
                 Experiment.TrialScheme.SetShuffled(set).CatchTrials = catch_trials;
                 Experiment.TrialScheme.SetShuffled(set).CatchType = catch_type;
                 Experiment.TrialScheme.SetShuffled(set).CatchResponse = catch_response;
+                %}
                 
                 %% Then split and assign to runs
                 catch_trials_reshaped = reshape(catch_trials, [set_length/nRuns, nRuns]);
