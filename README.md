@@ -19,4 +19,5 @@ In generateTrials.m:
 
 
 Places where code remains hardcoded:
-1. setupCatch.m assumes 4 runs per set. 
+1. setupCatch.m assumes 4 runs per set.
+2. shuffleTrials.m assumes 2 sets per session; currently commented out. 
