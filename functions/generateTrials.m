@@ -1,4 +1,7 @@
 function Experiment = generateTrials(Experiment)
+% RK (18/09/24): changed ITI generation, should comment block copying
+% trials and make sure nothing is dependent on the old TrialScheme + why is
+% the trial_scheme object updated if not saved. 
 
 nSess = length(Experiment.Session); % Loop through sessions
 for sesidx = 1:nSess
@@ -12,6 +15,7 @@ for sesidx = 1:nSess
             trial_scheme = Experiment.Session(sesidx).Set(setidx).RunShuffled(runidx).TrialSchemeShuffled;
             trial_length = length(trial_scheme);
             
+            %{
             %% If it's a catch trial, duplicate the trial
             catch_copies = [];
             for trial = 1:trial_length
@@ -26,7 +30,7 @@ for sesidx = 1:nSess
             Experiment.Session(sesidx).Set(setidx).RunShuffled(runidx).CatchTrials(end+1:end+(length(catch_copies))) = repelem(0,length(catch_copies),1); 
             Experiment.Session(sesidx).Set(setidx).RunShuffled(runidx).CatchType(end+1:end+(length(catch_copies))) = repelem(0,length(catch_copies),1); 
             Experiment.Session(sesidx).Set(setidx).RunShuffled(runidx).CatchResponse(end+1:end+(length(catch_copies))) = repelem(0,length(catch_copies),1); 
-            
+            %}
             
             %% All exemplar/orientation combinations
             allexemp = 1:Experiment.Stim.ExemplarsPerCatN;
