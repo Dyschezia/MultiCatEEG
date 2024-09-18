@@ -1,4 +1,9 @@
 function Experiment = runExperiment(Experiment)
+% RK (18/09/24) TODO: 
+% 1. Currently left name of key of starting EEG recording as MRItrigger.
+% That part saves the keypress as the beginning of the recording but in the
+% EEG case we will just press record... figure out whether that matters. 
+% Change MRI mentions to EEG :)
 
 %% Data
 session = Experiment.Subject.WhichSession;
@@ -9,11 +14,15 @@ nRuns = length(allRuns);
 %% Loop through runs
 for run = 1:nRuns
     
+    % RK (18/09/24): remove hardcoding 2 sets per ses
+    %{
     if set == 1
         run_to_display = run;
     else
         run_to_display = run + 4;
     end
+    %}
+    run_to_display = run + nRuns*(set-1);
     text = ['Run ' num2str(run_to_display) ' out of 8. Continue when ready.'];
     DrawFormattedText(Experiment.Display.window, text, 'center', 'center');
     Screen('Flip', Experiment.Display.window);
@@ -32,7 +41,7 @@ for run = 1:nRuns
      KbQueueStop([]);
      KbQueueFlush([]);
     
-    fprintf('\n\nSTART SCANNER\n\n');
+    fprintf('\n\nSTART EEG RECORDING\n\n');
     Keys = Experiment.Keys;
     keysOfInterest = zeros(1,256);
     keysOfInterest(Keys.MRItrigger) = 1;

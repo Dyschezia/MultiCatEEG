@@ -21,7 +21,7 @@
 % 7. Make sure calculations in visualAngleCalculation.m and
 % visangle2stimsize.m are correct (run some precalculated values). 
 % 8. Run createResponses.m once with the create section uncommented to
-% create the Y/N images. 
+% create the Y/N images.
 
 %% ----------------------------------------------------------------------
 %                           Initial setup
