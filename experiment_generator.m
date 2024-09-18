@@ -106,7 +106,9 @@ Experiment = setupCatch(Experiment);
 % individual trials: load exemplar IDs, add catch trials, add ITI jitter. 
 %  
 Experiment = generateTrials(Experiment);
-Experiment = shuffleTrials(Experiment); % After adding catch trials, shuffle the order again
+% RK (18/09/24): no need to reshuffle trials since no catch trials were
+% copied. 
+%Experiment = shuffleTrials(Experiment); % After adding catch trials, shuffle the order again
 
 %%-------------------------------------------------------------------------
 %                       Pregenerate timing
