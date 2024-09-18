@@ -91,6 +91,7 @@ Experiment = shuffleRuns(Experiment); % Shuffle the order of runs in each set
 Experiment = shuffleSets(Experiment); % Shuffle the order of sets
 
 % Assign the shuffled sets to sessions
+% RK: this was hardcoded as 3 sets, thus changed. 
 Experiment = setupSessions(Experiment);
 
 %%-------------------------------------------------------------
