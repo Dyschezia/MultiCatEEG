@@ -9,16 +9,16 @@ window = Experiment.Display.window;
 % Define environment and load appropriate settings
 % Manually enter distance in cm and screen size [x,y] in cm
 switch Experiment.Env.Environment
-    case 'EEG_FU' % RK(19/09/24)
+    case 'EEG_eyelink_FU' % RK(19/09/24)
         Experiment.Env.TotalDistance = 60; % RK(19/09/24)
         Experiment.Env.ScreenSize = [47.5, 29.5]; % RK(19/09/24)
         
         % Add keys
         Experiment.Keys.EscKey = 27;
-        Experiment.Keys.LeftResponse = 49; %1
-        Experiment.Keys.RightResponse = 50; %2
+        Experiment.Keys.LeftResponse = 37; %left
+        Experiment.Keys.RightResponse = 39; %right
         Experiment.Keys.ControlKeys = 13; % Enter
-        Experiment.Keys.MRItrigger = 53; % MRI trigger - 5
+        %Experiment.Keys.MRItrigger = 53; % MRI trigger - 5
 
     %{
     case 'behavLabBCCN'
@@ -34,15 +34,15 @@ switch Experiment.Env.Environment
         %}
         
     case 'home'
-        Experiment.Env.TotalDistance = 110;
-        Experiment.Env.ScreenSize = [48, 27]; %[59.8, 33.6];   
+        Experiment.Env.TotalDistance = 50;
+        Experiment.Env.ScreenSize = [31, 18.5]; %[59.8, 33.6];   
         
         % Add keys
-        Experiment.Keys.EscKey = 10; %KbName('5%')
-        Experiment.Keys.LeftResponse = 114;
-        Experiment.Keys.RightResponse = 115;
-        Experiment.Keys.ControlKeys = 37; % Enter
-        Experiment.Keys.MRItrigger = 15; % MRI trigger
+        Experiment.Keys.EscKey = 27; %KbName('5%')
+        Experiment.Keys.LeftResponse = 37;
+        Experiment.Keys.RightResponse = 39;
+        Experiment.Keys.ControlKeys = 13; % Enter
+        %Experiment.Keys.MRItrigger = 15; % MRI trigger
 end
 
 
