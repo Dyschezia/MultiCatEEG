@@ -127,6 +127,8 @@ Priority(MaxPriority(window));
 % Set up and measure display parameters
 Experiment = setupEnvironment(Experiment);
 
+% RK(19/09/24) Set up EEG triggers 
+
 % Convert visual angle to pixels and cm.
 Experiment = visualAngleCalculation(Experiment);
 
