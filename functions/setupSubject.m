@@ -22,7 +22,7 @@ switch Experiment.Mode.mode
         ok = [];
         while ~strcmp(ok,'y')
             session = input('Session:  ');
-            %set = input('Set:  ');
+            set = input('Set:  ');
             age = input('Age:  ');
             sex = input('Sex:  ','s');
 
@@ -31,6 +31,6 @@ switch Experiment.Mode.mode
 end
 
 Experiment.Subject.WhichSession = session;
-%Experiment.Subject.WhichSet = set;
+Experiment.Subject.WhichSet = set;
 Experiment.Subject.Age = age;
 Experiment.Subject.Sex = sex;
