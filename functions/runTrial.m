@@ -1,8 +1,10 @@
 function Experiment = runTrial(Experiment)
 % RK(19/09/24) TODO:
+% 1. EEG triggers. 
+% 2. RT is not being saved. 
 
 % Toggle to save clips of experiment for reporting/schematic figures
-saveExpImages = 1;
+saveExpImages = 0;
 
 % Timing data saving
 % Objects timed: 'fixation', 'stimulus'

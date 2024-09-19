@@ -28,7 +28,6 @@ for run = 1:nRuns
     %% Setup the run
         
     % Get trigger and assign it to t0
-    % t0 = time of first MRI trigger (first TR)
     fprintf('\n\nPRESS ENTER TO START NEXT RUN\n\n');
      Keys = Experiment.Keys;
      keysOfInterest = zeros(1,256);

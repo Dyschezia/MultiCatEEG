@@ -18,7 +18,9 @@
 % visangle2stimsize.m are correct (run some precalculated values). 
 % 8. Run createResponses.m once with the create section uncommented to
 % create the Y/N images.
-% 9. Don't forget to set sync to 0 and mode to exp before running!!!
+% 9. Add option to set run?
+
+% Don't forget to set sync to 0 and mode to exp before running!!!
 
 %% ----------------------------------------------------------------------
 %                           Initial setup
@@ -74,7 +76,7 @@ Experiment = loadExperimentStruct(TmpExperiment);
 Experiment.Env.WhichScreen = screennum; % Assign the display on which experiment should be played
 
 % Run duration
-%Experiment.Time.RunDuration = run_duration;
+%Experiment.Time.RunDuration = run_duration; %RK(19/09/24)
 
 % Add paths 
 Experiment.Paths.MainPath = TmpExperiment.Paths.MainPath;
