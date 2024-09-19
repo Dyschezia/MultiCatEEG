@@ -13,11 +13,12 @@
 % 5. Eye tracking, saving. 
 %   a. Remember to make background color the same as the exp!
 % 6. In setupEnvironment.m, need to measure sizes and distances in the exp
-% room. 
+% room (measured for eyelink room. Measure other room). 
 % 7. Make sure calculations in visualAngleCalculation.m and
 % visangle2stimsize.m are correct (run some precalculated values). 
 % 8. Run createResponses.m once with the create section uncommented to
 % create the Y/N images.
+% 9. Don't forget to set sync to 0 and mode to exp before running!!!
 
 %% ----------------------------------------------------------------------
 %                           Initial setup
@@ -73,7 +74,7 @@ Experiment = loadExperimentStruct(TmpExperiment);
 Experiment.Env.WhichScreen = screennum; % Assign the display on which experiment should be played
 
 % Run duration
-Experiment.Time.RunDuration = run_duration;
+%Experiment.Time.RunDuration = run_duration;
 
 % Add paths 
 Experiment.Paths.MainPath = TmpExperiment.Paths.MainPath;
