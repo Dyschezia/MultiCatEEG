@@ -31,8 +31,8 @@ close all; clearvars; sca;
 
 % SCREEN
 screennum = max(Screen('Screens')); % Change if needed
-environment = 'EEG_FU'; % fMRI_FU, home
-run_duration = 420; % Duration of one run (scanner defined)
+environment = 'EEG_eyelink_FU'; % EEG_eyelink_FU, EEG_FU (define), home
+%run_duration = 420; % RK(19/09/24) commented. Duration of one run (scanner defined)
 
 % For reliable  timing, this should be 0. But on multi-display setup, this
 % may not work. 1 shortens the tests for timing, 2 disables all
