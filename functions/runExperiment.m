@@ -3,7 +3,7 @@ function Experiment = runExperiment(Experiment)
 % 1. Currently left name of key of starting EEG recording as MRItrigger.
 % That part saves the keypress as the beginning of the recording but in the
 % EEG case we will just press record... figure out whether that matters. 
-% Change MRI mentions to EEG :)
+% 2. Change MRI mentions to EEG :)
 
 %% Data
 session = Experiment.Subject.WhichSession;

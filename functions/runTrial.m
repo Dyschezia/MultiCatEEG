@@ -1,4 +1,6 @@
 function Experiment = runTrial(Experiment)
+% RK(19/09/24) TODO:
+% 
 
 % Toggle to save clips of experiment for reporting/schematic figures
 saveExpImages = 1;
@@ -78,6 +80,9 @@ if isCatch
     else
         error('CatchType is neither 1 (YES) nor 2 (NO) - something is wrong. Check your trial structure.')
     end
+    
+    % RK(19/09/24): Save probe identity
+    Experiment.Log.log.CatchProbeIdx(idx) = prompt;
     
     % Add yes/no
     texYes = Experiment.Images.ResponseData.textureIndex( Experiment.Images.ResponseData.imageName=="Y");

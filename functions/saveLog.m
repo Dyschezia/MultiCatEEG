@@ -165,7 +165,7 @@ switch usecase
                 log.LocationResponse(idx) = runTrials.CatchResponse(trial);
                 % RK (18/09/24): Probe is sampled later; set place to save
                 % it. 
-                log.CatchProbe(idx) = NaN;
+                log.CatchProbeIdx(idx) = NaN;
                 
                 % Given response
                 log.ResponseKey(idx) = NaN;
