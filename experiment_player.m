@@ -46,17 +46,21 @@ addpath(genpath('functions'));
 TmpExperiment = struct();
 
 % What do we run?
-TmpExperiment.Mode.mode = 'experiment'; % 'test' or 'experiment'
+TmpExperiment.Mode.mode = 'test'; % 'test' or 'experiment'
 
 % Set main directory
 TmpExperiment.Paths.MainPath = pwd();
 
 % Path to subject data/pregen file
+%{ 
 if strcmp(environment, 'home')
     idcs = strfind(TmpExperiment.Paths.MainPath ,'/');
 else
     idcs = strfind(TmpExperiment.Paths.MainPath ,'\'); % if it's run on Windows
 end
+%} 
+%RK 19/09/24
+idcs = strfind(TmpExperiment.Paths.MainPath ,'\'); 
 parent_dir = TmpExperiment.Paths.MainPath (1:idcs(end)-1);
 TmpExperiment.Paths.OutDir = fullfile(parent_dir, 'data');
 

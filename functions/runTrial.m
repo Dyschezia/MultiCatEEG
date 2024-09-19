@@ -1,8 +1,5 @@
 function Experiment = runTrial(Experiment)
 % RK(19/09/24) TODO:
-% Currently tries (wrongly) to access the saved log, when that is supposed
-% to be done in saveLog. Instead, save only the current object and save to
-% the full log later. 
 
 % Toggle to save clips of experiment for reporting/schematic figures
 saveExpImages = 1;

@@ -51,8 +51,10 @@ for run = 1:nRuns
     KbQueueStop([]);
     KbQueueFlush([]);
     
-    Experiment.Log.StartTime = t0;
+    Experiment.Log.StartTime = t0; %figure out if this is important
     Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'mri_start'},NaN,0);
+    
+    % what about instruction screen?
     
     Screen('DrawDots', Experiment.Display.window, [Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY], Experiment.Stim.FixationPixels, Experiment.Stim.FixationColour, [], 2);
     vbl = Screen('Flip', Experiment.Display.window);
