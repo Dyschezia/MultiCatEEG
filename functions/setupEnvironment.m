@@ -19,6 +19,30 @@ switch Experiment.Env.Environment
         Experiment.Keys.RightResponse = 39; %right
         Experiment.Keys.ControlKeys = 13; % Enter
         %Experiment.Keys.MRItrigger = 53; % MRI trigger - 5
+        
+        % Set EEG triggers
+        eeg_dir = 'D:\cichyLab\#Common\parallel_port';
+        addpath(eeg_dir);
+        Experiment.Triggers.Address = hex2dec('3FE0');
+        %addpath('.\iosetup\');
+
+        case 'EEG_FU' % RK(19/09/24)
+        % Not yet measured! copied from above!!
+        Experiment.Env.TotalDistance = 60; % RK(19/09/24)
+        Experiment.Env.ScreenSize = [47.5, 29.5]; % RK(19/09/24)
+        
+        % Add keys
+        Experiment.Keys.EscKey = 27;
+        Experiment.Keys.LeftResponse = 37; %left
+        Experiment.Keys.RightResponse = 39; %right
+        Experiment.Keys.ControlKeys = 13; % Enter
+        %Experiment.Keys.MRItrigger = 53; % MRI trigger - 5
+        
+        % Set EEG triggers
+        eeg_dir = 'D:\cichyLab\#Common\parallel_port';
+        addpath(eeg_dir);
+        % For eeg only, function is supposed to work only with trigger_num.
+        %addpath('.\iosetup\');
 
     %{
     case 'behavLabBCCN'
