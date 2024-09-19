@@ -9,9 +9,9 @@ window = Experiment.Display.window;
 % Define environment and load appropriate settings
 % Manually enter distance in cm and screen size [x,y] in cm
 switch Experiment.Env.Environment
-    case 'fMRI_FU'
-        Experiment.Env.TotalDistance = 100; % Distance to mirror + distance mirror to eyes
-        Experiment.Env.ScreenSize = [48, 27];
+    case 'EEG_FU' % RK(19/09/24)
+        Experiment.Env.TotalDistance = 60; % RK(19/09/24)
+        Experiment.Env.ScreenSize = [47.5, 29.5]; % RK(19/09/24)
         
         % Add keys
         Experiment.Keys.EscKey = 27;
@@ -20,6 +20,7 @@ switch Experiment.Env.Environment
         Experiment.Keys.ControlKeys = 13; % Enter
         Experiment.Keys.MRItrigger = 53; % MRI trigger - 5
 
+    %{
     case 'behavLabBCCN'
         Experiment.Env.TotalDistance = 100;
         Experiment.Env.ScreenSize = [59.8, 33.6];
@@ -30,6 +31,7 @@ switch Experiment.Env.Environment
         Experiment.Keys.RightResponse = 39;
         Experiment.Keys.ControlKeys = 13; % Enter
         Experiment.Keys.MRItrigger = 53; % MRI trigger
+        %}
         
     case 'home'
         Experiment.Env.TotalDistance = 110;

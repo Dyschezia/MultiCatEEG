@@ -31,13 +31,13 @@ close all; clearvars; sca;
 
 % SCREEN
 screennum = max(Screen('Screens')); % Change if needed
-environment = 'fMRI_FU'; % fMRI_FU, home
+environment = 'EEG_FU'; % fMRI_FU, home
 run_duration = 420; % Duration of one run (scanner defined)
 
 % For reliable  timing, this should be 0. But on multi-display setup, this
 % may not work. 1 shortens the tests for timing, 2 disables all
 % calibration.
-Screen('Preference', 'SkipSyncTests', 0); 
+Screen('Preference', 'SkipSyncTests', 1); 
 
 % Add directory with functions to Matlab path
 addpath(genpath('functions')); 
