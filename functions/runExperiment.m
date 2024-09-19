@@ -1,8 +1,6 @@
 function Experiment = runExperiment(Experiment)
 % RK (18/09/24) TODO: 
-% 1. Currently left name of key of starting EEG recording as MRItrigger.
-% That part saves the keypress as the beginning of the recording but in the
-% EEG case we will just press record... figure out whether that matters. 
+% 1. Add instruction screen. 
 % 2. Change MRI mentions to EEG :)
 
 %% Data
@@ -31,7 +29,7 @@ for run = 1:nRuns
         
     % Get trigger and assign it to t0
     % t0 = time of first MRI trigger (first TR)
-    fprintf('\n\nPRESS ENTER TO CONTINUE NEXT RUN\n\n');
+    fprintf('\n\nPRESS ENTER TO START NEXT RUN\n\n');
      Keys = Experiment.Keys;
      keysOfInterest = zeros(1,256);
      keysOfInterest(Keys.ControlKeys) = 1;
@@ -40,8 +38,9 @@ for run = 1:nRuns
      t0 = KbQueueWait([]); % Wait for the trigger
      KbQueueStop([]);
      KbQueueFlush([]);
-    
-    fprintf('\n\nSTART EEG RECORDING\n\n');
+    % RK(19/09/24) removed fMRI trigger
+    %{
+     fprintf('\n\nSTART fMRI RECORDING\n\n');
     Keys = Experiment.Keys;
     keysOfInterest = zeros(1,256);
     keysOfInterest(Keys.MRItrigger) = 1;
@@ -50,9 +49,10 @@ for run = 1:nRuns
     t0 = KbQueueWait([]); % Wait for the trigger
     KbQueueStop([]);
     KbQueueFlush([]);
+     %}
     
-    Experiment.Log.StartTime = t0; %figure out if this is important
-    Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'mri_start'},NaN,0);
+    Experiment.Log.StartTime = t0; 
+    %Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'mri_start'},NaN,0);
     
     % what about instruction screen?
     
@@ -100,12 +100,14 @@ for run = 1:nRuns
             
     if Experiment.Log.Exit == 1
         break;
+    % RK(19/09/24) remove waiting till scanner defined duration
+    %{
     else
         last_event = thisRun.TimingLog.TimingExpected.timing(end-1);
         wait_time = Experiment.Time.RunDuration - last_event;
         WaitSecs(wait_time); % Wait until the end of the run (scanner defined)
     end
-    
+    %}
 end
 
 % Save the data
