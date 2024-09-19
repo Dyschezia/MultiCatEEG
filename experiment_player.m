@@ -30,7 +30,7 @@ close all; clearvars; sca;
 
 % SCREEN
 screennum = max(Screen('Screens')); % Change if needed
-environment = 'EEG_eyelink_FU'; % EEG_eyelink_FU, EEG_FU (define), home
+environment = 'home'; % EEG_eyelink_FU, EEG_FU (define), home
 %run_duration = 420; % RK(19/09/24) commented. Duration of one run (scanner defined)
 
 % For reliable  timing, this should be 0. But on multi-display setup, this
