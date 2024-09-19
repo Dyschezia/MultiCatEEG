@@ -9,10 +9,6 @@
 
 %%
 % RK (18/09/24) TODO: 
-% 1. Remove preset run duration. 
-% 2. Remove environment distinction if only differentiates mac/windows. 
-% 3. Add option to run a specific set. Maybe even a specific run? (possibly
-% could already be implemented based on setupSubject.m ?)
 % 4. EEG Triggers, saving. 
 % 5. Eye tracking, saving. 
 %   a. Remember to make background color the same as the exp!
@@ -143,8 +139,9 @@ Experiment = setupLocations(Experiment);
 
 %% The log files for two sets are stored separately
 Experiment.Log.Exit = 0;
-n_sets = 2;
-for i_set = 1:n_sets
+n_sets = Experiment.Task.SetsN/Experiment.Task.SessionsN; %RK (19/09/24) was hardcoded
+first_set = Experiment.Subject.WhichSet; % RK(19/09/24) set can now be set in setupSubject.m
+for i_set = first_set:n_sets
     Experiment.Subject.WhichSet = i_set;
     
     if Experiment.Log.Exit == 1
