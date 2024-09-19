@@ -1,6 +1,8 @@
 function Experiment = runTrial(Experiment)
 % RK(19/09/24) TODO:
-% 
+% Currently tries (wrongly) to access the saved log, when that is supposed
+% to be done in saveLog. Instead, save only the current object and save to
+% the full log later. 
 
 % Toggle to save clips of experiment for reporting/schematic figures
 saveExpImages = 1;
@@ -82,7 +84,8 @@ if isCatch
     end
     
     % RK(19/09/24): Save probe identity
-    Experiment.Log.log.CatchProbeIdx(idx) = prompt;
+    %Experiment.Log.log.CatchProbeIdx(idx) = prompt;
+    Experiment.Log.CatchProbeIdx = prompt;
     
     % Add yes/no
     texYes = Experiment.Images.ResponseData.textureIndex( Experiment.Images.ResponseData.imageName=="Y");
@@ -108,7 +111,11 @@ if isCatch
     
     % Add locations on screen
     destinationRectsPrompt = Experiment.Images.RectDestinationsProbe;
+
+else % RK(19/09/24)
+    Experiment.Log.CatchProbeIdx = NaN; % check if this is necassary
 end
+
 
 % Fixation
 fixRadius = Experiment.Stim.FixationPixels; 

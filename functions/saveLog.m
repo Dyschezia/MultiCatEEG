@@ -30,9 +30,12 @@ switch usecase
         idx = find(logData.Session==session & logData.Set==set & logData.Run==run & logData.Trial==trial);
         location_response = logData.LocationResponse(idx);
         response = Experiment.Log.response;
+        probe = Experiment.Log.CatchProbeIdx; % RK(19/09/24)
         
         logData.ResponseKey(idx) = Experiment.Log.key;
-        logData.ResponseSide(idx) = Experiment.Log.response;
+        logData.ResponseSide(idx) = response; % RK(19/09/24) (small change, was accessing Log)
+        logData.CatchProbeIdx(idx) = probe; % RK(19/09/24)
+        
         if location_response==1 % Yes is on the left
             if strcmp(response, "left")
                 responseYN = "yes";
