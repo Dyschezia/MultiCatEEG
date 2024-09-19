@@ -20,6 +20,11 @@ In generateTrials.m:
 In generateTiming.m and during play: 
 - currently does not have an option for a break between runs. Need to add and to make sure exp running itself does not depend on generateTiming.m...
 
+
 Places where code remains hardcoded:
 1. setupCatch.m assumes 4 runs per set.
-2. shuffleTrials.m assumes 2 sets per session; currently commented out. 
+2. shuffleTrials.m assumes 2 sets per session; currently commented out.
+
+
+Open questions:
+1. Is counterbalancing of response mapping necassary?
