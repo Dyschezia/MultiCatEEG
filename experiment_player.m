@@ -36,7 +36,11 @@ environment = 'home'; % EEG_eyelink_FU, EEG_FU (define), home
 % For reliable  timing, this should be 0. But on multi-display setup, this
 % may not work. 1 shortens the tests for timing, 2 disables all
 % calibration.
-Screen('Preference', 'SkipSyncTests', 1); 
+if strcmp(Experiment.Mode.mode, 'test')
+    Screen('Preference', 'SkipSyncTests', 1); 
+else
+    Screen('Preference', 'SkipSyncTests', 0);
+end
 
 % Add directory with functions to Matlab path
 addpath(genpath('functions')); 
@@ -100,7 +104,9 @@ Experiment = setupSubject(Experiment);
 % Environment
 Experiment.Env.Environment = environment; 
 
-%PsychDebugWindowConfiguration(); % Transparent screen for debugging
+if strcmp(Experiment.Mode.mode, 'test')
+    PsychDebugWindowConfiguration(); % Transparent screen for debugging
+end
 
 % Open PTB screen
 fprintf('\nOpening Psychtoolbox\n')
@@ -118,7 +124,9 @@ Screen('BlendFunction', window, 'GL_SRC_ALPHA', 'GL_ONE_MINUS_SRC_ALPHA');
 % fill screen with background color
 Screen('FillRect', window, background);
 
-HideCursor % hide mouse cursor
+if strcmp(Experiment.Mode.mode, 'experiment')
+    HideCursor % hide mouse cursor
+end
 Priority(MaxPriority(window));
 
 % Activate for alpha blending
@@ -141,6 +149,11 @@ Experiment = createResponses(Experiment);
 
 %% Define locations for images in the array
 Experiment = setupLocations(Experiment);
+
+%% (RK 20/09/24) Define EEG Triggers 
+% Creates in advance triggers for events and responses depending on the
+% environment. 
+Experiment = setupEEGTriggers(Experiment);
 
 %% The log files for two sets are stored separately
 Experiment.Log.Exit = 0;
