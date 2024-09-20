@@ -103,3 +103,15 @@ Experiment.Time.LocalizerStimOff = 0.3; % Stimulus off during localizer
 Experiment.Time.LocalizerStopGap = 6; % How many seconds we wait in thee baseline gap
 
 
+%% RK (20/09/24) EEG Triggers 
+% Indexing events will be done with 1 to
+% 3 triggers. The first trigger sets the type of event, the two other ones
+% will be used to code the identity of the trial. 
+% To code stimuli, will use 3 triggers
+
+% Set triggers defining event type
+Experiment.Triggers.Stimulus = 1;
+Experiment.Triggers.Fixation = 2;
+Experiment.Triggers.Probe = 3;
+Experiment.Triggers.Response = 4; 
+Experiment.Triggers.Calibration = 5;

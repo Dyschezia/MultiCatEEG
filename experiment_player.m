@@ -19,6 +19,9 @@
 % 8. Run createResponses.m once with the create section uncommented to
 % create the Y/N images.
 % 9. Add option to set run?
+% 10. Add blinking period. 
+% 11. Handle crashes (make sure eyelink data is saved as well)
+% 12. Handle first trial (through training or in the exp).
 
 % Don't forget to set sync to 0 and mode to exp before running!!!
 
@@ -149,11 +152,6 @@ Experiment = createResponses(Experiment);
 
 %% Define locations for images in the array
 Experiment = setupLocations(Experiment);
-
-%% (RK 20/09/24) Define EEG Triggers 
-% Creates in advance triggers for events and responses depending on the
-% environment. 
-Experiment = setupEEGTriggers(Experiment);
 
 %% The log files for two sets are stored separately
 Experiment.Log.Exit = 0;
