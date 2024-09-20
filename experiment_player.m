@@ -33,15 +33,6 @@ screennum = max(Screen('Screens')); % Change if needed
 environment = 'home'; % EEG_eyelink_FU, EEG_FU (define), home
 %run_duration = 420; % RK(19/09/24) commented. Duration of one run (scanner defined)
 
-% For reliable  timing, this should be 0. But on multi-display setup, this
-% may not work. 1 shortens the tests for timing, 2 disables all
-% calibration.
-if strcmp(Experiment.Mode.mode, 'test')
-    Screen('Preference', 'SkipSyncTests', 1); 
-else
-    Screen('Preference', 'SkipSyncTests', 0);
-end
-
 % Add directory with functions to Matlab path
 addpath(genpath('functions')); 
 
@@ -50,6 +41,15 @@ TmpExperiment = struct();
 
 % What do we run?
 TmpExperiment.Mode.mode = 'test'; % 'test' or 'experiment'
+
+% For reliable  timing, this should be 0. But on multi-display setup, this
+% may not work. 1 shortens the tests for timing, 2 disables all
+% calibration.
+if strcmp(TmpExperiment.Mode.mode, 'test')
+    Screen('Preference', 'SkipSyncTests', 1); 
+else
+    Screen('Preference', 'SkipSyncTests', 0);
+end
 
 % Set main directory
 TmpExperiment.Paths.MainPath = pwd();
