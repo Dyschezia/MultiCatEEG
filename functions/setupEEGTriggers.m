@@ -11,6 +11,7 @@ if strcmp(Experiment.Env.Environment, 'EEG_FU')
 else
     
     % Setting stimulus triggers of form 1xxxx
+
     Sess = Experiment.Subject.WhichSession;
     Set = Experiment.Subject.WhichSet;
     nSets = length(Experiment.Session(Sess).Set);
@@ -37,6 +38,21 @@ else
             
             % Save trigger vector to run trial scheme 
             Experiment.Session(Sess).Set(setidx).RunShuffled(runidx).StimulusTriggers = category_triggers;
+            
+            % Setting fixation trigger
+            Experiment.Triggers.Fixation = 10000;
+            
+            % Setting response triggers 2xxxx
+            Experiment.Triggers.LeftResponse = 20001;
+            Experiment.Triggers.RightResponse = 20002;
+            
+            % Setting eyetracking triggers 3xxxx
+            Experiment.Triggers.Calibration = 30001;
+            Experiment.Triggers.Validation = 30002;
+            
+            % Setting Probe triggers 4xxxx
+            Experiment.Triggers.Probe = 40001;
+            
         end
     end
 end 
