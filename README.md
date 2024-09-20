@@ -28,3 +28,4 @@ Places where code remains hardcoded:
 
 Open questions:
 1. Is counterbalancing of response mapping necassary?
+2. Should we limit single array trials to not repeat? (unlikely but possible). 
