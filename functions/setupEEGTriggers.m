@@ -22,7 +22,7 @@ else
     placeValues = [1000 100 10 1]; 
     
     for setidx = Set:nSets
-        nRuns = length(Experiment.Session(Sess).Set(setidx));
+        nRuns = length(Experiment.Session(Sess).Set(setidx).RunShuffled);
         for runidx = 1:nRuns
             
             run = Experiment.Session(Sess).Set(setidx).RunShuffled(runidx);
