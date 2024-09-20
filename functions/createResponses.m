@@ -14,6 +14,7 @@ end
 window = Experiment.Display.window;
 
 %% Create Y/N responses
+%{
 stimSet = ['Y', 'N'];
 ynFolderLocation = destination;
 Screen('TextSize', window, stimSize);
@@ -37,6 +38,8 @@ for i = 1:length(stimSet)
      % Remove from screen
      Screen('Flip', window); 
  end
+
+%}
 
 %% Load Y/N responses
 %If responses are already existing, just load them
