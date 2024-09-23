@@ -20,6 +20,8 @@ Experiment.Task.Trials1arrayN = 280; % Number of 1-array trials per run
 Experiment.Task.TrialsTotalN4array = Experiment.Task.Trials4arrayN * Experiment.Task.RunsN * Experiment.Task.SetsN;
 Experiment.Task.TrialsTotalN1array = Experiment.Task.Trials1arrayN * Experiment.Task.RunsN * Experiment.Task.SetsN;
 Experiment.Task.TrialsTotalN = Experiment.Task.TrialsTotalN4array + Experiment.Task.TrialsTotalN1array; % Number of all trials (all sizes, sessions, etc)
+% RK (23/09/24) After how many trials should subjects be offered break?
+Experiment.Task.TrialsPerBreak = 50;
 
 % Fonts and environment setup
 Experiment.Task.FontsizeInstruction = 1; % Font size for instruction texts
