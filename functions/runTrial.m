@@ -42,6 +42,12 @@ eyetracking = strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU');
 
 if eyetracking % The address of the non eyetracking trigger is set in the function
     trigger_address = Experiment.Triggers.Address;
+    % demo suggested sending messages to the edf file like trial number.
+    % Can I also send run, set, session info like so?
+    Eyelink('Message', 'TRIALID %d', trial);
+    Eyelink('Message', 'RUNID %d', run);
+    Eyelink('Message', 'SETID %d', set);
+    Eyelink('Message', 'SESID %d', session);
 end
 if send_eeg_triggers
 %    trigger_delay = Experiment.Triggers.TriggerDelay;

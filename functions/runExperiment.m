@@ -37,9 +37,12 @@ for run = first_run:nRuns
     %dummy_mode = 1; % should eyelink connection be initiated? if not, set 1
     if strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU')
         if run == first_run
+            % open EDF file, setup calibration settings, and calibrate
             Experiment = InitiateEyeTracking(Experiment);
         else
-            % run only driftcheck? calibrate anyway?
+            % run drift check. Need to press space. Does this depend on
+            % setting a key during initation?
+            EyelinkDoDriftCorrection(Experiment.Eyetracking.el, Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY);
         end
     end
     
@@ -55,26 +58,17 @@ for run = first_run:nRuns
      t0 = KbQueueWait([]); % Wait for the trigger
      KbQueueStop([]);
      KbQueueFlush([]);
-    % RK(19/09/24) removed fMRI trigger
-    %{
-     fprintf('\n\nSTART fMRI RECORDING\n\n');
-    Keys = Experiment.Keys;
-    keysOfInterest = zeros(1,256);
-    keysOfInterest(Keys.MRItrigger) = 1;
-    KbQueueCreate([],keysOfInterest);
-    KbQueueStart([]);
-    t0 = KbQueueWait([]); % Wait for the trigger
-    KbQueueStop([]);
-    KbQueueFlush([]);
-     %}
-    
+        
     Experiment.Log.StartTime = t0; 
-    %Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'mri_start'},NaN,0);
     
+    % Show initial fixation 
     Screen('DrawDots', Experiment.Display.window, [Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY], Experiment.Stim.FixationPixels, Experiment.Stim.FixationColour, [], 2);
     vbl = Screen('Flip', Experiment.Display.window);
     Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'initial_fixation'},NaN,0);
     Experiment.Log.ExpectedTime = startGap; % Show next object after initial wait
+    
+    % Start EDF recording
+    
     
     fprintf(['\nStarting run' num2str(run) '\n']);
         
