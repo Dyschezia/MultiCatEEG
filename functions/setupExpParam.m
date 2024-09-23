@@ -22,7 +22,8 @@ Experiment.Task.TrialsTotalN1array = Experiment.Task.Trials1arrayN * Experiment.
 Experiment.Task.TrialsTotalN = Experiment.Task.TrialsTotalN4array + Experiment.Task.TrialsTotalN1array; % Number of all trials (all sizes, sessions, etc)
 % RK (23/09/24) After how many trials should subjects be offered break?
 Experiment.Task.TrialsPerBreak = 50;
-
+Experiment.Task.ShortBreakDur = 10; % in seconds
+ 
 % Fonts and environment setup
 Experiment.Task.FontsizeInstruction = 1; % Font size for instruction texts
 Experiment.Task.FontsizeProbe = 1; % Font size for report probe

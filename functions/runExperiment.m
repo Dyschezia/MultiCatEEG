@@ -10,6 +10,10 @@ set = Experiment.Subject.WhichSet;
 first_run = Experiment.Subject.WhichRun;
 allRuns = Experiment.Session(session).Set(set).RunShuffled;
 nRuns = length(allRuns);  
+trialsPerBreak = Experiment.Task.TrialsPerBreak;
+shortBreakDur = Experiment.Task.ShortBreakDur;
+startGap = Experiment.Time.StartGap;
+halfifi = Experiment.Env.HalfIFI;
 
 %% Loop through runs
 for run = first_run:nRuns
@@ -60,7 +64,7 @@ for run = first_run:nRuns
     Screen('DrawDots', Experiment.Display.window, [Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY], Experiment.Stim.FixationPixels, Experiment.Stim.FixationColour, [], 2);
     vbl = Screen('Flip', Experiment.Display.window);
     Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'initial_fixation'},NaN,0);
-    Experiment.Log.ExpectedTime = Experiment.Time.StartGap; % Show next object after initial wait
+    Experiment.Log.ExpectedTime = startGap; % Show next object after initial wait
     
     fprintf(['\nStarting run' num2str(run) '\n']);
         
@@ -81,7 +85,7 @@ for run = first_run:nRuns
             if find(keyCode) == Experiment.Keys.EscKey
                     Experiment.Log.Exit = 1; break; 
             end
-        end   
+        end
         
         % Run the trial
         Experiment.Log.CurrentTrial = thisTrial;
@@ -96,6 +100,39 @@ for run = first_run:nRuns
          if Experiment.Log.Exit == 1
                 break;
          end
+         
+        % RK (23/09/24) Offer a break every trialsPerBreak trials:
+        
+        if mod(thisTrial, trialsPerBreak) == 0
+            % add text on screen saying take a short break
+            text = ['Take a short break of ' shortBreakDur '. Press any key to skip'];
+            DrawFormattedText(Experiment.Display.window, text, 'center', 'center');
+            Screen('DrawingFinished', Experiment.Display.window);
+            vbl = Screen('Flip', Experiment.Display.window, t0 + Experiment.Log.ExpectedTime - halfifi);
+            
+            % Update expected time of the next event
+            Experiment.Log.ExpectedTime = Experiment.Log.ExpectedTime + shortBreakDur;
+            Experiment.Log.timing(end+1,:) = table(session, set, run, NaN, NaN, NaN, {'short_break'},NaN, vbl);
+            
+            % Check if a key is pressed until the end of the break
+            keyDown = 0;
+            while GetSecs() < t0 + Experiment.Log.ExpectedTime
+                [keyDown, ~ , ~ , ~ ] = KbCheck();
+                if keyDown
+                    Experiment.Log.ExpectedTime = GetSecs() - t0 + 0.2;
+                    break
+                end
+            end
+            
+            % Add a longer fixation to make sure subjects is fixating
+            Screen('DrawDots', Experiment.Display.window, [Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY], Experiment.Stim.FixationPixels, Experiment.Stim.FixationColour, [], 2);
+            Screen('DrawingFinished', Experiment.Display.window);
+            vbl = Screen('Flip', Experiment.Display.window, t0 + Experiment.Log.ExpectedTime - halfifi);
+            Experiment.Log.timing(end+1,:) = table(session, set, run, NaN, NaN, NaN, {'initial_fixation'},NaN,vbl);
+            Experiment.Log.ExpectedTime = Experiment.Log.ExpectedTime + startGap;
+             
+        end
+        
          
     end
             
