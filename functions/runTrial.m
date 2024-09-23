@@ -2,6 +2,13 @@ function Experiment = runTrial(Experiment)
 % RK(19/09/24) TODO:
 % 1. EEG triggers. 
 % 2. RT is not being saved. 
+% 3. EDIT SEND TRIGGER TO WAIT LESS TIME 
+% Currently not adding trigger delay because it can just be added later. 
+
+% Stimulus triggers are of the form of 1 - set,run,trial. Because there are
+% 350 trials per run, this takes the form of 1 - set,run,hundreds -
+% tens,ones. For example, trial 251 in run 3 set 2 will be 1 - 232 - 51.
+% This cannot accomodate paradigms with more than 999 trials per run. 
 
 % Toggle to save clips of experiment for reporting/schematic figures
 saveExpImages = 0;
@@ -28,6 +35,24 @@ session = Experiment.Subject.WhichSession;
 set = Experiment.Subject.WhichSet;
 run = Experiment.Log.CurrentRun;
 trial = Experiment.Log.CurrentTrial;
+
+% RK (20/09/24) Is eyetracking collected? is EEG collected?
+send_eeg_triggers = ~strcmp(Experiment.Env.Environment, 'home');
+eyetracking = strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU');
+
+if eyetracking % The address of the non eyetracking trigger is set in the function
+    trigger_address = Experiment.Triggers.Address;
+end
+if send_eeg_triggers
+%    trigger_delay = Experiment.Triggers.TriggerDelay;
+    stimulus_trigger = Experiment.Triggers.Stimulus;
+    fixation_trigger = Experiment.Triggers.Fixation;
+    probe_trigger = Experiment.Triggers.Probe;
+    response_trigger = Experiment.Triggers.Response; 
+    stimulus_trigger2 = set*100 + run*10 + mod(floor(trial/ 100), 10);
+    stimulus_trigger3 = mod(trial, 100);
+    multi_trigger_delay = Experiment.Triggers.MultiTriggerDelay;
+end
 
 % Locate the stimulus array for this trial
 allRuns = Experiment.Session(session).Set(set).RunShuffled;
@@ -157,6 +182,24 @@ else
 end
 Screen('DrawingFinished', myWin);
 vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
+% RK (20/09/24) send EEG trigger
+if send_eeg_triggers
+    if eyetracking
+		%WaitSecs(trigger_delay);
+		send_triggerIO64(trigger_address, stimulus_trigger);
+        WaitSecs(multi_trigger_delay)% how long to wait between two triggers?
+        send_triggerIO64(trigger_address, stimulus_trigger2)
+        WaitSecs(multi_trigger_delay)
+        send_triggerIO64(trigger_address, stimulus_trigger3)
+    else
+        %WaitSecs(trigger_delay);
+        send_triggerIO64(stimulus_trigger);
+        WaitSecs(multi_trigger_delay)% how long to wait between two triggers?
+        send_triggerIO64(stimulus_trigger2)
+        WaitSecs(multi_trigger_delay)
+        send_triggerIO64(stimulus_trigger3)
+    end 
+end
 timeRealFlip = [timeRealFlip,  vbl - startTime];
 timeExpectedFlip = [timeExpectedFlip, expectedTime];
 whichObject = [whichObject, {'stimulus'}];
@@ -172,6 +215,16 @@ if ~isCatch % If it's not catch
     Screen('DrawDots', myWin, screenCenter, fixRadius,  fixColor, [], 2);
     Screen('DrawingFinished', myWin);
     vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
+    % RK (20/09/24)
+    if send_eeg_triggers
+        if eyetracking
+            %WaitSecs(trigger_delay);
+            send_triggerIO64(trigger_address, fixation_trigger);
+        else
+            %WaitSecs(trigger_delay);
+            send_triggerIO64(fixation_trigger);
+        end 
+    end    
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'fixation'}];
@@ -182,6 +235,16 @@ else % If it is a catch trial
     Screen('DrawDots', myWin, screenCenter, fixRadius,  fixColor, [], 2);
     Screen('DrawingFinished', myWin);
     vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
+    % RK (20/09/24)
+    if send_eeg_triggers
+        if eyetracking
+            %WaitSecs(trigger_delay);
+            send_triggerIO64(trigger_address, fixation_trigger);
+        else
+            %WaitSecs(trigger_delay);
+            send_triggerIO64(fixation_trigger);
+        end 
+    end    
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'fixation'}];
@@ -192,6 +255,16 @@ else % If it is a catch trial
     Screen('DrawTextures', myWin, texturePointersPrompt, [], destinationRectsPrompt); % Prompt screen
     Screen('DrawingFinished', myWin);
     vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
+    % RK (20/09/24)
+    if send_eeg_triggers
+        if eyetracking
+            %WaitSecs(trigger_delay);
+            send_triggerIO64(trigger_address, probe_trigger);
+        else
+            %WaitSecs(trigger_delay);
+            send_triggerIO64(probe_trigger);
+        end 
+    end    
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'promptScreen'}];
@@ -261,6 +334,16 @@ else % If it is a catch trial
         Screen('FrameRect', myWin, feedback_color, resprect, 4);
         Screen('DrawingFinished', myWin);
         vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi); % After response time is out show feedback
+        % RK (23/09/24)
+        if send_eeg_triggers
+            if eyetracking
+                %WaitSecs(trigger_delay);
+                send_triggerIO64(trigger_address, response_trigger);
+            else
+                %WaitSecs(trigger_delay);
+                send_triggerIO64(response_trigger);
+            end 
+        end    
         timeRealFlip = [timeRealFlip,  vbl - startTime];
         timeExpectedFlip = [timeExpectedFlip, NaN];
         whichObject = [whichObject, {'feedback'}];
@@ -276,6 +359,16 @@ else % If it is a catch trial
     Screen('DrawDots', myWin, screenCenter, fixRadius,  fixColor, [], 2);
     Screen('DrawingFinished', myWin);
     vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
+    % RK (23/09/24)
+    if send_eeg_triggers
+        if eyetracking
+            %WaitSecs(trigger_delay);
+            send_triggerIO64(trigger_address, fixation_trigger);
+        else
+            %WaitSecs(trigger_delay);
+            send_triggerIO64(fixation_trigger);
+        end 
+    end    
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'fixation'}];

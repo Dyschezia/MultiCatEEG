@@ -24,6 +24,8 @@ switch Experiment.Env.Environment
         eeg_dir = 'D:\cichyLab\#Common\parallel_port';
         addpath(eeg_dir);
         Experiment.Triggers.Address = hex2dec('3FE0');
+        Experiment.Triggers.TriggerDelay = 0.01367;
+        Experiment.Triggers.MultiTriggerDelay = 0.01;
         %addpath('.\iosetup\');
 
         case 'EEG_FU' % RK(19/09/24)
@@ -41,6 +43,9 @@ switch Experiment.Env.Environment
         % Set EEG triggers
         eeg_dir = 'D:\cichyLab\#Common\parallel_port';
         addpath(eeg_dir);
+        Experiment.Triggers.TriggerDelay = 0.011;
+        % how long to wait between several triggers? 
+        Experiment.Triggers.MultiTriggerDelay = 0.01;
         % For eeg only, function is supposed to work only with trigger_num.
         %addpath('.\iosetup\');
 
