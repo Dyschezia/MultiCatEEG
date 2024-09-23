@@ -120,13 +120,14 @@ switch usecase
         % Variables
         session = Experiment.Subject.WhichSession;
         set = Experiment.Subject.WhichSet;
+        first_run = Experiment.Subject.WhichRun;
         nRuns = length(Experiment.Session(session).Set(set).RunShuffled);
         subjectID = Experiment.Subject.ID;
         subjectAge = Experiment.Subject.Age;
         subjectSex = Experiment.Subject.Sex;
         
         idx = 1;
-        for run = 1:nRuns
+        for run = first_run:nRuns
             % RK (18/09/24): switched a few places where the run scheme was
             % called to the use of runTrials... just make sure it doesn't
             % fuck anything. 
