@@ -33,6 +33,16 @@ for run = first_run:nRuns
     DrawFormattedText(Experiment.Display.window, text, 'center', 'center');
     Screen('Flip', Experiment.Display.window);
      
+    %% Setup or drift check eyelink
+    %dummy_mode = 1; % should eyelink connection be initiated? if not, set 1
+    if strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU')
+        if run == first_run
+            Experiment = InitiateEyeTracking(Experiment);
+        else
+            % run only driftcheck? calibrate anyway?
+        end
+    end
+    
     %% Setup the run
         
     % Get trigger and assign it to t0
