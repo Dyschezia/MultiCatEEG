@@ -6,11 +6,12 @@ function Experiment = runExperiment(Experiment)
 %% Data
 session = Experiment.Subject.WhichSession;
 set = Experiment.Subject.WhichSet;
+first_run = Experiment.Subject.WhichRun;
 allRuns = Experiment.Session(session).Set(set).RunShuffled;
 nRuns = length(allRuns);  
 
 %% Loop through runs
-for run = 1:nRuns
+for run = first_run:nRuns
     
     % RK (18/09/24): remove hardcoding 2 sets per ses
     %{
