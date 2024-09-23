@@ -1,7 +1,8 @@
 function Experiment = runExperiment(Experiment)
 % RK (18/09/24) TODO: 
 % 1. Add instruction screen. 
-% 2. Change MRI mentions to EEG :)
+% 2. Add breaks (long break after run, short breaks between runs, or all
+% subject controlled). 
 
 %% Data
 session = Experiment.Subject.WhichSession;
@@ -100,6 +101,7 @@ for run = first_run:nRuns
             
     if Experiment.Log.Exit == 1
         break;
+    end
     % RK(19/09/24) remove waiting till scanner defined duration
     %{
     else
