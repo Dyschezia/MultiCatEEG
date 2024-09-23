@@ -1,19 +1,21 @@
 function Experiment = runExperiment(Experiment)
 % RK (18/09/24) TODO: 
 % 1. Add instruction screen. 
-% 2. Add breaks (long break after run, short breaks between runs, or all
-% subject controlled). 
+% 3. Eyelink things. 
 
 %% Data
 session = Experiment.Subject.WhichSession;
 set = Experiment.Subject.WhichSet;
 first_run = Experiment.Subject.WhichRun;
 allRuns = Experiment.Session(session).Set(set).RunShuffled;
-nRuns = length(allRuns);  
+nRuns = length(allRuns);
+totalRuns = Experiment.Task.SetsN/Experiment.Task.SessionsN*nRuns;
 trialsPerBreak = Experiment.Task.TrialsPerBreak;
 shortBreakDur = Experiment.Task.ShortBreakDur;
 startGap = Experiment.Time.StartGap;
 halfifi = Experiment.Env.HalfIFI;
+
+%% RK (23/09/24) If beginnning of exp, instruction screen
 
 %% Loop through runs
 for run = first_run:nRuns
@@ -27,7 +29,7 @@ for run = first_run:nRuns
     end
     %}
     run_to_display = run + nRuns*(set-1);
-    text = ['Run ' num2str(run_to_display) ' out of 8. Continue when ready.'];
+    text = ['Run ' num2str(run_to_display) ' out of' totalRuns '. Continue when ready.'];
     DrawFormattedText(Experiment.Display.window, text, 'center', 'center');
     Screen('Flip', Experiment.Display.window);
      
@@ -58,8 +60,6 @@ for run = first_run:nRuns
     
     Experiment.Log.StartTime = t0; 
     %Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'mri_start'},NaN,0);
-    
-    % what about instruction screen?
     
     Screen('DrawDots', Experiment.Display.window, [Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY], Experiment.Stim.FixationPixels, Experiment.Stim.FixationColour, [], 2);
     vbl = Screen('Flip', Experiment.Display.window);
@@ -102,7 +102,6 @@ for run = first_run:nRuns
          end
          
         % RK (23/09/24) Offer a break every trialsPerBreak trials:
-        
         if mod(thisTrial, trialsPerBreak) == 0
             % add text on screen saying take a short break
             text = ['Take a short break of ' shortBreakDur '. Press any key to skip'];
@@ -119,7 +118,7 @@ for run = first_run:nRuns
             while GetSecs() < t0 + Experiment.Log.ExpectedTime
                 [keyDown, ~ , ~ , ~ ] = KbCheck();
                 if keyDown
-                    Experiment.Log.ExpectedTime = GetSecs() - t0 + 0.2;
+                    Experiment.Log.ExpectedTime = GetSecs() - t0 + 0.1;
                     break
                 end
             end
@@ -128,17 +127,17 @@ for run = first_run:nRuns
             Screen('DrawDots', Experiment.Display.window, [Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY], Experiment.Stim.FixationPixels, Experiment.Stim.FixationColour, [], 2);
             Screen('DrawingFinished', Experiment.Display.window);
             vbl = Screen('Flip', Experiment.Display.window, t0 + Experiment.Log.ExpectedTime - halfifi);
-            Experiment.Log.timing(end+1,:) = table(session, set, run, NaN, NaN, NaN, {'initial_fixation'},NaN,vbl);
+            Experiment.Log.timing(end+1,:) = table(session, set, run, NaN, NaN, NaN, {'long_fixation'},NaN,vbl);
             Experiment.Log.ExpectedTime = Experiment.Log.ExpectedTime + startGap;
              
         end
         
-         
     end
             
     if Experiment.Log.Exit == 1
         break;
     end
+    
     % RK(19/09/24) remove waiting till scanner defined duration
     %{
     else
@@ -147,6 +146,8 @@ for run = first_run:nRuns
         WaitSecs(wait_time); % Wait until the end of the run (scanner defined)
     end
     %}
+    
+    
 end
 
 % Save the data

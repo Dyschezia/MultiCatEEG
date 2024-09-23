@@ -18,7 +18,6 @@
 % visangle2stimsize.m are correct (run some precalculated values). 
 % 8. Run createResponses.m once with the create section uncommented to
 % create the Y/N images.
-% 9. Add option to set run?
 % 10. Add blinking period. 
 % 11. Handle crashes (make sure eyelink data is saved as well)
 % 12. Handle first trial (through training or in the exp).
