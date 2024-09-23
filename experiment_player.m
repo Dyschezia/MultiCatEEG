@@ -9,7 +9,7 @@
 
 %%
 % RK (18/09/24) TODO: 
-% 4. EEG Triggers, saving. 
+% 4. Check EEG triggers sending works correctly!
 % 5. Eye tracking, saving. 
 %   a. Remember to make background color the same as the exp!
 % 6. In setupEnvironment.m, need to measure sizes and distances in the exp
