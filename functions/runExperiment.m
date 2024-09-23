@@ -47,7 +47,7 @@ for run = first_run:nRuns
     end
     
     %% Setup the run
-        
+    
     % Get trigger and assign it to t0
     fprintf('\n\nPRESS ENTER TO START NEXT RUN\n\n');
      Keys = Experiment.Keys;
@@ -67,8 +67,16 @@ for run = first_run:nRuns
     Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'initial_fixation'},NaN,0);
     Experiment.Log.ExpectedTime = startGap; % Show next object after initial wait
     
-    % Start EDF recording
+    % Draw graphics on the EyeLink Host PC display. See COMMANDS.INI in the Host PC's exe folder for a list of commands
+    Eyelink('SetOfflineMode');% Put tracker in idle/offline mode before drawing Host PC graphics and before recording        
+    Eyelink('Command', 'clear_screen 0'); % Clear Host PC display from any previus drawing
     
+    % Start EDF recording
+    Eyelink('SetOfflineMode'); % this is what the demo is doing, although confusing
+    Eyelink('StartRecording'); % start tracker recording
+    % WaitSecs(0.1) % demo recommends letting the eye tracker collect some
+    % data before first stimulus. However, this should happen during
+    % initial fixation, which is long, so supposed to be ok. 
     
     fprintf(['\nStarting run' num2str(run) '\n']);
         
