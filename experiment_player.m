@@ -10,8 +10,7 @@
 %%
 % RK (18/09/24) TODO: 
 % 4. Check EEG triggers sending works correctly!
-% 5. Eye tracking, saving. 
-%   a. Remember to make background color the same as the exp!
+% 5. Check eye tracking. 
 % 6. In setupEnvironment.m, need to measure sizes and distances in the exp
 % room (measured for eyelink room. Measure other room). 
 % 7. Make sure calculations in visualAngleCalculation.m and
@@ -33,6 +32,8 @@ close all; clearvars; sca;
 % SCREEN
 screennum = max(Screen('Screens')); % Change if needed
 environment = 'home'; % EEG_eyelink_FU, EEG_FU (define), home
+ETing = 0;
+
 %run_duration = 420; % RK(19/09/24) commented. Duration of one run (scanner defined)
 
 % Add directory with functions to Matlab path
@@ -47,11 +48,13 @@ TmpExperiment.Mode.mode = 'test'; % 'test' or 'experiment'
 % For reliable  timing, this should be 0. But on multi-display setup, this
 % may not work. 1 shortens the tests for timing, 2 disables all
 % calibration.
+%{
 if strcmp(TmpExperiment.Mode.mode, 'test')
     Screen('Preference', 'SkipSyncTests', 1); 
 else
     Screen('Preference', 'SkipSyncTests', 0);
 end
+%}
 
 % Set main directory
 TmpExperiment.Paths.MainPath = pwd();
@@ -92,6 +95,7 @@ Experiment.Subject.SubPath = TmpExperiment.Subject.SubPath;
 
 % Add mode
 Experiment.Mode.mode = TmpExperiment.Mode.mode;
+Experiment.Mode.ETing = ETing; %RK 24/09/24
 
 %% --------------------------------------------------------------------
 %                       Subject setup

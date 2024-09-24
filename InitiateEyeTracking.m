@@ -2,8 +2,8 @@ function Experiment = InitiateEyeTracking(Experiment)
 % Should I set screen number to be different than 0?
 
 dummymode = 0;
-EyeLinkInit(dummymode); % initialize eyelink connection
-status = EyeLink('IsConnected');
+EyelinkInit(dummymode); % initialize eyelink connection
+status = Eyelink('IsConnected');
 if status < 1 % If EyeLink not connected
     dummymode = 1;
 end
@@ -28,7 +28,7 @@ if length(edfFile) > 8
 end
 
 % Open and name an EDF file
-failOpen = EyeLink('OpenFile', edfFile);
+failOpen = Eyelink('OpenFile', edfFile);
 if failOpen ~= 0 % abort if failed to open
     fprintf('Could not create EDF file %s', edfFile);
     error('Could not create EDF file %s', edfFile);
@@ -89,7 +89,7 @@ Eyelink('Command', 'calibration_type = HV13'); % horizontal-vertical 13-points
 
 % Start listening for keyboard input. Suppress keypresses to Matlab windows.
 % Is screen 0 the correct screen?
-ListenChar(-1);
+%ListenChar(-1);
 % Which screen does the next command clean?
 Eyelink('Command', 'clear_screen 0'); % Clear Host PC display from any previus drawing
 % Put EyeLink Host PC in Camera Setup mode for participant setup/calibration

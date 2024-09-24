@@ -30,13 +30,13 @@ for run = first_run:nRuns
     end
     %}
     run_to_display = run + nRuns*(set-1);
-    text = ['Run ' num2str(run_to_display) ' out of' totalRuns '. Continue when ready.'];
+    text = ['Run ' num2str(run_to_display) ' out of' num2str(totalRuns) '. Continue when ready.'];
     DrawFormattedText(Experiment.Display.window, text, 'center', 'center');
     Screen('Flip', Experiment.Display.window);
      
     %% Setup or drift check eyelink
     %dummy_mode = 1; % should eyelink connection be initiated? if not, set 1
-    if strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU')
+    if strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') && Experiment.Mode.ETing == 1
         if run == first_run
             % open EDF file, setup calibration settings, and calibrate
             Experiment = InitiateEyeTracking(Experiment);
@@ -129,8 +129,10 @@ for run = first_run:nRuns
             end
             
             % Run a drift check 
-            EyelinkDoDriftCorrection(Experiment.Eyetracking.el, Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY);
-            Experiment.Log.ExpectedTime = GetSecs() - t0 + 0.1;
+            if strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') && Experiment.Mode.ETing == 1
+                EyelinkDoDriftCorrection(Experiment.Eyetracking.el, Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY);
+                Experiment.Log.ExpectedTime = GetSecs() - t0 + 0.1;
+            end
             
             % Add a longer fixation to make sure subjects is fixating
             Screen('DrawDots', Experiment.Display.window, [Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY], Experiment.Stim.FixationPixels, Experiment.Stim.FixationColour, [], 2);
@@ -160,26 +162,29 @@ for run = first_run:nRuns
 end
 
 % RK (24/09/24) Save eyetracking data
-Eyelink('SetOfflineMode'); % Put tracker in idle/offline mode
-%Eyelink('Command', 'clear_screen 0'); % Clear Host PC backdrop graphics at the end of the experiment
-WaitSecs(0.5); % Allow some time before closing and transferring file
-Eyelink('CloseFile'); % Close EDF file on Host PC
-
-if ~Experiment.Eyetracking.dummymode
-    try    
-        % Transfer a copy of the EDF file to Display PC
-        status = Eyelink('ReceiveFile');
-        % Check if EDF file has been transferred successfully and print file size in Matlab's Command Window
-        if status > 0
-            fprintf('EDF file size: %.1f KB\n', status/1024); % Divide file size by 1024 to convert bytes to KB
-        end 
-    catch % Catch a file-transfer error and print some text in Matlab's Command Window
-        fprintf('Problem receiving data file ''%s''\n', edfFile);
-        psychrethrow(psychlasterror);
-    end    
-else
+if strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') && Experiment.Mode.ETing == 1
+    Eyelink('SetOfflineMode'); % Put tracker in idle/offline mode
+    %Eyelink('Command', 'clear_screen 0'); % Clear Host PC backdrop graphics at the end of the experiment
+    WaitSecs(0.5); % Allow some time before closing and transferring file
+    Eyelink('CloseFile'); % Close EDF file on Host PC
+    
+    if ~Experiment.Eyetracking.dummymode 
+        try    
+            % Transfer a copy of the EDF file to Display PC
+            status = Eyelink('ReceiveFile');
+            % Check if EDF file has been transferred successfully and print file size in Matlab's Command Window
+            if status > 0
+                fprintf('EDF file size: %.1f KB\n', status/1024); % Divide file size by 1024 to convert bytes to KB
+            end 
+        catch % Catch a file-transfer error and print some text in Matlab's Command Window
+            fprintf('Problem receiving data file ''%s''\n', edfFile);
+            psychrethrow(psychlasterror);
+        end    
+    else
     fprintf('No EDF file saved in Dummy mode\n');    
-end
+    end
+end 
+
 
 % Save behavioral data
 Experiment = saveLog(Experiment, 'add_features');
