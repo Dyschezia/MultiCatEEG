@@ -111,21 +111,26 @@ if isCatch
     if catchType == 1 % YES trial - In this case, probe should be drawn from the stimulus array
         if isSingle
             texturePointersPrompt = texturePointers;
+            % RK 24/09/24 save probe identity
+            Experiment.Log.CatchProbeIdx = image;
         else
             texturePointersPrompt = texturePointers(randi(length(texturePointers)));
+            % RK 24/09/24 save probe identity. This is very crude but
+            % supposed to work. 
+            Experiment.Log.CatchProbeIdx = thisTrialStimArray;
         end
     elseif catchType == 2 % NO trial - a category not in stimulus array
         arrayCat =  imageData.imageCategory(ismember(imageData.imageIndex, thisTrialStimArray')); % Categories in the array
         allOther = imageData.imageIndex(~ismember(imageData.imageCategory, arrayCat')); % Indices of images of not those categories
         prompt = allOther(randi(length(allOther)));
         texturePointersPrompt = imageData.textureIndex(imageData.imageIndex==prompt);
+        % RK(19/09/24): Save probe identity
+        Experiment.Log.CatchProbeIdx = prompt;
     else
         error('CatchType is neither 1 (YES) nor 2 (NO) - something is wrong. Check your trial structure.')
     end
     
-    % RK(19/09/24): Save probe identity
-    %Experiment.Log.log.CatchProbeIdx(idx) = prompt;
-    Experiment.Log.CatchProbeIdx = prompt;
+    
     
     % Add yes/no
     texYes = Experiment.Images.ResponseData.textureIndex( Experiment.Images.ResponseData.imageName=="Y");
