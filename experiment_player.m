@@ -198,4 +198,8 @@ end
 % end
 
 %% Close window
+% RK (24/09/24)
+Eyelink('Shutdown'); % Close EyeLink connection
+ListenChar(0); % Restore keyboard output to Matlab
+ShowCursor; % Restore mouse cursor
 sca;
