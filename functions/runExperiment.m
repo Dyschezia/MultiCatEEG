@@ -159,6 +159,28 @@ for run = first_run:nRuns
     
 end
 
-% Save the data
+% RK (24/09/24) Save eyetracking data
+Eyelink('SetOfflineMode'); % Put tracker in idle/offline mode
+%Eyelink('Command', 'clear_screen 0'); % Clear Host PC backdrop graphics at the end of the experiment
+WaitSecs(0.5); % Allow some time before closing and transferring file
+Eyelink('CloseFile'); % Close EDF file on Host PC
+
+if ~Experiment.Eyetracking.dummymode
+    try    
+        % Transfer a copy of the EDF file to Display PC
+        status = Eyelink('ReceiveFile');
+        % Check if EDF file has been transferred successfully and print file size in Matlab's Command Window
+        if status > 0
+            fprintf('EDF file size: %.1f KB\n', status/1024); % Divide file size by 1024 to convert bytes to KB
+        end 
+    catch % Catch a file-transfer error and print some text in Matlab's Command Window
+        fprintf('Problem receiving data file ''%s''\n', edfFile);
+        psychrethrow(psychlasterror);
+    end    
+else
+    fprintf('No EDF file saved in Dummy mode\n');    
+end
+
+% Save behavioral data
 Experiment = saveLog(Experiment, 'add_features');
 Experiment = saveLog(Experiment, 'save_log');

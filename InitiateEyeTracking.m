@@ -73,6 +73,7 @@ end
 EyelinkUpdateDefaults(el);
 
 Experiment.Eyetracking.el = el;
+Experiment.Eyetracking.dummymode = dummymode;
 
 %% Calibrate 
 % Set display coordinates for EyeLink data by entering left, top, right and bottom coordinates in screen pixels
