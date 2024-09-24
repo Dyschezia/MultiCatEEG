@@ -203,7 +203,9 @@ end
 
 %% Close window
 % RK (24/09/24)
-Eyelink('Shutdown'); % Close EyeLink connection
-ListenChar(0); % Restore keyboard output to Matlab
-ShowCursor; % Restore mouse cursor
+if strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') && Experiment.Mode.ETing == 1
+    Eyelink('Shutdown'); % Close EyeLink connection
+    ListenChar(0); % Restore keyboard output to Matlab
+    ShowCursor; % Restore mouse cursor
+end
 sca;
