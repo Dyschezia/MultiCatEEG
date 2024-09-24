@@ -2,6 +2,7 @@ function Experiment = runExperiment(Experiment)
 % RK (18/09/24) TODO: 
 % 1. Add instruction screen. 
 % 3. Eyelink things. 
+%   a. After short break - drift check. After long break - recalibration.
 
 %% Data
 session = Experiment.Subject.WhichSession;
@@ -40,9 +41,7 @@ for run = first_run:nRuns
             % open EDF file, setup calibration settings, and calibrate
             Experiment = InitiateEyeTracking(Experiment);
         else
-            % run drift check. Need to press space. Does this depend on
-            % setting a key during initation?
-            EyelinkDoDriftCorrection(Experiment.Eyetracking.el, Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY);
+            EyelinkDoTrackerSetup(Experiment.Eyetracking.el);            
         end
     end
     
@@ -68,8 +67,9 @@ for run = first_run:nRuns
     Experiment.Log.ExpectedTime = startGap; % Show next object after initial wait
     
     % Draw graphics on the EyeLink Host PC display. See COMMANDS.INI in the Host PC's exe folder for a list of commands
-    Eyelink('SetOfflineMode');% Put tracker in idle/offline mode before drawing Host PC graphics and before recording        
-    Eyelink('Command', 'clear_screen 0'); % Clear Host PC display from any previus drawing
+    % check what this does. 
+    %Eyelink('SetOfflineMode');% Put tracker in idle/offline mode before drawing Host PC graphics and before recording        
+    %Eyelink('Command', 'clear_screen 0'); % Clear Host PC display from any previus drawing
     
     % Start EDF recording
     Eyelink('SetOfflineMode'); % this is what the demo is doing, although confusing
@@ -134,6 +134,10 @@ for run = first_run:nRuns
                     break
                 end
             end
+            
+            % Run a drift check 
+            EyelinkDoDriftCorrection(Experiment.Eyetracking.el, Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY);
+            Experiment.Log.ExpectedTime = GetSecs() - t0 + 0.1;
             
             % Add a longer fixation to make sure subjects is fixating
             Screen('DrawDots', Experiment.Display.window, [Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY], Experiment.Stim.FixationPixels, Experiment.Stim.FixationColour, [], 2);

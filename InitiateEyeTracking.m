@@ -1,4 +1,6 @@
 function Experiment = InitiateEyeTracking(Experiment)
+% Should I set screen number to be different than 0?
+
 dummymode = 0;
 EyeLinkInit(dummymode); % initialize eyelink connection
 status = EyeLink('IsConnected');
@@ -63,6 +65,9 @@ el.msgfontcolour = [0 0 0];% RGB black
 % Set calibration beeps (0 = sound off, 1 = sound on)
 el.targetbeep = 1;  % sound a beep when a target is presented
 el.feedbackbeep = 1;  % sound a beep after calibration or drift check/correction
+if el.targetbeep || el.feedbackbeep
+    InitializePsychSound();
+end
 
 % You must call this function to apply the changes made to the el structure above
 EyelinkUpdateDefaults(el);
@@ -84,6 +89,7 @@ Eyelink('Command', 'calibration_type = HV13'); % horizontal-vertical 13-points
 % Start listening for keyboard input. Suppress keypresses to Matlab windows.
 % Is screen 0 the correct screen?
 ListenChar(-1);
+% Which screen does the next command clean?
 Eyelink('Command', 'clear_screen 0'); % Clear Host PC display from any previus drawing
 % Put EyeLink Host PC in Camera Setup mode for participant setup/calibration
 EyelinkDoTrackerSetup(el);
