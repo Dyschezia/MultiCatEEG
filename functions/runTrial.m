@@ -114,10 +114,11 @@ if isCatch
             % RK 24/09/24 save probe identity
             Experiment.Log.CatchProbeIdx = image;
         else
-            texturePointersPrompt = texturePointers(randi(length(texturePointers)));
+            probe_idx = randi(length(texturePointers));
+            texturePointersPrompt = texturePointers(probe_idx);
             % RK 24/09/24 save probe identity. This is very crude but
             % supposed to work. 
-            Experiment.Log.CatchProbeIdx = thisTrialStimArray;
+            Experiment.Log.CatchProbeIdx = probe_idx;
         end
     elseif catchType == 2 % NO trial - a category not in stimulus array
         arrayCat =  imageData.imageCategory(ismember(imageData.imageIndex, thisTrialStimArray')); % Categories in the array
