@@ -346,14 +346,18 @@ else % If it is a catch trial
      keysOfInterest([responseLeft responseRight]) = 1;
      KbQueueCreate([],keysOfInterest);
      KbQueueStart([]);
-     [pressTime, key] = KbQueueWait([]); 
+     while 1
+        [pressed, firstPress]=KbQueueCheck([]);
+        if pressed
+            key = min(find(firstPress));
+            break
+        end
+     end
+     
+    
      KbQueueStop([]);
      KbQueueFlush([]);
     
-    
-    % Save RT
-    rt = secs - begin_response;
-    rt_resolution = deltaSecs;
 
     if key == responseLeft
         response = "left";
