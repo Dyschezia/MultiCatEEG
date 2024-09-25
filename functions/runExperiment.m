@@ -27,11 +27,7 @@ for run = first_run:nRuns
         run_to_display = run + 4;
     end
     %}
-    run_to_display = run + nRuns*(set-1);
-    text = ['Run ' num2str(run_to_display) ' out of ' num2str(totalRuns) '. Continue when ready.'];
-    DrawFormattedText(Experiment.Display.window, text, 'center', 'center');
-    Screen('Flip', Experiment.Display.window);
-     
+    
     %% Setup or drift check eyelink
     %dummy_mode = 1; % should eyelink connection be initiated? if not, set 1
     if strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') && Experiment.Mode.ETing == 1
@@ -42,6 +38,33 @@ for run = first_run:nRuns
             EyelinkDoTrackerSetup(Experiment.Eyetracking.el);            
         end
     end
+    
+    % RK 25/09/24 If first run, show instructions
+    if run == 1
+        instructions = ['Welcome. In this experiment you will view arrays made of one or four objects, which will appear for short durations.' ... 
+            '\n Please try to identify the objects presented, as on some trials you will be asked to decide whether a shown image had appeared in the preceding array.' ... 
+            '\n Importantly, please continue to fixate on the fixation point at the middle of the screen throughout the experiment.' ...
+            '\n Try to blink only when you are asked about an object, or when only a fixation is shown.' ... 
+            '\n \n \n If you have understood the instructions, please press ENTER'];
+        DrawFormattedText(Experiment.Display.window, instructions, 'center', 'center');
+        Screen('Flip', Experiment.Display.window);
+        
+        % Wait for response 
+         Keys = Experiment.Keys;
+         keysOfInterest = zeros(1,256);
+         keysOfInterest(Keys.ControlKeys) = 1;
+         KbQueueCreate([],keysOfInterest);
+         KbQueueStart([]);
+         press = KbQueueWait([]); 
+         KbQueueStop([]);
+         KbQueueFlush([]);
+    end
+    
+    run_to_display = run + nRuns*(set-1);
+    text = ['Run ' num2str(run_to_display) ' out of ' num2str(totalRuns) '. Continue when ready.'];
+    DrawFormattedText(Experiment.Display.window, text, 'center', 'center');
+    Screen('Flip', Experiment.Display.window);
+     
     
     %% Setup the run
     
@@ -105,7 +128,7 @@ for run = first_run:nRuns
          end
          
         % RK (23/09/24) Offer a break every trialsPerBreak trials:
-        if mod(thisTrial, trialsPerBreak) == 0
+        if mod(thisTrial, trialsPerBreak) == 0 && thisTrial ~= 350
             % add text on screen saying take a short break
             text = ['Take a short break of ' num2str(shortBreakDur) ' seconds. Press any key to skip'];
             DrawFormattedText(Experiment.Display.window, text, 'center', 'center');

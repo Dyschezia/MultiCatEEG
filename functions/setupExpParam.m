@@ -94,8 +94,8 @@ Experiment.Time.CatchIti1 = 0.7;
 %Experiment.Time.CatchIti2 = 1.0;
 
 % ITI
-Experiment.Time.ItiMean = 0.7; % Mean ITI in seconds
-Experiment.Time.ItiRange = [0.6, 0.8]; % Range in which ITI varies
+Experiment.Time.ItiMean = 0.8; % Mean ITI in seconds
+Experiment.Time.ItiRange = [0.7, 0.9]; % Range in which ITI varies
 Experiment.Time.ItiIncrement = 0.05; % Increment of ITI values
 Experiment.Time.StartGap = 2.0; % Wait before the start of the first trial of the run
 Experiment.Time.StopGap = 2.0; % Wait after thelast trial of the run

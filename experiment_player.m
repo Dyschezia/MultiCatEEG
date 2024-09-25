@@ -151,7 +151,13 @@ Priority(MaxPriority(window));
 % Set up and measure display parameters
 Experiment = setupEnvironment(Experiment);
 
-% Convert visual angle to pixels and cm.
+
+
+
+
+
+
+
 Experiment = visualAngleCalculation(Experiment);
 
 %% Load the images to vRAM
@@ -161,7 +167,11 @@ Experiment = loadImagesAsTextures(Experiment);
 %% Create responses
 Experiment = createResponses(Experiment);
 
-%% Define locations for images in the array
+%% Define locations for images in the 
+     
+
+
+
 Experiment = setupLocations(Experiment);
 
 %% The log files for two sets are stored separately
