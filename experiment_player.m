@@ -17,16 +17,14 @@
 % visangle2stimsize.m are correct (run some precalculated values). 
 % 8. Run createResponses.m once with the create section uncommented to
 % create the Y/N images.
-% 10. Add blinking period. 
 % 11. Handle crashes (make sure eyelink data is saved as well)
 % 12. Handle first trial (through training or in the exp).
 
 % - either make response in probe be longer so they have time to blink, or
 % make it self paces
 % - training
-% - instructions
 % - trigger length 
-% - add bonus for performance
+% - reward for performance! but maybe after the initial 3 subjects?
 
 % - check timing 
 % - translate instructions
@@ -151,13 +149,7 @@ Priority(MaxPriority(window));
 % Set up and measure display parameters
 Experiment = setupEnvironment(Experiment);
 
-
-
-
-
-
-
-
+% Convert visual angle to pixels and cm.
 Experiment = visualAngleCalculation(Experiment);
 
 %% Load the images to vRAM
@@ -167,11 +159,7 @@ Experiment = loadImagesAsTextures(Experiment);
 %% Create responses
 Experiment = createResponses(Experiment);
 
-%% Define locations for images in the 
-     
-
-
-
+%% Define locations for images in the array
 Experiment = setupLocations(Experiment);
 
 %% The log files for two sets are stored separately

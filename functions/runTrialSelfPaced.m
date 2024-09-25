@@ -1,6 +1,5 @@
-function Experiment = runTrial(Experiment)
+function Experiment = runTrialSelfPaced(Experiment)
 % RK(19/09/24) TODO:
-% 1. EEG triggers. 
 % 2. RT is not being saved. 
 % 3. EDIT SEND TRIGGER TO WAIT LESS TIME 
 % Currently not adding trigger delay because it can just be added later. 
@@ -9,6 +8,9 @@ function Experiment = runTrial(Experiment)
 % 350 trials per run, this takes the form of 1 - set,run,hundreds -
 % tens,ones. For example, trial 251 in run 3 set 2 will be 1 - 232 - 51.
 % This cannot accomodate paradigms with more than 999 trials per run. 
+
+% In this version of the function, the probe screen is not timed, and
+% instead is self-paced by the subject.
 
 % Toggle to save clips of experiment for reporting/schematic figures
 saveExpImages = 0;
@@ -338,84 +340,75 @@ else % If it is a catch trial
     end
     
     % Collect the response
-    begin_response = GetSecs();
-    end_response = begin_response +  Experiment.Time.RespWait;
-    response = [];
-    keyDown = 0;
+    % RK 25/09/24 response is not timed but self paced. 
+    Keys = Experiment.Keys;
+     keysOfInterest = zeros(1,256);
+     keysOfInterest([responseLeft responseRight]) = 1;
+     KbQueueCreate([],keysOfInterest);
+     KbQueueStart([]);
+     [pressTime, key] = KbQueueWait([]); 
+     KbQueueStop([]);
+     KbQueueFlush([]);
     
-    RestrictKeysForKbCheck([Experiment.Keys.LeftResponse, Experiment.Keys.RightResponse, Experiment.Keys.EscKey]);
-    while GetSecs() < end_response 
-        [keyDown, secs, keyCode, deltaSecs] = KbCheck();
-        if keyDown 
-            key=find(keyCode);
-            break;
-        end
-    end
     
-    if keyDown
-        % Save RT
-        rt = secs - begin_response;
-        rt_resolution = deltaSecs;
-        
-        if key == responseLeft
-            response = "left";
-            resprect = destinationRectsPrompt(:,2);
-        elseif key == responseRight
-            response = "right";
-            resprect = destinationRectsPrompt(:,3);
-        elseif key == escKey
-            Experiment.Log.Exit = 1;
-            return;
-        end
-        
-        % Draw register rectangle
-        Screen('DrawDots', myWin, screenCenter, fixRadius,  fixColor, [], 2); % Fixation
-        Screen('DrawTextures', myWin, texturePointersPrompt, [], destinationRectsPrompt); % Prompt screen
-        Screen('FrameRect', myWin, feedbackRegister, resprect, 4);
-        Screen('DrawingFinished', myWin);
-        vbl = Screen('Flip', myWin);
-        % RK (23/09/24)
-        if send_eeg_triggers
-            if eyetracking
-                %WaitSecs(trigger_delay);
-                send_triggerIO64(trigger_address, response_trigger);
-                if Experiment.Mode.ETing == 1
-                    % RK (24/09/24)
-                    Eyelink('Message', 'RESPONSE');
-                end
-            else
-                %WaitSecs(trigger_delay);
-                send_triggerIO64(response_trigger);
-            end 
-        end    
-        timeRealFlip = [timeRealFlip,  vbl - startTime];
-        timeExpectedFlip = [timeExpectedFlip, NaN];
-        whichObject = [whichObject, {'response'}];
+    % Save RT
+    rt = secs - begin_response;
+    rt_resolution = deltaSecs;
+
+    if key == responseLeft
+        response = "left";
+        resprect = destinationRectsPrompt(:,2);
+    elseif key == responseRight
+        response = "right";
+        resprect = destinationRectsPrompt(:,3);
+    elseif key == escKey
+        Experiment.Log.Exit = 1;
+        return;
     end
+
+    % Draw register rectangle
+    Screen('DrawDots', myWin, screenCenter, fixRadius,  fixColor, [], 2); % Fixation
+    Screen('DrawTextures', myWin, texturePointersPrompt, [], destinationRectsPrompt); % Prompt screen
+    Screen('FrameRect', myWin, feedbackRegister, resprect, 4);
+    Screen('DrawingFinished', myWin);
+    vbl = Screen('Flip', myWin);
+    % RK (23/09/24)
+    if send_eeg_triggers
+        if eyetracking
+            %WaitSecs(trigger_delay);
+            send_triggerIO64(trigger_address, response_trigger);
+            if Experiment.Mode.ETing == 1
+                % RK (24/09/24)
+                Eyelink('Message', 'RESPONSE');
+            end
+        else
+            %WaitSecs(trigger_delay);
+            send_triggerIO64(response_trigger);
+        end 
+    end    
+    expectedTime = GetSecs() - startTime + 0.1;
+    timeRealFlip = [timeRealFlip,  vbl - startTime];
+    timeExpectedFlip = [timeExpectedFlip, NaN];
+    whichObject = [whichObject, {'response'}];
+
             
     % Feedback
-    if isempty(response) % Change the fixation color if there's no response
-        Screen('DrawDots', myWin, screenCenter, fixRadius,  feedbackFixation, [], 2);
-        Screen('DrawingFinished', myWin);
-        vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi); % After response time is out show feedback
-        expectedTime = expectedTime + feedbackTime;
+    if strcmp(correct_response, response) 
+        feedback_color = feedbackCorrect; % If the response is correct
     else 
-        if strcmp(correct_response, response) 
-            feedback_color = feedbackCorrect; % If the response is correct
-        else 
-            feedback_color = feedbackWrong; % If the response is wrong
-        end
-          
-        Screen('DrawDots', myWin, screenCenter, fixRadius,  fixColor, [], 2); % Fixation
-        Screen('DrawTextures', myWin, texturePointersPrompt, [], destinationRectsPrompt); % Prompt screen
-        Screen('FrameRect', myWin, feedback_color, resprect, 4);
-        Screen('DrawingFinished', myWin);
-        vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi); % After response time is out show feedback
-        timeRealFlip = [timeRealFlip,  vbl - startTime];
-        timeExpectedFlip = [timeExpectedFlip, NaN];
-        whichObject = [whichObject, {'feedback'}];
-        expectedTime = expectedTime + feedbackTime;
+        feedback_color = feedbackWrong; % If the response is wrong
     end
+
+    Screen('DrawDots', myWin, screenCenter, fixRadius,  fixColor, [], 2); % Fixation
+    Screen('DrawTextures', myWin, texturePointersPrompt, [], destinationRectsPrompt); % Prompt screen
+    Screen('FrameRect', myWin, feedback_color, resprect, 4);
+    Screen('DrawingFinished', myWin);
+    vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi); % After response time is out show feedback
+    timeRealFlip = [timeRealFlip,  vbl - startTime];
+    timeExpectedFlip = [timeExpectedFlip, NaN];
+    whichObject = [whichObject, {'feedback'}];
+    expectedTime = expectedTime + feedbackTime;
+    
     
     if saveExpImages
         img = Screen('GetImage', myWin);
