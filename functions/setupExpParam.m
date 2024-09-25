@@ -88,7 +88,7 @@ Experiment.Task.LocalizerCatchN = 5; % Total N of catch trials durung one loc ru
 Experiment.Time.StimExpTime = 0.250;  % Stimulus array exposure time [s]
 
 % Response
-Experiment.Time.RespWait = 3.0; % How long to allow for the response
+Experiment.Time.RespWait = 2.0; % How long to allow for the response
 Experiment.Time.FeedbackGap = 0.5; % Gap after feedback
 Experiment.Time.CatchIti1 = 0.7;
 %Experiment.Time.CatchIti2 = 1.0;
