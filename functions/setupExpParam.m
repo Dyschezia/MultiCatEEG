@@ -99,11 +99,7 @@ Experiment.Time.ItiRange = [0.6, 0.8]; % Range in which ITI varies
 Experiment.Time.ItiIncrement = 0.05; % Increment of ITI values
 Experiment.Time.StartGap = 2.0; % Wait before the start of the first trial of the run
 Experiment.Time.StopGap = 2.0; % Wait after thelast trial of the run
-
-% Localizer
-Experiment.Time.LocalizerStimOn = 0.5; % Stimulus on during localizer
-Experiment.Time.LocalizerStimOff = 0.3; % Stimulus off during localizer
-Experiment.Time.LocalizerStopGap = 6; % How many seconds we wait in thee baseline gap
+Experiment.Time.AfterProbeGap = 0.7; % Have an x seconds longer fixation after probe trial? 
 
 
 %% RK (20/09/24) EEG Triggers 

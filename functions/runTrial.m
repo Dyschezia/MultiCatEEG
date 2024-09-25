@@ -178,6 +178,7 @@ initialGap = Experiment.Time.StartGap;
 itiGap =  thisRun.ITIs(trial);
 itiCatch1 = Experiment.Time.CatchIti1;
 %itiCatch2 = Experiment.Time.CatchIti2;
+probeITI = Experiment.Time.AfterProbeGap;
 halfifi = Experiment.Env.HalfIFI;
 stimExpTime = Experiment.Time.StimExpTime;
 respTime = Experiment.Time.RespWait;
@@ -440,10 +441,10 @@ else % If it is a catch trial
             send_triggerIO64(fixation_trigger);
         end 
     end    
-    timeRealFlip = [timeRealFlip,  vbl - startTime];
+    timeRealFlip = [timeRealFlip, vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'fixation'}];
-    expectedTime = expectedTime + itiGap; % Wait for first part of the catch gap
+    expectedTime = expectedTime + itiGap + probeITI; % Wait for first part of the catch gap
            
 end
 
