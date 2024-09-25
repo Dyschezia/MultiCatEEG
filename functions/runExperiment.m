@@ -1,8 +1,6 @@
 function Experiment = runExperiment(Experiment)
 % RK (18/09/24) TODO: 
 % 1. Add instruction screen. 
-% 3. Eyelink things. 
-%   a. After short break - drift check. After long break - recalibration.
 
 %% Data
 session = Experiment.Subject.WhichSession;

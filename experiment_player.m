@@ -26,6 +26,7 @@
 % - training
 % - instructions
 % - trigger length 
+% - add bonus for performance
 
 % - check timing 
 % - translate instructions
