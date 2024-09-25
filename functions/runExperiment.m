@@ -30,7 +30,7 @@ for run = first_run:nRuns
     end
     %}
     run_to_display = run + nRuns*(set-1);
-    text = ['Run ' num2str(run_to_display) ' out of' num2str(totalRuns) '. Continue when ready.'];
+    text = ['Run ' num2str(run_to_display) ' out of ' num2str(totalRuns) '. Continue when ready.'];
     DrawFormattedText(Experiment.Display.window, text, 'center', 'center');
     Screen('Flip', Experiment.Display.window);
      
@@ -109,7 +109,7 @@ for run = first_run:nRuns
         % RK (23/09/24) Offer a break every trialsPerBreak trials:
         if mod(thisTrial, trialsPerBreak) == 0
             % add text on screen saying take a short break
-            text = ['Take a short break of ' shortBreakDur '. Press any key to skip'];
+            text = ['Take a short break of ' num2str(shortBreakDur) ' seconds. Press any key to skip'];
             DrawFormattedText(Experiment.Display.window, text, 'center', 'center');
             Screen('DrawingFinished', Experiment.Display.window);
             vbl = Screen('Flip', Experiment.Display.window, t0 + Experiment.Log.ExpectedTime - halfifi);
@@ -125,6 +125,12 @@ for run = first_run:nRuns
                 if keyDown
                     Experiment.Log.ExpectedTime = GetSecs() - t0 + 0.1;
                     break
+                else
+                    text = ['Take a short break of ' num2str(floor(Experiment.Log.ExpectedTime - GetSecs())) ' seconds. Press any key to skip'];
+                    DrawFormattedText(Experiment.Display.window, text, 'center', 'center');
+                    Screen('DrawingFinished', Experiment.Display.window);
+                    vbl = Screen('Flip', Experiment.Display.window);
+                    WaitSecs(0.2);
                 end
             end
             

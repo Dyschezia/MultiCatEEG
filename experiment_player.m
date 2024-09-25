@@ -21,6 +21,21 @@
 % 11. Handle crashes (make sure eyelink data is saved as well)
 % 12. Handle first trial (through training or in the exp).
 
+% - time to blink
+% - longer fixation after probe trial
+% - longer short break or after less trials? 
+% - or longer ITI (especially if not reporting confidence)
+% - show timer going down during short break
+% - make response in probe be longer so they have time to blink
+% - probe self paced?
+% - training
+% - instructions
+% - trigger length 
+
+
+% - check timing 
+% - translate instructions
+
 % Don't forget to set sync to 0 and mode to exp before running!!!
 
 %% ----------------------------------------------------------------------
