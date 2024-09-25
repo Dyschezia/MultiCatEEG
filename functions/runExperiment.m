@@ -112,7 +112,7 @@ for run = first_run:nRuns
         
         % Run the trial
         Experiment.Log.CurrentTrial = thisTrial;
-        Experiment = runTrial(Experiment);
+        Experiment = runTrialSelfPaced(Experiment);
 
         fprintf(repmat('\b',1,output))
         output=fprintf('run %d/%d - trial: %d ', run, nRuns, thisTrial);
