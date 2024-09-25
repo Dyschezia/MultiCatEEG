@@ -120,13 +120,13 @@ for run = first_run:nRuns
             
             % Check if a key is pressed until the end of the break
             keyDown = 0;
-            while GetSecs() < t0 + Experiment.Log.ExpectedTime
+            while GetSecs() < t0 + Experiment.Log.ExpectedTime - 0.1
                 [keyDown, ~ , ~ , ~ ] = KbCheck();
                 if keyDown
                     Experiment.Log.ExpectedTime = GetSecs() - t0 + 0.1;
                     break
                 else
-                    text = ['Take a short break of ' num2str(floor(Experiment.Log.ExpectedTime - GetSecs())) ' seconds. Press any key to skip'];
+                    text = ['Take a short break of ' num2str(floor(t0 + Experiment.Log.ExpectedTime - GetSecs())) ' seconds. Press any key to skip'];
                     DrawFormattedText(Experiment.Display.window, text, 'center', 'center');
                     Screen('DrawingFinished', Experiment.Display.window);
                     vbl = Screen('Flip', Experiment.Display.window);
