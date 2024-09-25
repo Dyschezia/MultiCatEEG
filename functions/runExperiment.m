@@ -128,7 +128,7 @@ for run = first_run:nRuns
          end
          
         % RK (23/09/24) Offer a break every trialsPerBreak trials:
-        if mod(thisTrial, trialsPerBreak) == 0 && thisTrial ~= 350
+        if mod(thisTrial, trialsPerBreak) == 0 && thisTrial ~= trialsN
             % add text on screen saying take a short break
             text = ['Take a short break of ' num2str(shortBreakDur) ' seconds. Press any key to skip'];
             DrawFormattedText(Experiment.Display.window, text, 'center', 'center');
