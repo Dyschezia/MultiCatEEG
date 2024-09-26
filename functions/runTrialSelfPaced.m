@@ -173,17 +173,17 @@ fixColor = Experiment.Stim.FixationColour;
 feedbackCorrect = [0, 255, 0]; %[0 0.9 0.1] .* 
 feedbackWrong = [255, 0, 0]; %[0.9 0.1 0] .* 
 feedbackRegister =  [255, 255, 255]; %[0.2 0.2 0.2] .* % Color to register response
-feedbackFixation =[255, 255, 255]; % [0.7 0.2 0.3] .* 
+%feedbackFixation =[255, 255, 255]; % [0.7 0.2 0.3] .* 
     
 % Timing
-initialGap = Experiment.Time.StartGap;
+%initialGap = Experiment.Time.StartGap;
 itiGap =  thisRun.ITIs(trial);
 itiCatch1 = Experiment.Time.CatchIti1;
 %itiCatch2 = Experiment.Time.CatchIti2;
 probeITI = Experiment.Time.AfterProbeGap;
 halfifi = Experiment.Env.HalfIFI;
 stimExpTime = Experiment.Time.StimExpTime;
-respTime = Experiment.Time.RespWait;
+%respTime = Experiment.Time.RespWait;
 feedbackTime = Experiment.Time.FeedbackGap;
 
 % Response keys
@@ -333,7 +333,7 @@ else % If it is a catch trial
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'promptScreen'}];
-    expectedTime = expectedTime + respTime;
+    %expectedTime = expectedTime + respTime;
     if saveExpImages
         img = Screen('GetImage', myWin);
         imwrite(img, 'promptScreen.png', 'PNG');
@@ -341,7 +341,7 @@ else % If it is a catch trial
     
     % Collect the response
     % RK 25/09/24 response is not timed but self paced. 
-    Keys = Experiment.Keys;
+    %Keys = Experiment.Keys;
      keysOfInterest = zeros(1,256);
      keysOfInterest([responseLeft responseRight]) = 1;
      KbQueueCreate([],keysOfInterest);
