@@ -49,6 +49,7 @@ ETing = 0;
 
 % Add directory with functions to Matlab path
 addpath(genpath('functions')); 
+addpath(genpath('eeg trigger functions')); 
 
 % Main path
 TmpExperiment = struct();
