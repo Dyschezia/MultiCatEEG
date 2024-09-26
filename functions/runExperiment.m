@@ -11,8 +11,6 @@ shortBreakDur = Experiment.Task.ShortBreakDur;
 startGap = Experiment.Time.StartGap;
 halfifi = Experiment.Env.HalfIFI;
 
-%% RK (23/09/24) If beginnning of exp, instruction screen
-
 %% Loop through runs
 for run = first_run:nRuns
     
@@ -176,7 +174,9 @@ for run = first_run:nRuns
         break;
     end
     
-    % RK(19/09/24) remove waiting till scanner defined duration
+    % RK(19/09/24) remove waiting till scanner defined duration. Just wait
+    % a short duration to let everything run. 
+    WaitSecs(2);
     %{
     else
         last_event = thisRun.TimingLog.TimingExpected.timing(end-1);
