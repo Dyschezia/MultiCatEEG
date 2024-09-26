@@ -176,7 +176,7 @@ for run = first_run:nRuns
     
     % RK(19/09/24) remove waiting till scanner defined duration. Just wait
     % a short duration to let everything run. 
-    WaitSecs(2);
+    WaitSecs(1.5);
     %{
     else
         last_event = thisRun.TimingLog.TimingExpected.timing(end-1);
@@ -184,7 +184,6 @@ for run = first_run:nRuns
         WaitSecs(wait_time); % Wait until the end of the run (scanner defined)
     end
     %}
-    
     
 end
 

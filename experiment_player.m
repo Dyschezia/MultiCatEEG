@@ -10,7 +10,9 @@
 %%
 % RK (18/09/24) TODO: 
 % 4. Check EEG triggers sending works correctly!
-% 5. Check eye tracking. 
+% 5. Check eye tracking.
+    % ADD RECORDING DURING CALIBRATION AND VALIDATION? or just base acc/pre
+    % on the drift checks. If so, MAKE SURE GAZE IS RECORDED THEN!!!
 % 6. In setupEnvironment.m, need to measure sizes and distances in the exp
 % room (measured for eyelink room. Measure other room). 
 % 7. Make sure calculations in visualAngleCalculation.m and

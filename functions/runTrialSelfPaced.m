@@ -230,11 +230,11 @@ vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
 if send_eeg_triggers
     if eyetracking
 		%WaitSecs(trigger_delay);
-		send_triggerIO64(trigger_address, stimulus_trigger);
+		send_triggerIO64(stimulus_trigger);
         WaitSecs(multi_trigger_delay)% how long to wait between two triggers?
-        send_triggerIO64(trigger_address, stimulus_trigger2)
+        send_triggerIO64(stimulus_trigger2)
         WaitSecs(multi_trigger_delay)
-        send_triggerIO64(trigger_address, stimulus_trigger3)
+        send_triggerIO64(stimulus_trigger3)
         
         if Experiment.Mode.ETing == 1
             % RK (24/09/24) Send message to EDF file
@@ -269,7 +269,7 @@ if ~isCatch % If it's not catch
     if send_eeg_triggers
         if eyetracking
             %WaitSecs(trigger_delay);
-            send_triggerIO64(trigger_address, fixation_trigger);
+            send_triggerIO64(fixation_trigger);
             if Experiment.Mode.ETing == 1
                 % RK (24/09/24)
                 Eyelink('Message', 'FIXATION');
@@ -294,7 +294,7 @@ else % If it is a catch trial
     if send_eeg_triggers
         if eyetracking
             %WaitSecs(trigger_delay);
-            send_triggerIO64(trigger_address, fixation_trigger);
+            send_triggerIO64(fixation_trigger);
             
             if Experiment.Mode.ETing == 1
                 % RK (24/09/24)
@@ -320,7 +320,7 @@ else % If it is a catch trial
     if send_eeg_triggers
         if eyetracking
             %WaitSecs(trigger_delay);
-            send_triggerIO64(trigger_address, probe_trigger);
+            send_triggerIO64(probe_trigger);
             if Experiment.Mode.ETing == 1
                 % RK (24/09/24)
                 Eyelink('Message', 'PROBE');
@@ -380,7 +380,7 @@ else % If it is a catch trial
     if send_eeg_triggers
         if eyetracking
             %WaitSecs(trigger_delay);
-            send_triggerIO64(trigger_address, response_trigger);
+            send_triggerIO64(response_trigger);
             if Experiment.Mode.ETing == 1
                 % RK (24/09/24)
                 Eyelink('Message', 'RESPONSE');
@@ -427,7 +427,7 @@ else % If it is a catch trial
     if send_eeg_triggers
         if eyetracking
             %WaitSecs(trigger_delay);
-            send_triggerIO64(trigger_address, fixation_trigger);
+            send_triggerIO64(fixation_trigger);
             
             if Experiment.Mode.ETing == 1
                 % RK (24/09/24)
