@@ -2,6 +2,10 @@ function Experiment = runShortBreak(Experiment)
 % RK 26/09/24
 
 % Get necassary values
+session = Experiment.Subject.WhichSession;
+set = Experiment.Subject.WhichSet;
+run = Experiment.Log.CurrentRun;
+
 window = Experiment.Display.window; 
 expectedTime = Experiment.Log.ExpectedTime;
 startTime = Experiment.Log.StartTime;
