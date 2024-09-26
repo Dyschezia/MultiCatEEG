@@ -23,10 +23,7 @@
 % 12. Handle first trial (through training or in the exp).
 % 13. Maybe show performance measure 
 
-% - either make response in probe be longer so they have time to blink, or
-% make it self paces
 % - training
-% - trigger length 
 % - reward for performance! but maybe after the initial 3 subjects?
 
 % - check timing 
@@ -44,8 +41,6 @@ close all; clearvars; sca;
 screennum = max(Screen('Screens')); % Change if needed
 environment = 'home'; % EEG_eyelink_FU, EEG_FU (define), home
 ETing = 0;
-
-%run_duration = 420; % RK(19/09/24) commented. Duration of one run (scanner defined)
 
 % Add directory with functions to Matlab path
 addpath(genpath('functions')); 
