@@ -1,13 +1,12 @@
 function Experiment = runTrialSelfPaced(Experiment)
 % RK(19/09/24) TODO:
 % 2. RT is not being saved. 
-% 3. EDIT SEND TRIGGER TO WAIT LESS TIME 
-% Currently not adding trigger delay because it can just be added later. 
 
-% Stimulus triggers are of the form of 1 - set,run,trial. Because there are
-% 350 trials per run, this takes the form of 1 - set,run,hundreds -
-% tens,ones. For example, trial 251 in run 3 set 2 will be 1 - 232 - 51.
-% This cannot accomodate paradigms with more than 999 trials per run. 
+% After stimulus presentation, sends two triggers. The first, is 1xx, the
+% second 0xx. The four xxxx state the catgory of the image presented (or
+% not) in each of the four locations in the same mapping used in the
+% Experiment structure (top left, top right, bottom left, bottom right). 
+% the other triggers are 200 (fix), 201 (probe), (202) response. 
 
 % In this version of the function, the probe screen is not timed, and
 % instead is self-paced by the subject.
@@ -43,7 +42,6 @@ send_eeg_triggers = ~strcmp(Experiment.Env.Environment, 'home');
 eyetracking = strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU');
 
 if eyetracking % The address of the non eyetracking trigger is set in the function
-    trigger_address = Experiment.Triggers.Address;
     % demo suggested sending messages to the edf file like trial number.
     % Can I also send run, set, session info like so?
     if Experiment.Mode.ETing == 1
@@ -61,22 +59,27 @@ if eyetracking % The address of the non eyetracking trigger is set in the functi
     end
 end
 
-if send_eeg_triggers
-%    trigger_delay = Experiment.Triggers.TriggerDelay;
-    stimulus_trigger = Experiment.Triggers.Stimulus;
-    fixation_trigger = Experiment.Triggers.Fixation;
-    probe_trigger = Experiment.Triggers.Probe;
-    response_trigger = Experiment.Triggers.Response; 
-    stimulus_trigger2 = set*100 + run*10 + mod(floor(trial/ 100), 10);
-    stimulus_trigger3 = mod(trial, 100);
-    multi_trigger_delay = Experiment.Triggers.MultiTriggerDelay;
-end
-
 % Locate the stimulus array for this trial
 allRuns = Experiment.Session(session).Set(set).RunShuffled;
 thisRun = allRuns(run);
 allTrials = thisRun.StimArrays;
 thisTrialStimArray = allTrials(trial, :);
+thisTrialCategories = thisRun.TrialSchemeShuffled(trial,:);
+
+% Define EEG triggers, if recording EEG
+if send_eeg_triggers
+%    trigger_delay = Experiment.Triggers.TriggerDelay;
+    stimulus_trigger1 = Experiment.Triggers.Stimulus1;
+    stimulus_trigger1 = stimulus_trigger1 + thisTrialCategories(1)*10 + thisTrialCategories(2);
+    stimulus_trigger2 = Experiment.Triggers.Stimulus2;
+    stimulus_trigger2 = stimulus_trigger2 + thisTrialCategories(3)*10 + thisTrialCategories(4);
+    fixation_trigger = Experiment.Triggers.Fixation;
+    probe_trigger = Experiment.Triggers.Probe;
+    response_trigger = Experiment.Triggers.Response; 
+    feedback_trigger = Experiment.Triggers.Feedback; 
+    multi_trigger_delay = Experiment.Triggers.MultiTriggerDelay;
+end
+
 
 % Is it a catch trial?
 isCatch = thisRun.CatchTrials(trial);
@@ -228,26 +231,15 @@ Screen('DrawingFinished', myWin);
 vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
 % RK (20/09/24) send EEG trigger
 if send_eeg_triggers
-    if eyetracking
-		%WaitSecs(trigger_delay);
-		send_triggerIO64(stimulus_trigger);
-        WaitSecs(multi_trigger_delay)% how long to wait between two triggers?
-        send_triggerIO64(stimulus_trigger2)
-        WaitSecs(multi_trigger_delay)
-        send_triggerIO64(stimulus_trigger3)
-        
-        if Experiment.Mode.ETing == 1
-            % RK (24/09/24) Send message to EDF file
-            Eyelink('Message', 'STIM_ONSET');
-        end
-    else
-        %WaitSecs(trigger_delay);
-        send_triggerIO64(stimulus_trigger);
-        WaitSecs(multi_trigger_delay)% how long to wait between two triggers?
-        send_triggerIO64(stimulus_trigger2)
-        WaitSecs(multi_trigger_delay)
-        send_triggerIO64(stimulus_trigger3)
-    end 
+    %WaitSecs(trigger_delay);
+    send_triggerIO64(stimulus_trigger1);
+    WaitSecs(multi_trigger_delay)% how long to wait between two triggers?
+    send_triggerIO64(stimulus_trigger2) 
+    if eyetracking && Experiment.Mode.ETing == 1
+        % RK (24/09/24) Send message to EDF file
+        % I don't know if I can send such long messages.
+        Eyelink('Message', ['STIM_SES' num2str(session) '_SET' num2str(set) '_RUN' num2str(run) '_TRIAL' num2str(trial)]);
+    end
 end
 
 timeRealFlip = [timeRealFlip,  vbl - startTime];
@@ -267,16 +259,11 @@ if ~isCatch % If it's not catch
     vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
     % RK (20/09/24)
     if send_eeg_triggers
-        if eyetracking
-            %WaitSecs(trigger_delay);
-            send_triggerIO64(fixation_trigger);
-            if Experiment.Mode.ETing == 1
-                % RK (24/09/24)
-                Eyelink('Message', 'FIXATION');
-            end
-        else
-            %WaitSecs(trigger_delay);
-            send_triggerIO64(fixation_trigger);
+        %WaitSecs(trigger_delay);
+        send_triggerIO64(fixation_trigger);
+        if eyetracking && Experiment.Mode.ETing == 1
+            % RK (24/09/24)
+            Eyelink('Message', 'FIXATION');
         end 
     end
 
@@ -292,17 +279,11 @@ else % If it is a catch trial
     vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
     % RK (20/09/24)
     if send_eeg_triggers
-        if eyetracking
-            %WaitSecs(trigger_delay);
-            send_triggerIO64(fixation_trigger);
-            
-            if Experiment.Mode.ETing == 1
-                % RK (24/09/24)
-                Eyelink('Message', 'FIXATION');
-            end
-        else
-            %WaitSecs(trigger_delay);
-            send_triggerIO64(fixation_trigger);
+        %WaitSecs(trigger_delay);
+        send_triggerIO64(fixation_trigger);
+        if eyetracking && Experiment.Mode.ETing == 1
+            % RK (24/09/24)
+            Eyelink('Message', 'FIXATION');
         end 
     end
    
@@ -318,16 +299,11 @@ else % If it is a catch trial
     vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
     % RK (20/09/24)
     if send_eeg_triggers
-        if eyetracking
-            %WaitSecs(trigger_delay);
-            send_triggerIO64(probe_trigger);
-            if Experiment.Mode.ETing == 1
-                % RK (24/09/24)
-                Eyelink('Message', 'PROBE');
-            end
-        else
-            %WaitSecs(trigger_delay);
-            send_triggerIO64(probe_trigger);
+        %WaitSecs(trigger_delay);
+        send_triggerIO64(probe_trigger);
+        if eyetracking && Experiment.Mode.ETing == 1
+            % RK (24/09/24)
+            Eyelink('Message', 'PROBE');
         end 
     end    
     timeRealFlip = [timeRealFlip,  vbl - startTime];
@@ -378,18 +354,13 @@ else % If it is a catch trial
     vbl = Screen('Flip', myWin);
     % RK (23/09/24)
     if send_eeg_triggers
-        if eyetracking
-            %WaitSecs(trigger_delay);
-            send_triggerIO64(response_trigger);
-            if Experiment.Mode.ETing == 1
-                % RK (24/09/24)
-                Eyelink('Message', 'RESPONSE');
-            end
-        else
-            %WaitSecs(trigger_delay);
-            send_triggerIO64(response_trigger);
+        %WaitSecs(trigger_delay);
+        send_triggerIO64(response_trigger);
+        if eyetracking && Experiment.Mode.ETing == 1
+            % RK (24/09/24)
+            Eyelink('Message', 'RESPONSE');
         end 
-    end    
+    end
     expectedTime = GetSecs() - startTime + 0.1;
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, NaN];
@@ -408,6 +379,14 @@ else % If it is a catch trial
     Screen('FrameRect', myWin, feedback_color, resprect, 4);
     Screen('DrawingFinished', myWin);
     vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi); % After response time is out show feedback
+    
+    if send_eeg_triggers
+        %WaitSecs(trigger_delay);
+        send_triggerIO64(feedback_trigger);
+        if eyetracking && Experiment.Mode.ETing == 1
+            Eyelink('Message', 'FEEDBACK');
+        end 
+    end
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, NaN];
     whichObject = [whichObject, {'feedback'}];
@@ -425,19 +404,12 @@ else % If it is a catch trial
     vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
     % RK (23/09/24)
     if send_eeg_triggers
-        if eyetracking
-            %WaitSecs(trigger_delay);
-            send_triggerIO64(fixation_trigger);
-            
-            if Experiment.Mode.ETing == 1
-                % RK (24/09/24)
-                Eyelink('Message', 'FIXATION');
-            end
-        else
-            %WaitSecs(trigger_delay);
-            send_triggerIO64(fixation_trigger);
+        %WaitSecs(trigger_delay);
+        send_triggerIO64(fixation_trigger);
+        if eyetracking && Experiment.Mode.ETing == 1
+            Eyelink('Message', 'FIXATION');
         end 
-    end    
+    end
     timeRealFlip = [timeRealFlip, vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'fixation'}];

@@ -109,8 +109,11 @@ Experiment.Time.AfterProbeGap = 0.2; % Have an x seconds longer fixation after p
 % To code stimuli, will use 3 triggers
 
 % Set triggers defining event type
-Experiment.Triggers.Stimulus = 1;
-Experiment.Triggers.Fixation = 2;
-Experiment.Triggers.Probe = 3;
-Experiment.Triggers.Response = 4; 
-Experiment.Triggers.Calibration = 5;
+Experiment.Triggers.Stimulus1 = 100;
+Experiment.Triggers.Stimulus2 = 0;
+Experiment.Triggers.Fixation = 200;
+Experiment.Triggers.Probe = 201;
+Experiment.Triggers.Response = 202;
+Experiment.Triggers.Feedback = 203;
+Experiment.Triggers.DriftCheck = 204;
+Experiment.Triggers.Calibration = 205;
