@@ -19,6 +19,7 @@
 % create the Y/N images.
 % 11. Handle crashes (make sure eyelink data is saved as well)
 % 12. Handle first trial (through training or in the exp).
+% 13. Maybe show performance measure 
 
 % - either make response in probe be longer so they have time to blink, or
 % make it self paces
