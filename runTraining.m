@@ -12,8 +12,7 @@ nRuns = length(allRuns);
 %% Loop through runs
 for run = 1
     
-    text = ['Welcome to the training run. This will take 2-3 minutes.\n\n' ...
-                'During the training run, please keep one finger on the LEFT ARROW,'...
+    text = ['During the training run, please keep one finger on the LEFT ARROW,'...
                 'and another finger on the RIGHT ARROW. \n You will give your response by pressing those buttons.'...
                 '\n\n\nWhen you are ready, begin the training by pressing RIGHT ARROW.'];
     DrawFormattedText(Experiment.Display.window, text, 'center', 'center');
@@ -36,20 +35,16 @@ for run = 1
     vbl = Screen('Flip', Experiment.Display.window);
     Experiment.Log.ExpectedTime = Experiment.Time.StartGap; % Show next object after initial wait
     
-    fprintf(['\nStarting run' num2str(run) '\n']);
+    fprintf(['\nStarting training run \n']);
         
     %% Loop through trials
     Experiment.Log.CurrentRun = run;
     thisRun = allRuns(run);
-    Experiment.Session(1).Set(1).RunShuffled(1).CatchTrials(3) = 1;
-    Experiment.Session(1).Set(1).RunShuffled(1).CatchTrials(5) = 1;
-    Experiment.Session(1).Set(1).RunShuffled(1).CatchTrials(6) = 1;
-    Experiment.Session(1).Set(1).RunShuffled(1).CatchTrials(10) = 1;
-    Experiment.Session(1).Set(1).RunShuffled(1).CatchTrials(12) = 1;
-    Experiment.Session(1).Set(1).RunShuffled(1).CatchTrials(15) = 1;
-    Experiment.Session(1).Set(1).RunShuffled(1).CatchTrials(18) = 1;
-    Experiment.Session(1).Set(1).RunShuffled(1).CatchTrials(19) = 1;
-    Experiment.Session(1).Set(1).RunShuffled(1).CatchTrials(25) = 1;
+    thisRun.CatchTrials(3) = 1;
+    thisRun.CatchTrials(10) = 1;
+    thisRun.CatchTrials(15) = 1;
+    thisRun.CatchTrials(19) = 1;
+    thisRun.CatchTrials(25) = 1;
     
     output=fprintf('run %d/%d - trial: %d ', run, nRuns, 0);
     for thisTrial = 1:25

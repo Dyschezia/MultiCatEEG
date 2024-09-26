@@ -1,4 +1,8 @@
 function Experiment = runExperiment(Experiment)
+%% TODO
+% RECORD EYE MOVEMENTS DURING DRIFT CHECKS for future accuracy/precision
+% calculation. 
+
 %% Data
 session = Experiment.Subject.WhichSession;
 set = Experiment.Subject.WhichSet;
@@ -43,7 +47,7 @@ for run = first_run:nRuns
             '\n Do not move your eyes towards the presented images. You can move them during a question, but bring them' ...  
             '\n back to fixation before the next array appears. Try to blink only when a question is presented,' ... 
             '\n or when only a fixation is shown.' ... 
-            '\n \n \n If you have understood the instructions, please press ENTER'];
+            '\n \n \n If you have understood the instructions, please press ENTER to start a training session.'];
         DrawFormattedText(Experiment.Display.window, instructions, 'center', 'center');
         Screen('Flip', Experiment.Display.window);
         
@@ -56,6 +60,9 @@ for run = first_run:nRuns
          press = KbQueueWait([]); 
          KbQueueStop([]);
          KbQueueFlush([]);
+         
+         % Run training 
+         
     end
     
     run_to_display = run + nRuns*(set-1);
