@@ -21,7 +21,7 @@ Experiment.Task.TrialsTotalN4array = Experiment.Task.Trials4arrayN * Experiment.
 Experiment.Task.TrialsTotalN1array = Experiment.Task.Trials1arrayN * Experiment.Task.RunsN * Experiment.Task.SetsN;
 Experiment.Task.TrialsTotalN = Experiment.Task.TrialsTotalN4array + Experiment.Task.TrialsTotalN1array; % Number of all trials (all sizes, sessions, etc)
 % RK (23/09/24) After how many trials should subjects be offered break?
-Experiment.Task.TrialsPerBreak = 50;
+Experiment.Task.TrialsPerBreak = 70;
 Experiment.Task.ShortBreakDur = 10; % in seconds
  
 % Fonts and environment setup
@@ -89,7 +89,7 @@ Experiment.Time.StimExpTime = 0.250;  % Stimulus array exposure time [s]
 
 % Response
 Experiment.Time.RespWait = 2.0; % How long to allow for the response
-Experiment.Time.FeedbackGap = 0.25; % Gap after feedback
+Experiment.Time.FeedbackGap = 0.4; % Gap after feedback
 Experiment.Time.CatchIti1 = 0.7;
 %Experiment.Time.CatchIti2 = 1.0;
 
@@ -99,7 +99,7 @@ Experiment.Time.ItiRange = [0.7, 0.9]; % Range in which ITI varies
 Experiment.Time.ItiIncrement = 0.05; % Increment of ITI values
 Experiment.Time.StartGap = 2.0; % Wait before the start of the first trial of the run
 Experiment.Time.StopGap = 2.0; % Wait after thelast trial of the run
-Experiment.Time.AfterProbeGap = 0.6; % Have an x seconds longer fixation after probe trial? 
+Experiment.Time.AfterProbeGap = 0.2; % Have an x seconds longer fixation after probe trial? 
 
 
 %% RK (20/09/24) EEG Triggers 
