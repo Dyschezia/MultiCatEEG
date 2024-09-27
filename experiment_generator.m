@@ -17,7 +17,7 @@ close all; clearvars;
 Experiment = struct();
 
 %%% Context 
-Experiment.Mode.mode = 'test'; % test, experiment
+Experiment.Mode.mode = 'experiment'; % test, experiment
 
 %%% Paths
 % Set main directory

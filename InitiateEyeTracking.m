@@ -8,19 +8,20 @@ if status < 1 % If EyeLink not connected
     dummymode = 1;
 end
 
-% Open dialog box for EyeLink Data file name entry. File name up to
-% 8 characters. 
-prompt = {'Enter EDF file name (up to 8 characters)'};
-dlg_title = 'Create EDF file';
-def = {'test'}; % Create a default edf file name
-answer = inputdlg(prompt, dlg_title, 1, def); % Prompt for new EDF file name 
-% Print some text in Matlab's Command Window if a file name has not
-% been entered
-if isempty(answer)
-    fprintf('Session cancelled by user (no edf file name set) \n')
-    error('Session cancelled by user (not edf file name set)'); % Abort experiment (cleaning function?)
+% Set file name (SXX_session_runOfTotal)
+session = Experiment.Subject.WhichSession;
+set = Experiment.Subject.WhichSet;
+run = Experiment.Log.CurrentRun;
+totalRuns = length(Experiment.Session(session).Set(set).RunShuffled);
+runOfTotal = totalRuns * (set-1) + run;
+subject = Experiment.Subject.ID; 
+
+if strcmp(subject, 'test')
+    edfFile = ['tst_' num2str(session) '_' num2str(runOfTotal)];
+else
+    edfFile = ['S' num2str(subject) '_' num2str(session) '_' num2str(runOfTotal)];
 end
-edfFile = answer(1);
+
 % Is file name longer than 8 characters?
 if length(edfFile) > 8
     fprintf('EDF filename too long (max 8 characters, letter numbers or underscores) \n')

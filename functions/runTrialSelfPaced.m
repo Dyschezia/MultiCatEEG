@@ -238,8 +238,7 @@ if send_eeg_triggers
     fprintf(num2str(stimulus_trigger2))
     if eyetracking && Experiment.Mode.ETing == 1
         % RK (24/09/24) Send message to EDF file
-        % I don't know if I can send such long messages.
-        Eyelink('Message', ['STIM_SES' num2str(session) '_SET' num2str(set) '_RUN' num2str(run) '_TRIAL' num2str(trial)]);
+        Eyelink('Message', 'STIM_ONSET');
     end
 end
 

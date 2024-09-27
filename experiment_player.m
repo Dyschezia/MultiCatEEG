@@ -9,7 +9,6 @@
 
 %%
 % RK (18/09/24) TODO: 
-% save RT
 % 4. Check EEG triggers sending works correctly!
 % 5. Check eye tracking.
     % ADD RECORDING DURING CALIBRATION AND VALIDATION? or just base acc/pre
@@ -48,7 +47,7 @@ addpath(genpath('eeg trigger functions'));
 TmpExperiment = struct();
 
 % What do we run?
-TmpExperiment.Mode.mode = 'test'; % 'test' or 'experiment'
+TmpExperiment.Mode.mode = 'experiment'; % 'test' or 'experiment'
 
 % For reliable  timing, this should be 0. But on multi-display setup, this
 % may not work. 1 shortens the tests for timing, 2 disables all
