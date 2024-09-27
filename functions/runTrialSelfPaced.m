@@ -233,8 +233,11 @@ vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
 if send_eeg_triggers
     %WaitSecs(trigger_delay);
     send_triggerIO64(stimulus_trigger1);
+    fprintf(num2str(stimulus_trigger1))
     WaitSecs(multi_trigger_delay)% how long to wait between two triggers?
     send_triggerIO64(stimulus_trigger2) 
+    fprintf('\n')
+    fprintf(num2str(stimulus_trigger2))
     if eyetracking && Experiment.Mode.ETing == 1
         % RK (24/09/24) Send message to EDF file
         % I don't know if I can send such long messages.
@@ -319,7 +322,7 @@ else % If it is a catch trial
     % RK 25/09/24 response is not timed but self paced. 
     %Keys = Experiment.Keys;
      keysOfInterest = zeros(1,256);
-     keysOfInterest([responseLeft responseRight]) = 1;
+     keysOfInterest([responseLeft responseRight, escKey]) = 1;
      KbQueueCreate([],keysOfInterest);
      KbQueueStart([]);
      while 1
@@ -329,11 +332,19 @@ else % If it is a catch trial
             break
         end
      end
-     
-    
+
      KbQueueStop([]);
      KbQueueFlush([]);
     
+     % RK (23/09/24)
+    if send_eeg_triggers
+        %WaitSecs(trigger_delay);
+        send_triggerIO64(response_trigger);
+        if eyetracking && Experiment.Mode.ETing == 1
+            % RK (24/09/24)
+            Eyelink('Message', 'RESPONSE');
+        end 
+    end
 
     if key == responseLeft
         response = "left";
@@ -352,15 +363,7 @@ else % If it is a catch trial
     Screen('FrameRect', myWin, feedbackRegister, resprect, 4);
     Screen('DrawingFinished', myWin);
     vbl = Screen('Flip', myWin);
-    % RK (23/09/24)
-    if send_eeg_triggers
-        %WaitSecs(trigger_delay);
-        send_triggerIO64(response_trigger);
-        if eyetracking && Experiment.Mode.ETing == 1
-            % RK (24/09/24)
-            Eyelink('Message', 'RESPONSE');
-        end 
-    end
+    
     expectedTime = GetSecs() - startTime + 0.1;
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, NaN];

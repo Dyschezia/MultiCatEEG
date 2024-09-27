@@ -17,10 +17,7 @@
 % room (measured for eyelink room. Measure other room). 
 % 7. Make sure calculations in visualAngleCalculation.m and
 % visangle2stimsize.m are correct (run some precalculated values). 
-% 8. Run createResponses.m once with the create section uncommented to
-% create the Y/N images.
 % 11. Handle crashes (make sure eyelink data is saved as well)
-% 12. Handle first trial (through training or in the exp).
 % 13. Maybe show performance measure 
 
 % - training

@@ -13,6 +13,7 @@ shortBreakDur = Experiment.Task.ShortBreakDur;
 ScreenCenterX = Experiment.Env.ScreenCenterX;
 ScreenCenterY = Experiment.Env.ScreenCenterY;
 halfifi = Experiment.Env.HalfIFI;
+startGap = Experiment.Time.StartGap;
 
 % add text on screen saying take a short break
 text = ['Take a short break of ' num2str(shortBreakDur) ' seconds. Press any key to skip'];
@@ -29,7 +30,7 @@ keyDown = 0;
 while GetSecs() < startTime + expectedTime - 0.1
     [keyDown, ~ , ~ , ~ ] = KbCheck();
     if keyDown
-        expectedTime = GetSecs() - t0 + 0.1;
+        expectedTime = GetSecs() - startTime + 0.1;
         break
     else
         text = ['Take a short break of ' num2str(floor(startTime + expectedTime - GetSecs())) ' seconds. Press any key to skip'];
