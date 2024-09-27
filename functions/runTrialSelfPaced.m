@@ -310,6 +310,7 @@ else % If it is a catch trial
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'promptScreen'}];
+    responseStartTime = vbl;
     %expectedTime = expectedTime + respTime;
     if saveExpImages
         img = Screen('GetImage', myWin);
@@ -424,7 +425,6 @@ Experiment.Log.StartTime = startTime;
 Experiment.Log.timeRealFlip = timeRealFlip;
 Experiment.Log.timeExpectedFlip = timeExpectedFlip;
 Experiment.Log.whichObject = whichObject;
-Experiment.Log.RT = RT;
 
 %%% Save the data
 
@@ -440,6 +440,8 @@ if isCatch
         Experiment.Log.key = key;
         Experiment.Log.response = response;
         Experiment.Log.iscorrect = strcmp(response, correct_response);
+        Experiment.Log.RT = RT - responseStartTime;
+
     else
         Experiment.Log.key = 0;
         Experiment.Log.response = "missed";
