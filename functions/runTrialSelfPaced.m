@@ -233,10 +233,8 @@ vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
 if send_eeg_triggers
     %WaitSecs(trigger_delay);
     send_triggerIO64(stimulus_trigger1);
-    fprintf(num2str(stimulus_trigger1))
     WaitSecs(multi_trigger_delay)% how long to wait between two triggers?
     send_triggerIO64(stimulus_trigger2) 
-    fprintf('\n')
     fprintf(num2str(stimulus_trigger2))
     if eyetracking && Experiment.Mode.ETing == 1
         % RK (24/09/24) Send message to EDF file
@@ -329,6 +327,7 @@ else % If it is a catch trial
         [pressed, firstPress]=KbQueueCheck([]);
         if pressed
             key = min(find(firstPress));
+            RT = firstPress(find(firstPress));
             break
         end
      end
@@ -345,7 +344,7 @@ else % If it is a catch trial
             Eyelink('Message', 'RESPONSE');
         end 
     end
-
+    
     if key == responseLeft
         response = "left";
         resprect = destinationRectsPrompt(:,2);
@@ -425,6 +424,7 @@ Experiment.Log.StartTime = startTime;
 Experiment.Log.timeRealFlip = timeRealFlip;
 Experiment.Log.timeExpectedFlip = timeExpectedFlip;
 Experiment.Log.whichObject = whichObject;
+Experiment.Log.RT = RT;
 
 %%% Save the data
 

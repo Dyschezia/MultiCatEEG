@@ -31,10 +31,12 @@ switch usecase
         location_response = logData.LocationResponse(idx);
         response = Experiment.Log.response;
         probe = Experiment.Log.CatchProbeIdx; % RK(19/09/24)
+        RT = Experiment.Log.RT;
         
         logData.ResponseKey(idx) = Experiment.Log.key;
         logData.ResponseSide(idx) = response; % RK(19/09/24) (small change, was accessing Log)
         logData.CatchProbeIdx(idx) = probe; % RK(19/09/24)
+        logData.ResponseRT(idx) = RT; % RK 27/09/24
         
         if location_response==1 % Yes is on the left
             if strcmp(response, "left")
@@ -176,6 +178,8 @@ switch usecase
                 log.ResponseSide(idx) = " ";
                 log.ResponseYN(idx) = " ";
                 log.ResponseAccuracy(idx) = NaN;
+                % 27/09/24
+                log.ResponseRT(idx) = NaN;
                 
                 idx = idx+1;
             end
