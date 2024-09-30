@@ -176,7 +176,7 @@ fixColor = Experiment.Stim.FixationColour;
 feedbackCorrect = [0, 255, 0]; %[0 0.9 0.1] .* 
 feedbackWrong = [255, 0, 0]; %[0.9 0.1 0] .* 
 feedbackRegister =  [255, 255, 255]; %[0.2 0.2 0.2] .* % Color to register response
-%feedbackFixation =[255, 255, 255]; % [0.7 0.2 0.3] .* 
+feedbackFixation =[255, 255, 255]; % [0.7 0.2 0.3] .* 
     
 % Timing
 %initialGap = Experiment.Time.StartGap;
@@ -186,7 +186,7 @@ itiCatch1 = Experiment.Time.CatchIti1;
 probeITI = Experiment.Time.AfterProbeGap;
 halfifi = Experiment.Env.HalfIFI;
 stimExpTime = Experiment.Time.StimExpTime;
-%respTime = Experiment.Time.RespWait;
+respTime = Experiment.Time.RespWait;
 feedbackTime = Experiment.Time.FeedbackGap;
 
 % Response keys
@@ -310,7 +310,6 @@ else % If it is a catch trial
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'promptScreen'}];
     responseStartTime = vbl;
-    %expectedTime = expectedTime + respTime;
     if saveExpImages
         img = Screen('GetImage', myWin);
         imwrite(img, 'promptScreen.png', 'PNG');
@@ -323,7 +322,10 @@ else % If it is a catch trial
      keysOfInterest([responseLeft responseRight, escKey]) = 1;
      KbQueueCreate([],keysOfInterest);
      KbQueueStart([]);
-     while 1
+     pressed = 0;
+     t0 = GetSecs();
+     % here respTime defines the maximal RT
+     while 1 & (GetSecs() - t0 < respTime)
         [pressed, firstPress]=KbQueueCheck([]);
         if pressed
             key = min(find(firstPress));
@@ -345,59 +347,71 @@ else % If it is a catch trial
         end 
     end
     
-    if key == responseLeft
-        response = "left";
-        resprect = destinationRectsPrompt(:,2);
-    elseif key == responseRight
-        response = "right";
-        resprect = destinationRectsPrompt(:,3);
-    elseif key == escKey
-        Experiment.Log.Exit = 1;
-        return;
-    end
+    if pressed
+        if key == responseLeft
+            response = "left";
+            resprect = destinationRectsPrompt(:,2);
+        elseif key == responseRight
+            response = "right";
+            resprect = destinationRectsPrompt(:,3);
+        elseif key == escKey
+            Experiment.Log.Exit = 1;
+            return;
+        end
+        
+        % Draw register rectangle
+        Screen('DrawDots', myWin, screenCenter, fixRadius,  fixColor, [], 2); % Fixation
+        Screen('DrawTextures', myWin, texturePointersPrompt, [], destinationRectsPrompt); % Prompt screen
+        Screen('FrameRect', myWin, feedbackRegister, resprect, 4);
+        Screen('DrawingFinished', myWin);
+        vbl = Screen('Flip', myWin);
 
-    % Draw register rectangle
-    Screen('DrawDots', myWin, screenCenter, fixRadius,  fixColor, [], 2); % Fixation
-    Screen('DrawTextures', myWin, texturePointersPrompt, [], destinationRectsPrompt); % Prompt screen
-    Screen('FrameRect', myWin, feedbackRegister, resprect, 4);
-    Screen('DrawingFinished', myWin);
-    vbl = Screen('Flip', myWin);
-    
-    expectedTime = GetSecs() - startTime + 0.1;
-    timeRealFlip = [timeRealFlip,  vbl - startTime];
-    timeExpectedFlip = [timeExpectedFlip, NaN];
-    whichObject = [whichObject, {'response'}];
+        expectedTime = GetSecs() - startTime + 0.1;
+        timeRealFlip = [timeRealFlip,  vbl - startTime];
+        timeExpectedFlip = [timeExpectedFlip, NaN];
+        whichObject = [whichObject, {'response'}];
+    else
+        expectedTime = expectedTime + 0.1;
+    end
 
             
     % Feedback
-    if strcmp(correct_response, response) 
-        feedback_color = feedbackCorrect; % If the response is correct
-    else 
-        feedback_color = feedbackWrong; % If the response is wrong
-    end
+    if ~pressed
+        % If nothing was pressed before respTime, change fixation color
+        Screen('DrawDots', myWin, screenCenter, fixRadius,  feedbackFixation, [], 2);
+        Screen('DrawingFinished', myWin);
+        vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi); % After response time is out show feedback
+        expectedTime = expectedTime + feedbackTime;
+    else
+        % else, show feedback 
+        if strcmp(correct_response, response)
+            feedback_color = feedbackCorrect; % If the response is correct
+        else 
+            feedback_color = feedbackWrong; % If the response is wrong
+        end
 
-    Screen('DrawDots', myWin, screenCenter, fixRadius,  fixColor, [], 2); % Fixation
-    Screen('DrawTextures', myWin, texturePointersPrompt, [], destinationRectsPrompt); % Prompt screen
-    Screen('FrameRect', myWin, feedback_color, resprect, 4);
-    Screen('DrawingFinished', myWin);
-    vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi); % After response time is out show feedback
-    
-    if send_eeg_triggers
-        %WaitSecs(trigger_delay);
-        send_triggerIO64(feedback_trigger);
-        if eyetracking && Experiment.Mode.ETing == 1
-            Eyelink('Message', 'FEEDBACK');
-        end 
-    end
-    timeRealFlip = [timeRealFlip,  vbl - startTime];
-    timeExpectedFlip = [timeExpectedFlip, NaN];
-    whichObject = [whichObject, {'feedback'}];
-    expectedTime = expectedTime + feedbackTime;
-    
-    
-    if saveExpImages
-        img = Screen('GetImage', myWin);
-        imwrite(img, 'feedbackScreen.png', 'PNG');
+        Screen('DrawDots', myWin, screenCenter, fixRadius,  fixColor, [], 2); % Fixation
+        Screen('DrawTextures', myWin, texturePointersPrompt, [], destinationRectsPrompt); % Prompt screen
+        Screen('FrameRect', myWin, feedback_color, resprect, 4);
+        Screen('DrawingFinished', myWin);
+        vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi); % After response time is out show feedback
+
+        if send_eeg_triggers
+            %WaitSecs(trigger_delay);
+            send_triggerIO64(feedback_trigger);
+            if eyetracking && Experiment.Mode.ETing == 1
+                Eyelink('Message', 'FEEDBACK');
+            end 
+        end
+        timeRealFlip = [timeRealFlip,  vbl - startTime];
+        timeExpectedFlip = [timeExpectedFlip, NaN];
+        whichObject = [whichObject, {'feedback'}];
+        expectedTime = expectedTime + feedbackTime;
+
+        if saveExpImages
+            img = Screen('GetImage', myWin);
+            imwrite(img, 'feedbackScreen.png', 'PNG');
+        end
     end
     
     % Draw fixation and wait for second part of the delay
