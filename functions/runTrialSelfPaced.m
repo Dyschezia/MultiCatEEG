@@ -309,6 +309,7 @@ else % If it is a catch trial
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'promptScreen'}];
+    expectedTime = expectedTime + respTime; 
     responseStartTime = vbl;
     if saveExpImages
         img = Screen('GetImage', myWin);
@@ -323,9 +324,9 @@ else % If it is a catch trial
      KbQueueCreate([],keysOfInterest);
      KbQueueStart([]);
      pressed = 0;
-     t0 = GetSecs();
+     %t0 = GetSecs();
      % here respTime defines the maximal RT
-     while 1 & (GetSecs() - t0 < respTime)
+     while 1 & (GetSecs() - responseStartTime < respTime)
         [pressed, firstPress]=KbQueueCheck([]);
         if pressed
             key = min(find(firstPress));
@@ -338,7 +339,7 @@ else % If it is a catch trial
      KbQueueFlush([]);
     
      % RK (23/09/24)
-    if send_eeg_triggers
+    if send_eeg_triggers & pressed
         %WaitSecs(trigger_delay);
         send_triggerIO64(response_trigger);
         if eyetracking && Experiment.Mode.ETing == 1
@@ -372,6 +373,9 @@ else % If it is a catch trial
         whichObject = [whichObject, {'response'}];
     else
         expectedTime = expectedTime + 0.1;
+        key = NaN; 
+        response = NaN;
+        RT = NaN;
     end
 
             
@@ -381,7 +385,7 @@ else % If it is a catch trial
         Screen('DrawDots', myWin, screenCenter, fixRadius,  feedbackFixation, [], 2);
         Screen('DrawingFinished', myWin);
         vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi); % After response time is out show feedback
-        expectedTime = expectedTime + feedbackTime;
+        expectedTime = expectedTime + feedbackTime + 0.1;
     else
         % else, show feedback 
         if strcmp(correct_response, response)
