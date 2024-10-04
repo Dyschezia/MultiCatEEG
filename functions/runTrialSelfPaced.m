@@ -8,6 +8,9 @@ function Experiment = runTrialSelfPaced(Experiment)
 % In this version of the function, the probe screen is not timed, and
 % instead is self-paced by the subject.
 
+% Photodiode square currently appears only for the duration of the
+% stimulus. 
+
 % Toggle to save clips of experiment for reporting/schematic figures
 saveExpImages = 0;
 
@@ -34,9 +37,11 @@ set = Experiment.Subject.WhichSet;
 run = Experiment.Log.CurrentRun;
 trial = Experiment.Log.CurrentTrial;
 
-% RK (20/09/24) Is eyetracking collected? is EEG collected?
+% RK (20/09/24) Is eyetracking collected? is EEG collected? Is the
+% photodiode used?
 send_eeg_triggers = ~strcmp(Experiment.Env.Environment, 'home');
 eyetracking = strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') & Experiment.Mode.ETing;
+photodiode = strcmp(Experiment.Mode.Photodiode);
 
 if eyetracking % The address of the non eyetracking trigger is set in the function
     % demo suggested sending messages to the edf file like trial number.
@@ -131,8 +136,6 @@ if isCatch
         error('CatchType is neither 1 (YES) nor 2 (NO) - something is wrong. Check your trial structure.')
     end
     
-    
-    
     % Add yes/no
     texYes = Experiment.Images.ResponseData.textureIndex( Experiment.Images.ResponseData.imageName=="Y");
     texNo = Experiment.Images.ResponseData.textureIndex( Experiment.Images.ResponseData.imageName=="N");
@@ -172,6 +175,12 @@ feedbackCorrect = [0, 255, 0]; %[0 0.9 0.1] .*
 feedbackWrong = [255, 0, 0]; %[0.9 0.1 0] .* 
 feedbackRegister =  [255, 255, 255]; %[0.2 0.2 0.2] .* % Color to register response
 feedbackFixation =[255, 255, 255]; % [0.7 0.2 0.3] .* 
+
+% Photodiode color and rect
+if photodiode
+    photodiodeColor = Experiment.Photodiode.color;
+    photodiodeRect = Experiment.Photodiode.rect;
+end
     
 % Timing
 %initialGap = Experiment.Time.StartGap;
@@ -219,8 +228,13 @@ if isSingle
 else
     Screen('DrawTextures', myWin, texturePointers, [], destinationRects); % Stimulus
 end
+% If photodiode, draw photodiode square 
+if photodiode
+    Screen('FillRect', myWin, photodiodeColor, photodiodeRect);
+end
 Screen('DrawingFinished', myWin);
 vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
+
 % RK (20/09/24) send EEG trigger
 if send_eeg_triggers
     %WaitSecs(trigger_delay);
