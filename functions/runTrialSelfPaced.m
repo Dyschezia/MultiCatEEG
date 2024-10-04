@@ -204,6 +204,7 @@ respTimeFrames = Experiment.Time.RespWaitFrames;
 feedbackTimeFrames = Experiment.Time.FeedbackGapFrames;
 halfifi = Experiment.Env.HalfIFI;
 ifi = Experiment.Env.IFI;
+respTime = Experiment.Time.RespWait;
 
 % Response keys
 % Add keys

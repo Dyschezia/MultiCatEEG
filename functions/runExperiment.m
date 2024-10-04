@@ -11,8 +11,7 @@ allRuns = Experiment.Session(session).Set(set).RunShuffled;
 nRuns = length(allRuns);
 totalRuns = Experiment.Task.SetsN/Experiment.Task.SessionsN*nRuns;
 trialsPerBreak = Experiment.Task.TrialsPerBreak;
-%startGap = Experiment.Time.StartGap;
-startGapFrames = Experiment.Time.StartGapFrames;
+startGap = Experiment.Time.StartGap;
 halfifi = Experiment.Env.HalfIFI;
 
 %% Loop through runs
