@@ -1,7 +1,4 @@
 function Experiment = runTrialSelfPaced(Experiment)
-% RK(19/09/24) TODO:
-% 2. RT is not being saved. 
-
 % After stimulus presentation, sends two triggers. The first, is 1xx, the
 % second 0xx. The four xxxx state the catgory of the image presented (or
 % not) in each of the four locations in the same mapping used in the
@@ -39,24 +36,22 @@ trial = Experiment.Log.CurrentTrial;
 
 % RK (20/09/24) Is eyetracking collected? is EEG collected?
 send_eeg_triggers = ~strcmp(Experiment.Env.Environment, 'home');
-eyetracking = strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU');
+eyetracking = strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') & Experiment.Mode.ETing;
 
 if eyetracking % The address of the non eyetracking trigger is set in the function
     % demo suggested sending messages to the edf file like trial number.
     % Can I also send run, set, session info like so?
-    if Experiment.Mode.ETing == 1
-        Eyelink('Message', 'TRIALID %d', trial);
-        Eyelink('Message', 'RUNID %d', run);
-        Eyelink('Message', 'SETID %d', set);
-        Eyelink('Message', 'SESID %d', session);
-       
-        % Start EDF recording
-        Eyelink('SetOfflineMode'); % this is what the demo is doing, although confusing
-        Eyelink('StartRecording'); % start tracker recording
-        % WaitSecs(0.1) % demo recommends letting the eye tracker collect some
-        % data before first stimulus. However, this should happen during
-        % initial fixation, which is long, so supposed to be ok. 
-    end
+    Eyelink('Message', 'TRIALID %d', trial);
+    Eyelink('Message', 'RUNID %d', run);
+    Eyelink('Message', 'SETID %d', set);
+    Eyelink('Message', 'SESID %d', session);
+
+    % Start EDF recording
+    Eyelink('SetOfflineMode'); % this is what the demo is doing, although confusing
+    Eyelink('StartRecording'); % start tracker recording
+    % WaitSecs(0.1) % demo recommends letting the eye tracker collect some
+    % data before first stimulus. However, this should happen during
+    % initial fixation, which is long, so supposed to be ok. 
 end
 
 % Locate the stimulus array for this trial
@@ -203,20 +198,17 @@ expectedTime = Experiment.Log.ExpectedTime;
 
 % RK (24/09/24 Make sure eyelink is recording 
 if eyetracking
-    if Experiment.Mode.ETing == 1
-        err = Eyelink('CheckRecording');
-        if(err ~= 0)
-            fprintf('EyeLink Recording stopped!\n');
-            % Transfer a copy of the EDF file to Display PC
-            Eyelink('SetOfflineMode');% Put tracker in idle/offline mode
-            Eyelink('CloseFile'); % Close EDF file on Host PC
-            Eyelink('Command', 'clear_screen 0'); % Clear trial image on Host PC at the end of the experiment
-            WaitSecs(0.1); % Allow some time for screen drawing
-            % Transfer a copy of the EDF file to Display PC
-            transferFile; % See transferFile function below)
-            error('EyeLink is not in record mode when it should be. Unknown error. EDF transferred from Host PC to Display PC, please check its integrity.');
-        end
-        
+    err = Eyelink('CheckRecording');
+    if(err ~= 0)
+        fprintf('EyeLink Recording stopped!\n');
+        % Transfer a copy of the EDF file to Display PC
+        Eyelink('SetOfflineMode');% Put tracker in idle/offline mode
+        Eyelink('CloseFile'); % Close EDF file on Host PC
+        Eyelink('Command', 'clear_screen 0'); % Clear trial image on Host PC at the end of the experiment
+        WaitSecs(0.1); % Allow some time for screen drawing
+        % Transfer a copy of the EDF file to Display PC
+        transferFile; % See transferFile function below)
+        error('EyeLink is not in record mode when it should be. Unknown error. EDF transferred from Host PC to Display PC, please check its integrity.');
     end
 end
 
@@ -236,7 +228,7 @@ if send_eeg_triggers
     WaitSecs(multi_trigger_delay)% how long to wait between two triggers?
     send_triggerIO64(stimulus_trigger2) 
     fprintf(num2str(stimulus_trigger2))
-    if eyetracking && Experiment.Mode.ETing == 1
+    if eyetracking 
         % RK (24/09/24) Send message to EDF file
         Eyelink('Message', 'STIM_ONSET');
     end
@@ -261,7 +253,7 @@ if ~isCatch % If it's not catch
     if send_eeg_triggers
         %WaitSecs(trigger_delay);
         send_triggerIO64(fixation_trigger);
-        if eyetracking && Experiment.Mode.ETing == 1
+        if eyetracking 
             % RK (24/09/24)
             Eyelink('Message', 'FIXATION');
         end 
@@ -281,7 +273,7 @@ else % If it is a catch trial
     if send_eeg_triggers
         %WaitSecs(trigger_delay);
         send_triggerIO64(fixation_trigger);
-        if eyetracking && Experiment.Mode.ETing == 1
+        if eyetracking 
             % RK (24/09/24)
             Eyelink('Message', 'FIXATION');
         end 
@@ -301,7 +293,7 @@ else % If it is a catch trial
     if send_eeg_triggers
         %WaitSecs(trigger_delay);
         send_triggerIO64(probe_trigger);
-        if eyetracking && Experiment.Mode.ETing == 1
+        if eyetracking 
             % RK (24/09/24)
             Eyelink('Message', 'PROBE');
         end 
@@ -342,7 +334,7 @@ else % If it is a catch trial
     if send_eeg_triggers & pressed
         %WaitSecs(trigger_delay);
         send_triggerIO64(response_trigger);
-        if eyetracking && Experiment.Mode.ETing == 1
+        if eyetracking 
             % RK (24/09/24)
             Eyelink('Message', 'RESPONSE');
         end 
@@ -403,7 +395,7 @@ else % If it is a catch trial
         if send_eeg_triggers
             %WaitSecs(trigger_delay);
             send_triggerIO64(feedback_trigger);
-            if eyetracking && Experiment.Mode.ETing == 1
+            if eyetracking 
                 Eyelink('Message', 'FEEDBACK');
             end 
         end
@@ -426,7 +418,7 @@ else % If it is a catch trial
     if send_eeg_triggers
         %WaitSecs(trigger_delay);
         send_triggerIO64(fixation_trigger);
-        if eyetracking && Experiment.Mode.ETing == 1
+        if eyetracking 
             Eyelink('Message', 'FIXATION');
         end 
     end
@@ -445,7 +437,7 @@ Experiment.Log.whichObject = whichObject;
 
 %%% Save the data
 
-if Experiment.Mode.ETing == 1
+if eyetracking
     % RK (24/09/24) Stop eyetracking
     Eyelink('StopRecording'); % Stop tracker recording
 end
