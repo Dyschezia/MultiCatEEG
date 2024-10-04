@@ -16,16 +16,9 @@ halfifi = Experiment.Env.HalfIFI;
 
 %% Loop through runs
 for run = first_run:nRuns
-    %% Setup or drift check eyelink
-    %dummy_mode = 1; % should eyelink connection be initiated? if not, set 1
-    if strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') && Experiment.Mode.ETing == 1
-        if run == first_run
-            % open EDF file, setup calibration settings, and calibrate
-            Experiment = InitiateEyeTracking(Experiment);
-        else
-            EyelinkDoTrackerSetup(Experiment.Eyetracking.el);            
-        end
-    end
+    Experiment.Log.CurrentRun = run;
+    thisRun = allRuns(run);
+    trialsN = thisRun.TrialsN;
     
     % RK 25/09/24 If first run, show instructions
     if run == 1
@@ -60,7 +53,18 @@ for run = first_run:nRuns
     text = ['Run ' num2str(run_to_display) ' out of ' num2str(totalRuns) '. Continue when ready.'];
     DrawFormattedText(Experiment.Display.window, text, 'center', 'center');
     Screen('Flip', Experiment.Display.window);
-     
+    
+    %% Setup or drift check eyelink
+    %dummy_mode = 1; % should eyelink connection be initiated? if not, set 1
+    if strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') && Experiment.Mode.ETing == 1
+        if run == first_run
+            % open EDF file, setup calibration settings, and calibrate
+            Experiment = InitiateEyeTracking(Experiment);
+        else
+            EyelinkDoTrackerSetup(Experiment.Eyetracking.el);            
+        end
+    end
+    
     
     %% Setup the run
     
@@ -91,9 +95,7 @@ for run = first_run:nRuns
     fprintf(['\nStarting run' num2str(run) '\n']);
         
     %% Loop through trials
-    Experiment.Log.CurrentRun = run;
-    thisRun = allRuns(run);
-    trialsN = thisRun.TrialsN;
+    
     
     output=fprintf('run %d/%d - trial: %d ', run, nRuns, 0);
     for thisTrial = 1:trialsN
