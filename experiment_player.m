@@ -1,9 +1,9 @@
 %% MultiCAT - object information in multi-object arrays
 % Experiment player script
 % Written by: Karla Matic, kmatic94@gmail.com
-% Edits to adapt to EEG: Rotem Krispil, rotem.krispil@mail.huji.ac.il
+% Adaptation to EEG and eyetracking: Rotem Krispil, rotem.krispil@mail.huji.ac.il
 % First written: November 2023
-% Last update: September 2024
+% Last update: October 2024
 % This script loads the 'Experiment' structure for a given subject,
 % plays the experiment, and logs the data.
 
@@ -34,10 +34,11 @@
 commandwindow
 close all; clearvars; sca;
 
-% SCREEN
+% Setup
 screennum = max(Screen('Screens')); % Change if needed
 environment = 'home'; % EEG_eyelink_FU, EEG_FU (define), home
 ETing = 0;
+Photodiode = 1;
 
 % Add directory with functions to Matlab path
 addpath(genpath('functions')); 
@@ -64,13 +65,6 @@ end
 TmpExperiment.Paths.MainPath = pwd();
 
 % Path to subject data/pregen file
-%{ 
-if strcmp(environment, 'home')
-    idcs = strfind(TmpExperiment.Paths.MainPath ,'/');
-else
-    idcs = strfind(TmpExperiment.Paths.MainPath ,'\'); % if it's run on Windows
-end
-%} 
 %RK 19/09/24
 idcs = strfind(TmpExperiment.Paths.MainPath ,'\'); 
 parent_dir = TmpExperiment.Paths.MainPath (1:idcs(end)-1);
@@ -88,9 +82,6 @@ Experiment = loadExperimentStruct(TmpExperiment);
 % Screen
 Experiment.Env.WhichScreen = screennum; % Assign the display on which experiment should be played
 
-% Run duration
-%Experiment.Time.RunDuration = run_duration; %RK(19/09/24)
-
 % Add paths 
 Experiment.Paths.MainPath = TmpExperiment.Paths.MainPath;
 Experiment.Paths.OutDir = TmpExperiment.Paths.OutDir;
@@ -100,6 +91,7 @@ Experiment.Subject.SubPath = TmpExperiment.Subject.SubPath;
 % Add mode
 Experiment.Mode.mode = TmpExperiment.Mode.mode;
 Experiment.Mode.ETing = ETing; %RK 24/09/24
+Experiment.Mode.Photodiode = Photodiode; %RK 04/10/24
 
 %% --------------------------------------------------------------------
 %                       Subject setup
@@ -157,6 +149,11 @@ Experiment = createResponses(Experiment);
 
 %% Define locations for images in the array
 Experiment = setupLocations(Experiment);
+
+%% Define photodiode square if used (RK 04/10/24)
+if Photodiode
+    Experiment = setupPhotodiode(Experiment);
+end
 
 %% The log files for two sets are stored separately
 Experiment.Log.Exit = 0;
