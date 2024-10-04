@@ -88,10 +88,30 @@ Experiment.Env.ScreenCenterX = Experiment.Env.ScreenSizeX/2;
 Experiment.Env.ScreenCenterY = Experiment.Env.ScreenSizeY/2;
 
 %% Estimate flip interval 
-    
-Experiment.Env.IFI = Screen('GetFlipInterval', window);
-Experiment.Env.HalfIFI = Experiment.Env.IFI / 2;
+IFI = Screen('GetFlipInterval', window);
+Experiment.Env.IFI = IFI;
+Experiment.Env.HalfIFI = IFI / 2;
 
+%% RK 04/10/24 Define event durations as multiple of IFIs
 
+% Set timing parameters to be multiples of the IFI
+Experiment.Time.StimExpTimeFrames = round(Experiment.Time.StimExpTime / IFI);
+Experiment.Time.FeedbackGapFrames = round(Experiment.Time.FeedbackGap / IFI);
+Experiment.Time.CatchIti1Frames = round(Experiment.Time.CatchIti1 / IFI);
+Experiment.Time.StartGapFrames = round(Experiment.Time.StartGap / IFI);
+Experiment.Time.StopGapFrames = round(Experiment.Time.StopGap / IFI);
+Experiment.Time.AfterProbeGapFrames = round(Experiment.Time.AfterProbeGap / IFI);
 
+% Set the pregenerated random ITIs to be multiples of the IFI
+session = Experiment.Subject.WhichSession;
+firstSet = Experiment.Subject.WhichSet;
+firstRun = Experiment.Subject.WhichRun;
+nSets = length(Experiment.Session(session).Set);
+
+for set = firstSet:nSets
+    nRuns = length(Experiment.Session(session).Set(set).RunShuffled);
+    for run = firstRun:nRuns
+        Experiment.Session(session).Set(set).RunShuffled(run).ITIsFrames = round(Experiment.Session(session).Set(set).RunShuffled(run).ITIs / IFI);
+    end
+end
 
