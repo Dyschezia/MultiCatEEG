@@ -385,7 +385,7 @@ else % If it is a catch trial
         Screen('DrawDots', myWin, screenCenter, fixRadius,  feedbackFixation, [], 2);
         Screen('DrawingFinished', myWin);
         vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi); % After response time is out show feedback
-        expectedTime = expectedTime + feedbackTime + 0.1;
+        expectedTime = expectedTime + feedbackTime;
     else
         % else, show feedback 
         if strcmp(correct_response, response)
