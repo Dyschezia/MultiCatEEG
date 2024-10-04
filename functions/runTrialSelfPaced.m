@@ -41,7 +41,7 @@ trial = Experiment.Log.CurrentTrial;
 % photodiode used?
 send_eeg_triggers = ~strcmp(Experiment.Env.Environment, 'home');
 eyetracking = strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') & Experiment.Mode.ETing;
-photodiode = strcmp(Experiment.Mode.Photodiode);
+photodiode = Experiment.Mode.Photodiode;
 
 if eyetracking % The address of the non eyetracking trigger is set in the function
     % demo suggested sending messages to the edf file like trial number.
