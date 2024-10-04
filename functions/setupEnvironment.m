@@ -101,6 +101,7 @@ Experiment.Time.CatchIti1Frames = round(Experiment.Time.CatchIti1 / IFI);
 Experiment.Time.StartGapFrames = round(Experiment.Time.StartGap / IFI);
 Experiment.Time.StopGapFrames = round(Experiment.Time.StopGap / IFI);
 Experiment.Time.AfterProbeGapFrames = round(Experiment.Time.AfterProbeGap / IFI);
+Experiment.Time.RespWaitFrames = round(Experiment.Time.RespWait / IFI);
 
 % Set the pregenerated random ITIs to be multiples of the IFI
 session = Experiment.Subject.WhichSession;

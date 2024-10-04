@@ -181,7 +181,8 @@ if photodiode
     photodiodeColor = Experiment.Photodiode.color;
     photodiodeRect = Experiment.Photodiode.rect;
 end
-    
+
+%{
 % Timing
 %initialGap = Experiment.Time.StartGap;
 itiGap =  thisRun.ITIs(trial);
@@ -192,6 +193,17 @@ halfifi = Experiment.Env.HalfIFI;
 stimExpTime = Experiment.Time.StimExpTime;
 respTime = Experiment.Time.RespWait;
 feedbackTime = Experiment.Time.FeedbackGap;
+%}
+
+% Timing based on frames (RK 04/10/24)
+itiGapFrames =  thisRun.ITIsFrames(trial);
+itiCatch1Frames = Experiment.Time.CatchIti1Frames;
+probeITIFrames = Experiment.Time.AfterProbeGapFrames;
+stimExpTimeFrames = Experiment.Time.StimExpTimeFrames;
+respTimeFrames = Experiment.Time.RespWaitFrames; 
+feedbackTimeFrames = Experiment.Time.FeedbackGapFrames;
+halfifi = Experiment.Env.HalfIFI;
+ifi = Experiment.Env.IFI;
 
 % Response keys
 % Add keys
@@ -251,7 +263,7 @@ end
 timeRealFlip = [timeRealFlip,  vbl - startTime];
 timeExpectedFlip = [timeExpectedFlip, expectedTime];
 whichObject = [whichObject, {'stimulus'}];
-expectedTime = expectedTime + stimExpTime;
+expectedTime = expectedTime + stimExpTimeFrames * ifi;
 if saveExpImages
     img = Screen('GetImage', myWin);
     imwrite(img, 'stimulus.png', 'PNG');
@@ -276,7 +288,7 @@ if ~isCatch % If it's not catch
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'fixation'}];
-    expectedTime = expectedTime + itiGap; % Wait for a variable ITI
+    expectedTime = expectedTime + itiGapFrames*ifi; % Wait for a variable ITI
     
 else % If it is a catch trial
     % Draw fixation and wait for first part of the delay
@@ -296,7 +308,7 @@ else % If it is a catch trial
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'fixation'}];
-    expectedTime = expectedTime + itiCatch1; % Wait for first part of the catch gap
+    expectedTime = expectedTime + itiCatch1Frames*ifi; % Wait for first part of the catch gap
     
     % Show the prompt screen
     Screen('DrawDots', myWin, screenCenter, fixRadius,  fixColor, [], 2); % Fixation
@@ -315,7 +327,7 @@ else % If it is a catch trial
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'promptScreen'}];
-    expectedTime = expectedTime + respTime; 
+    expectedTime = expectedTime + respTimeFrames*ifi; 
     responseStartTime = vbl;
     if saveExpImages
         img = Screen('GetImage', myWin);
@@ -391,7 +403,7 @@ else % If it is a catch trial
         Screen('DrawDots', myWin, screenCenter, fixRadius,  feedbackFixation, [], 2);
         Screen('DrawingFinished', myWin);
         vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi); % After response time is out show feedback
-        expectedTime = expectedTime + feedbackTime;
+        expectedTime = expectedTime + feedbackTimeFrames*ifi;
     else
         % else, show feedback 
         if strcmp(correct_response, response)
@@ -416,7 +428,7 @@ else % If it is a catch trial
         timeRealFlip = [timeRealFlip,  vbl - startTime];
         timeExpectedFlip = [timeExpectedFlip, NaN];
         whichObject = [whichObject, {'feedback'}];
-        expectedTime = expectedTime + feedbackTime;
+        expectedTime = expectedTime + feedbackTimeFrames*ifi;
 
         if saveExpImages
             img = Screen('GetImage', myWin);
@@ -439,7 +451,7 @@ else % If it is a catch trial
     timeRealFlip = [timeRealFlip, vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'fixation'}];
-    expectedTime = expectedTime + itiGap + probeITI; % Wait for first part of the catch gap
+    expectedTime = expectedTime + itiGapFrames*ifi + probeITIFrames*ifi; % Wait for first part of the catch gap
            
 end
 

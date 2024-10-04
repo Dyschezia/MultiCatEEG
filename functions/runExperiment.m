@@ -11,21 +11,12 @@ allRuns = Experiment.Session(session).Set(set).RunShuffled;
 nRuns = length(allRuns);
 totalRuns = Experiment.Task.SetsN/Experiment.Task.SessionsN*nRuns;
 trialsPerBreak = Experiment.Task.TrialsPerBreak;
-startGap = Experiment.Time.StartGap;
+%startGap = Experiment.Time.StartGap;
+startGapFrames = Experiment.Time.StartGapFrames;
 halfifi = Experiment.Env.HalfIFI;
 
 %% Loop through runs
 for run = first_run:nRuns
-    
-    % RK (18/09/24): remove hardcoding 2 sets per ses
-    %{
-    if set == 1
-        run_to_display = run;
-    else
-        run_to_display = run + 4;
-    end
-    %}
-    
     %% Setup or drift check eyelink
     %dummy_mode = 1; % should eyelink connection be initiated? if not, set 1
     if strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') && Experiment.Mode.ETing == 1
