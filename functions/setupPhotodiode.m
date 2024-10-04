@@ -3,7 +3,7 @@ function Experiment = setupPhotodiode(Experiment)
     % screen. 
     
     % Size of square in pixels
-    size = 20; 
+    size = 45; 
     
     % set rectangle
     photodiodeRect = SetRect(0,0,size,size);
