@@ -2,6 +2,11 @@ function Experiment = runExperiment(Experiment)
 %% TODO
 % RECORD EYE MOVEMENTS DURING DRIFT CHECKS for future accuracy/precision
 % calculation. 
+% open a new ET file for every run, so if experiment crashes, will not lose
+% all data. 
+% to synchronize the ET and EEG signals, need to send at the beginning and
+% end of the experiment a trigger with the same number, and some keyword in
+% the ET case. 
 
 %% Data
 session = Experiment.Subject.WhichSession;

@@ -42,7 +42,8 @@ Photodiode = 1;
 
 % Add directory with functions to Matlab path
 addpath(genpath('functions')); 
-addpath(genpath('eeg trigger functions')); 
+addpath(genpath('functions\eeg trigger functions')); 
+addpath(genpath('functions\eeg trigger functions')); 
 
 % Main path
 TmpExperiment = struct();
