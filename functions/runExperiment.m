@@ -7,6 +7,8 @@ function Experiment = runExperiment(Experiment)
 % to synchronize the ET and EEG signals, need to send at the beginning and
 % end of the experiment a trigger with the same number, and some keyword in
 % the ET case. 
+% I want to ET during fixations too, as this is the baseline for the next
+% trial. So might as well always record. 
 
 %% Data
 session = Experiment.Subject.WhichSession;
@@ -18,6 +20,13 @@ totalRuns = Experiment.Task.SetsN/Experiment.Task.SessionsN*nRuns;
 trialsPerBreak = Experiment.Task.TrialsPerBreak;
 startGap = Experiment.Time.StartGap;
 halfifi = Experiment.Env.HalfIFI;
+
+% Mode
+ETing = strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') & Experiment.Mode.ETing;
+eeg = ~strcmp(Experiment.Env.Environment, 'home');
+startTrigger = Experiment.Triggers.SyncStart;
+endTrigger = Experiment.Triggers.SyncEnd;
+syncKeyWord = Experiment.Triggers.SyncKeyWord;
 
 %% Loop through runs
 for run = first_run:nRuns
@@ -62,12 +71,16 @@ for run = first_run:nRuns
     %% Setup or drift check eyelink
     %dummy_mode = 1; % should eyelink connection be initiated? if not, set 1
     if strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') && Experiment.Mode.ETing == 1
+        %{
         if run == first_run
             % open EDF file, setup calibration settings, and calibrate
             Experiment = InitiateEyeTracking(Experiment);
         else
             EyelinkDoTrackerSetup(Experiment.Eyetracking.el);            
         end
+        %}
+        % Now splitting ET files by run 
+        Experiment = InitiateEyeTracking(Experiment);
     end
     
     
@@ -86,11 +99,37 @@ for run = first_run:nRuns
         
     Experiment.Log.StartTime = t0; 
     
-    % Show initial fixation 
+    % 10/10/24 Start ET recording 
+    % Start EDF recording
+    if ETing
+        Eyelink('SetOfflineMode'); % this is what the demo is doing, although confusing
+        Eyelink('StartRecording'); % start tracker recording
+    end
+    
+    % 10/10/24 send syncing trigger to ET and EEG
+    if eeg
+        send_triggerIO64(startTrigger)
+        if ETing
+            Eyelink('Message', [syncKeyWord ' ' num2str(startTrigger)])
+        end
+    end
+
+    Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'startSyncTrigger'},NaN,0);
+    
+    % Show initial fixation
     Screen('DrawDots', Experiment.Display.window, [Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY], Experiment.Stim.FixationPixels, Experiment.Stim.FixationColour, [], 2);
-    vbl = Screen('Flip', Experiment.Display.window);
-    Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'initial_fixation'},NaN,0);
+    vbl = Screen('Flip', Experiment.Display.window); 
+    Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'fixation'},NaN,0);
     Experiment.Log.ExpectedTime = startGap; % Show next object after initial wait
+    
+    if eeg
+        %WaitSecs(trigger_delay);
+        send_triggerIO64(Experiment.Triggers.Fixation);
+        if eyetracking 
+            % RK (24/09/24)
+            Eyelink('Message', 'FIXATION');
+        end 
+    end
     
     % Draw graphics on the EyeLink Host PC display. See COMMANDS.INI in the Host PC's exe folder for a list of commands
     % check what this does. 
@@ -141,43 +180,40 @@ for run = first_run:nRuns
         break;
     end
     
-    % RK(19/09/24) remove waiting till scanner defined duration. Just wait
-    % a short duration to let everything run. 
-    WaitSecs(1.5);
-    %{
-    else
-        last_event = thisRun.TimingLog.TimingExpected.timing(end-1);
-        wait_time = Experiment.Time.RunDuration - last_event;
-        WaitSecs(wait_time); % Wait until the end of the run (scanner defined)
+    % 10/10/24 Send end sync trigger and save eye tracking data (ET data broken to files by run)
+    if eeg
+        send_triggerIO64(endTrigger)
+        if ETing
+            Eyelink('Message', [syncKeyWord ' ' num2str(endTrigger)])
+            WaitSecs(0.2);
+            Eyelink('StopRecording'); % Stop tracker recording
+            WaitSecs(0.2);
+            Eyelink('SetOfflineMode'); % Put tracker in idle/offline mode
+            %Eyelink('Command', 'clear_screen 0'); % Clear Host PC backdrop graphics at the end of the experiment
+            WaitSecs(0.2); % Allow some time before closing and transferring file
+            Eyelink('CloseFile'); % Close EDF file on Host PC
+            if ~Experiment.Eyetracking.dummymode 
+                try    
+                    % Transfer a copy of the EDF file to Display PC
+                    status = Eyelink('ReceiveFile');
+                    % Check if EDF file has been transferred successfully and print file size in Matlab's Command Window
+                    if status > 0
+                        fprintf('EDF file size: %.1f KB\n', status/1024); % Divide file size by 1024 to convert bytes to KB
+                    end 
+                catch % Catch a file-transfer error and print some text in Matlab's Command Window
+                    fprintf('Problem receiving data file ''%s''\n', edfFile);
+                    psychrethrow(psychlasterror);
+                end    
+            else
+                fprintf('No EDF file saved in Dummy mode\n');    
+            end
+        end
+        Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'endSyncTrigger'},NaN,0);
     end
-    %}
+
+    WaitSecs(0.1);
     
 end
-
-% RK (24/09/24) Save eyetracking data
-if strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') && Experiment.Mode.ETing == 1
-    Eyelink('SetOfflineMode'); % Put tracker in idle/offline mode
-    %Eyelink('Command', 'clear_screen 0'); % Clear Host PC backdrop graphics at the end of the experiment
-    WaitSecs(0.5); % Allow some time before closing and transferring file
-    Eyelink('CloseFile'); % Close EDF file on Host PC
-    
-    if ~Experiment.Eyetracking.dummymode 
-        try    
-            % Transfer a copy of the EDF file to Display PC
-            status = Eyelink('ReceiveFile');
-            % Check if EDF file has been transferred successfully and print file size in Matlab's Command Window
-            if status > 0
-                fprintf('EDF file size: %.1f KB\n', status/1024); % Divide file size by 1024 to convert bytes to KB
-            end 
-        catch % Catch a file-transfer error and print some text in Matlab's Command Window
-            fprintf('Problem receiving data file ''%s''\n', edfFile);
-            psychrethrow(psychlasterror);
-        end    
-    else
-    fprintf('No EDF file saved in Dummy mode\n');    
-    end
-end 
-
 
 % Save behavioral data
 Experiment = saveLog(Experiment, 'add_features');

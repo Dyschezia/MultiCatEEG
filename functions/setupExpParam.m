@@ -117,3 +117,8 @@ Experiment.Triggers.Response = 202;
 Experiment.Triggers.Feedback = 203;
 Experiment.Triggers.DriftCheck = 204;
 Experiment.Triggers.Calibration = 205;
+Experiment.Triggers.SyncStart = 206;
+Experiment.Triggers.SyncEnd = 207;
+
+% 10/10/24 ETing keyword for syncing
+Experiment.Triggers.SyncKeyWord = 'YO';

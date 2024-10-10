@@ -50,10 +50,6 @@ if eyetracking % The address of the non eyetracking trigger is set in the functi
     Eyelink('Message', 'RUNID %d', run);
     Eyelink('Message', 'SETID %d', set);
     Eyelink('Message', 'SESID %d', session);
-
-    % Start EDF recording
-    Eyelink('SetOfflineMode'); % this is what the demo is doing, although confusing
-    Eyelink('StartRecording'); % start tracker recording
     % WaitSecs(0.1) % demo recommends letting the eye tracker collect some
     % data before first stimulus. However, this should happen during
     % initial fixation, which is long, so supposed to be ok. 
@@ -461,13 +457,6 @@ Experiment.Log.StartTime = startTime;
 Experiment.Log.timeRealFlip = timeRealFlip;
 Experiment.Log.timeExpectedFlip = timeExpectedFlip;
 Experiment.Log.whichObject = whichObject;
-
-%%% Save the data
-
-if eyetracking
-    % RK (24/09/24) Stop eyetracking
-    Eyelink('StopRecording'); % Stop tracker recording
-end
 
 % Save timing data 
 Experiment = saveLog(Experiment, 'timing_data'); % Timing Log
