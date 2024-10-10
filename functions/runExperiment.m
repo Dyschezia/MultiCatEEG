@@ -2,13 +2,6 @@ function Experiment = runExperiment(Experiment)
 %% TODO
 % RECORD EYE MOVEMENTS DURING DRIFT CHECKS for future accuracy/precision
 % calculation. 
-% open a new ET file for every run, so if experiment crashes, will not lose
-% all data. 
-% to synchronize the ET and EEG signals, need to send at the beginning and
-% end of the experiment a trigger with the same number, and some keyword in
-% the ET case. 
-% I want to ET during fixations too, as this is the baseline for the next
-% trial. So might as well always record. 
 
 %% Data
 session = Experiment.Subject.WhichSession;
@@ -125,7 +118,7 @@ for run = first_run:nRuns
     if eeg
         %WaitSecs(trigger_delay);
         send_triggerIO64(Experiment.Triggers.Fixation);
-        if eyetracking 
+        if ETing
             % RK (24/09/24)
             Eyelink('Message', 'FIXATION');
         end 
@@ -171,7 +164,15 @@ for run = first_run:nRuns
          
         % RK (23/09/24) Offer a break every trialsPerBreak trials:
         if mod(thisTrial, trialsPerBreak) == 0 && thisTrial ~= trialsN
+            % At the end of the break the code runs a drift check; can't be
+            % recording during a drift check. 
+            if ETing 
+                Eyelink('StopRecording');
+            end
             Experiment = runShortBreak(Experiment); 
+            if ETing % start recording again 
+                Eyelink('StartRecording');
+            end
         end
         
     end

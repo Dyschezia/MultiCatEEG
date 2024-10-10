@@ -1,5 +1,5 @@
 function Experiment = runTrialSelfPaced(Experiment)
-% After stimulus presentation, sends two triggers. The first, is 1xx, the
+% After stimulus presentation, sends two triggers. The first is 1xx, the
 % second 0xx. The four xxxx state the catgory of the image presented (or
 % not) in each of the four locations in the same mapping used in the
 % Experiment structure (top left, top right, bottom left, bottom right). 
