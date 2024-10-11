@@ -176,10 +176,7 @@ for run = first_run:nRuns
         end
         
     end
-            
-    if Experiment.Log.Exit == 1
-        break;
-    end
+    
     
     % 10/10/24 Send end sync trigger and save eye tracking data (ET data broken to files by run)
     if eeg
@@ -213,6 +210,12 @@ for run = first_run:nRuns
     end
 
     WaitSecs(0.1);
+         
+    % Need to break AFTER end trigger is sent and file is closed and
+    % transfered 
+    if Experiment.Log.Exit == 1
+        break;
+    end
     
 end
 
