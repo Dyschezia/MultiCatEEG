@@ -219,6 +219,7 @@ if eyetracking
     err = Eyelink('CheckRecording');
     if(err ~= 0)
         fprintf('EyeLink Recording stopped!\n');
+        %{
         % Transfer a copy of the EDF file to Display PC
         Eyelink('SetOfflineMode');% Put tracker in idle/offline mode
         Eyelink('CloseFile'); % Close EDF file on Host PC
@@ -227,6 +228,9 @@ if eyetracking
         % Transfer a copy of the EDF file to Display PC
         transferFile; % See transferFile function below)
         error('EyeLink is not in record mode when it should be. Unknown error. EDF transferred from Host PC to Display PC, please check its integrity.');
+        %}
+        Experiment.Log.Exit = 1;
+        return % end of experiment is handeled outside the trial fucntion
     end
 end
 
