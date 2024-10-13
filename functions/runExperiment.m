@@ -64,7 +64,7 @@ for run = first_run:nRuns
     
     %% Setup or drift check eyelink
     %dummy_mode = 1; % should eyelink connection be initiated? if not, set 1
-    if strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') && Experiment.Mode.ETing == 1
+    if ETing
         %{
         if run == first_run
             % open EDF file, setup calibration settings, and calibrate
