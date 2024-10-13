@@ -121,7 +121,7 @@ for run = first_run:nRuns
         send_triggerIO64(Experiment.Triggers.Fixation);
         if ETing
             % RK (24/09/24)
-            Eyelink('Message', 'FIXATION');
+            Eyelink('Message', [syncKeyWord ' ' num2str(Experiment.Triggers.Fixation)])
         end 
     end
     
