@@ -84,7 +84,7 @@ Eyelink('Command','screen_pixel_coords = %ld %ld %ld %ld', 0, 0, Experiment.Env.
 Eyelink('Command', 'calibration_type = HV13'); % horizontal-vertical 13-points
 
 % Set drift checks to force a maximum error of 1 degree (default is 2)
- Eyelink('Command', 'drift_correction_rpt_error = 1.0');
+ %Eyelink('Command', 'drift_correction_rpt_error = 1.0');
 
 % Here the demo sets a buttonbox button to be used for manual calibration -
 % check whether this can be set via the GUI too?

@@ -9,11 +9,6 @@
 
 %%
 % RK (18/09/24) TODO: 
-% 5. Check eye tracking.
-    % Decide on accuracy/precision threshold and understand how can you
-    % report it later. 
-% 6. In setupEnvironment.m, need to measure sizes and distances in the exp
-% room (measured for eyelink room. Measure other room). 
 % 7. Make sure calculations in visualAngleCalculation.m and
 % visangle2stimsize.m are correct (run some precalculated values). 
 % 13. Maybe show performance measure 

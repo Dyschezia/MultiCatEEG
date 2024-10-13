@@ -5,6 +5,9 @@ function Experiment = runTrialSelfPaced(Experiment)
 % Experiment structure (top left, top right, bottom left, bottom right). 
 % the other triggers are 200 (fix), 201 (probe), (202) response. 
 
+% 11/10/24 note: If I change ET triggers to be identical to EEG triggers,
+% they can be used by EEGlab to check the quality of synchronization. 
+
 % In this version of the function, the probe screen is not timed, and
 % instead is self-paced by the subject.
 
@@ -230,7 +233,7 @@ if eyetracking
         error('EyeLink is not in record mode when it should be. Unknown error. EDF transferred from Host PC to Display PC, please check its integrity.');
         %}
         Experiment.Log.Exit = 1;
-        return % end of experiment is handeled outside the trial fucntion
+        return % RK: end of experiment is handeled outside the trial fucntion
     end
 end
 

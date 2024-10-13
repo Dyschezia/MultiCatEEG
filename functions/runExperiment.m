@@ -2,6 +2,7 @@ function Experiment = runExperiment(Experiment)
 %% TODO
 % RECORD EYE MOVEMENTS DURING DRIFT CHECKS for future accuracy/precision
 % calculation. 
+% Can start start and end sync triggers a few times just in case 
 
 %% Data
 session = Experiment.Subject.WhichSession;
