@@ -38,8 +38,9 @@ for run = first_run:nRuns
             '\n the center throughout the experiment. You can move your eyes during a question if necessary, but bring them back ' ...
             '\n to the center before the next set of images is shown. Moreover, it is important that you try not to blink ' ... 
             '\n when images are shown. Try to blink only during questions, or when only the central dot (and not images) is shown. ' ...
-            '\n You will be given time to rest your eyes throughout the experiment. ' ... 
-            '\n \n \n If you have understood the instructions, please press ENTER to start a training session.'];
+            '\n You will be given time to rest your eyes throughout the experiment during and at the end of each series of images. ' ... 
+            '\n When prompted to start the next run, please wait for the experimenters instructions. ' ... 
+            '\n \n \n If you have understood the instructions, please press ENTER to continue.'];
         DrawFormattedText(Experiment.Display.window, instructions, 'center', 'center');
         Screen('Flip', Experiment.Display.window);
         
@@ -58,7 +59,7 @@ for run = first_run:nRuns
     end
     
     run_to_display = run + nRuns*(set-1);
-    text = ['Run ' num2str(run_to_display) ' out of ' num2str(totalRuns) '. Continue when ready.'];
+    text = ['Run ' num2str(run_to_display) ' out of ' num2str(totalRuns) '. Inform experimenter when ready.'];
     DrawFormattedText(Experiment.Display.window, text, 'center', 'center');
     Screen('Flip', Experiment.Display.window);
     
