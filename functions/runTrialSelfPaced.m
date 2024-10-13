@@ -46,6 +46,7 @@ send_eeg_triggers = ~strcmp(Experiment.Env.Environment, 'home');
 eyetracking = strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') & Experiment.Mode.ETing;
 photodiode = Experiment.Mode.Photodiode;
 
+%{
 if eyetracking % The address of the non eyetracking trigger is set in the function
     % demo suggested sending messages to the edf file like trial number.
     % Can I also send run, set, session info like so?
@@ -57,6 +58,7 @@ if eyetracking % The address of the non eyetracking trigger is set in the functi
     % data before first stimulus. However, this should happen during
     % initial fixation, which is long, so supposed to be ok. 
 end
+%}
 
 % Locate the stimulus array for this trial
 allRuns = Experiment.Session(session).Set(set).RunShuffled;
@@ -77,6 +79,7 @@ if send_eeg_triggers
     response_trigger = Experiment.Triggers.Response; 
     feedback_trigger = Experiment.Triggers.Feedback; 
     multi_trigger_delay = Experiment.Triggers.MultiTriggerDelay;
+    syncKeyWord = Experiment.Triggers.SyncKeyWord;
 end
 
 
@@ -255,13 +258,18 @@ vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
 if send_eeg_triggers
     %WaitSecs(trigger_delay);
     send_triggerIO64(stimulus_trigger1);
-    WaitSecs(multi_trigger_delay)% how long to wait between two triggers?
-    send_triggerIO64(stimulus_trigger2) 
-    fprintf(num2str(stimulus_trigger2))
     if eyetracking 
         % RK (24/09/24) Send message to EDF file
-        Eyelink('Message', 'STIM_ONSET');
+        Eyelink('Message', [syncKeyWord ' ' num2str(stimulus_trigger1)]);
     end
+    WaitSecs(multi_trigger_delay)% how long to wait between two triggers?
+    send_triggerIO64(stimulus_trigger2) 
+    if eyetracking 
+        % RK (24/09/24) Send message to EDF file
+        Eyelink('Message', [syncKeyWord ' ' num2str(stimulus_trigger2)]);
+    end
+    fprintf(num2str(stimulus_trigger2))
+    
 end
 
 timeRealFlip = [timeRealFlip,  vbl - startTime];
@@ -285,7 +293,7 @@ if ~isCatch % If it's not catch
         send_triggerIO64(fixation_trigger);
         if eyetracking 
             % RK (24/09/24)
-            Eyelink('Message', 'FIXATION');
+            Eyelink('Message', [syncKeyWord ' ' num2str(fixation_trigger)]);
         end 
     end
 
@@ -305,7 +313,7 @@ else % If it is a catch trial
         send_triggerIO64(fixation_trigger);
         if eyetracking 
             % RK (24/09/24)
-            Eyelink('Message', 'FIXATION');
+            Eyelink('Message', [syncKeyWord ' ' num2str(fixation_trigger)]);
         end 
     end
    
@@ -325,7 +333,7 @@ else % If it is a catch trial
         send_triggerIO64(probe_trigger);
         if eyetracking 
             % RK (24/09/24)
-            Eyelink('Message', 'PROBE');
+            Eyelink('Message', [syncKeyWord ' ' num2str(probe_trigger)]);
         end 
     end    
     timeRealFlip = [timeRealFlip,  vbl - startTime];
@@ -366,7 +374,7 @@ else % If it is a catch trial
         send_triggerIO64(response_trigger);
         if eyetracking 
             % RK (24/09/24)
-            Eyelink('Message', 'RESPONSE');
+            Eyelink('Message', [syncKeyWord ' ' num2str(response_trigger)]);
         end 
     end
     
@@ -426,7 +434,7 @@ else % If it is a catch trial
             %WaitSecs(trigger_delay);
             send_triggerIO64(feedback_trigger);
             if eyetracking 
-                Eyelink('Message', 'FEEDBACK');
+                Eyelink('Message', [syncKeyWord ' ' num2str(feedback_trigger)]);
             end 
         end
         timeRealFlip = [timeRealFlip,  vbl - startTime];
@@ -449,7 +457,7 @@ else % If it is a catch trial
         %WaitSecs(trigger_delay);
         send_triggerIO64(fixation_trigger);
         if eyetracking 
-            Eyelink('Message', 'FIXATION');
+            Eyelink('Message', [syncKeyWord ' ' num2str(fixation_trigger)]);
         end 
     end
     timeRealFlip = [timeRealFlip, vbl - startTime];
