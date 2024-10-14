@@ -102,11 +102,9 @@ for run = first_run:nRuns
     end
     
     % 10/10/24 send syncing trigger to ET and EEG
-    if eeg
+    if eeg & ETing
         send_triggerIO64(startTrigger)
-        if ETing
-            Eyelink('Message', [syncKeyWord ' ' num2str(startTrigger)])
-        end
+        Eyelink('Message', [syncKeyWord ' ' num2str(startTrigger)])
     end
 
     Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'startSyncTrigger'},NaN,0);
@@ -181,32 +179,30 @@ for run = first_run:nRuns
     
     
     % 10/10/24 Send end sync trigger and save eye tracking data (ET data broken to files by run)
-    if eeg
+    if eeg & ETing
         send_triggerIO64(endTrigger)
-        if ETing
-            Eyelink('Message', [syncKeyWord ' ' num2str(endTrigger)])
-            WaitSecs(0.2);
-            Eyelink('StopRecording'); % Stop tracker recording
-            WaitSecs(0.2);
-            Eyelink('SetOfflineMode'); % Put tracker in idle/offline mode
-            %Eyelink('Command', 'clear_screen 0'); % Clear Host PC backdrop graphics at the end of the experiment
-            WaitSecs(0.2); % Allow some time before closing and transferring file
-            Eyelink('CloseFile'); % Close EDF file on Host PC
-            if ~Experiment.Eyetracking.dummymode 
-                try    
-                    % Transfer a copy of the EDF file to Display PC
-                    status = Eyelink('ReceiveFile');
-                    % Check if EDF file has been transferred successfully and print file size in Matlab's Command Window
-                    if status > 0
-                        fprintf('EDF file size: %.1f KB\n', status/1024); % Divide file size by 1024 to convert bytes to KB
-                    end 
-                catch % Catch a file-transfer error and print some text in Matlab's Command Window
-                    fprintf('Problem receiving data file ''%s''\n', edfFile);
-                    psychrethrow(psychlasterror);
-                end    
-            else
-                fprintf('No EDF file saved in Dummy mode\n');    
-            end
+        Eyelink('Message', [syncKeyWord ' ' num2str(endTrigger)])
+        WaitSecs(0.2);
+        Eyelink('StopRecording'); % Stop tracker recording
+        WaitSecs(0.2);
+        Eyelink('SetOfflineMode'); % Put tracker in idle/offline mode
+        %Eyelink('Command', 'clear_screen 0'); % Clear Host PC backdrop graphics at the end of the experiment
+        WaitSecs(0.2); % Allow some time before closing and transferring file
+        Eyelink('CloseFile'); % Close EDF file on Host PC
+        if ~Experiment.Eyetracking.dummymode 
+            try    
+                % Transfer a copy of the EDF file to Display PC
+                status = Eyelink('ReceiveFile');
+                % Check if EDF file has been transferred successfully and print file size in Matlab's Command Window
+                if status > 0
+                    fprintf('EDF file size: %.1f KB\n', status/1024); % Divide file size by 1024 to convert bytes to KB
+                end 
+            catch % Catch a file-transfer error and print some text in Matlab's Command Window
+                fprintf('Problem receiving data file ''%s''\n', edfFile);
+                psychrethrow(psychlasterror);
+            end    
+        else
+            fprintf('No EDF file saved in Dummy mode\n');    
         end
         Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'endSyncTrigger'},NaN,0);
     end
