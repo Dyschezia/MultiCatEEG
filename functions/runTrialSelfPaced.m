@@ -5,14 +5,15 @@ function Experiment = runTrialSelfPaced(Experiment)
 % Experiment structure (top left, top right, bottom left, bottom right). 
 % the other triggers are 200 (fix), 201 (probe), (202) response. 
 
-% 11/10/24 note: If I change ET triggers to be identical to EEG triggers,
-% they can be used by EEGlab to check the quality of synchronization. 
-
 % In this version of the function, the probe screen is not timed, and
 % instead is self-paced by the subject.
 
 % Photodiode square currently appears only for the duration of the
 % stimulus. 
+
+% 20/10/24 RK: EEG/ET functionality is split between functions instead of
+% depending on if statements in this function. This version sends both EEG
+% and ET triggers. 
 
 % Toggle to save clips of experiment for reporting/schematic figures
 saveExpImages = 0;
@@ -40,25 +41,10 @@ set = Experiment.Subject.WhichSet;
 run = Experiment.Log.CurrentRun;
 trial = Experiment.Log.CurrentTrial;
 
-% RK (20/09/24) Is eyetracking collected? is EEG collected? Is the
+% RK (20/09/24) Is eyetracking collected? Is the
 % photodiode used?
-send_eeg_triggers = ~strcmp(Experiment.Env.Environment, 'home');
 eyetracking = strcmp(Experiment.Env.Environment, 'EEG_eyelink_FU') & Experiment.Mode.ETing;
 photodiode = Experiment.Mode.Photodiode;
-
-%{
-if eyetracking % The address of the non eyetracking trigger is set in the function
-    % demo suggested sending messages to the edf file like trial number.
-    % Can I also send run, set, session info like so?
-    Eyelink('Message', 'TRIALID %d', trial);
-    Eyelink('Message', 'RUNID %d', run);
-    Eyelink('Message', 'SETID %d', set);
-    Eyelink('Message', 'SESID %d', session);
-    % WaitSecs(0.1) % demo recommends letting the eye tracker collect some
-    % data before first stimulus. However, this should happen during
-    % initial fixation, which is long, so supposed to be ok. 
-end
-%}
 
 % Locate the stimulus array for this trial
 allRuns = Experiment.Session(session).Set(set).RunShuffled;
@@ -67,21 +53,17 @@ allTrials = thisRun.StimArrays;
 thisTrialStimArray = allTrials(trial, :);
 thisTrialCategories = thisRun.TrialSchemeShuffled(trial,:);
 
-% Define EEG triggers, if recording EEG
-if send_eeg_triggers
-%    trigger_delay = Experiment.Triggers.TriggerDelay;
-    stimulus_trigger1 = Experiment.Triggers.Stimulus1;
-    stimulus_trigger1 = stimulus_trigger1 + thisTrialCategories(1)*10 + thisTrialCategories(2);
-    stimulus_trigger2 = Experiment.Triggers.Stimulus2;
-    stimulus_trigger2 = stimulus_trigger2 + thisTrialCategories(3)*10 + thisTrialCategories(4);
-    fixation_trigger = Experiment.Triggers.Fixation;
-    probe_trigger = Experiment.Triggers.Probe;
-    response_trigger = Experiment.Triggers.Response; 
-    feedback_trigger = Experiment.Triggers.Feedback; 
-    multi_trigger_delay = Experiment.Triggers.MultiTriggerDelay;
-    syncKeyWord = Experiment.Triggers.SyncKeyWord;
-end
-
+% Define EEG triggers
+stimulus_trigger1 = Experiment.Triggers.Stimulus1;
+stimulus_trigger1 = stimulus_trigger1 + thisTrialCategories(1)*10 + thisTrialCategories(2);
+stimulus_trigger2 = Experiment.Triggers.Stimulus2;
+stimulus_trigger2 = stimulus_trigger2 + thisTrialCategories(3)*10 + thisTrialCategories(4);
+fixation_trigger = Experiment.Triggers.Fixation;
+probe_trigger = Experiment.Triggers.Probe;
+response_trigger = Experiment.Triggers.Response; 
+feedback_trigger = Experiment.Triggers.Feedback; 
+multi_trigger_delay = Experiment.Triggers.MultiTriggerDelay;
+syncKeyWord = Experiment.Triggers.SyncKeyWord;
 
 % Is it a catch trial?
 isCatch = thisRun.CatchTrials(trial);
@@ -184,19 +166,6 @@ if photodiode
     photodiodeRect = Experiment.Photodiode.rect;
 end
 
-%{
-% Timing
-%initialGap = Experiment.Time.StartGap;
-itiGap =  thisRun.ITIs(trial);
-itiCatch1 = Experiment.Time.CatchIti1;
-%itiCatch2 = Experiment.Time.CatchIti2;
-probeITI = Experiment.Time.AfterProbeGap;
-halfifi = Experiment.Env.HalfIFI;
-stimExpTime = Experiment.Time.StimExpTime;
-respTime = Experiment.Time.RespWait;
-feedbackTime = Experiment.Time.FeedbackGap;
-%}
-
 % Timing based on frames (RK 04/10/24)
 itiGapFrames =  thisRun.ITIsFrames(trial);
 itiCatch1Frames = Experiment.Time.CatchIti1Frames;
@@ -225,18 +194,8 @@ if eyetracking
     err = Eyelink('CheckRecording');
     if(err ~= 0)
         fprintf('EyeLink Recording stopped!\n');
-        %{
-        % Transfer a copy of the EDF file to Display PC
-        Eyelink('SetOfflineMode');% Put tracker in idle/offline mode
-        Eyelink('CloseFile'); % Close EDF file on Host PC
-        Eyelink('Command', 'clear_screen 0'); % Clear trial image on Host PC at the end of the experiment
-        WaitSecs(0.1); % Allow some time for screen drawing
-        % Transfer a copy of the EDF file to Display PC
-        transferFile; % See transferFile function below)
-        error('EyeLink is not in record mode when it should be. Unknown error. EDF transferred from Host PC to Display PC, please check its integrity.');
-        %}
         Experiment.Log.Exit = 1;
-        return % RK: end of experiment is handeled outside the trial fucntion
+        return 
     end
 end
 
@@ -255,22 +214,16 @@ Screen('DrawingFinished', myWin);
 vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
 
 % RK (20/09/24) send EEG trigger
-if send_eeg_triggers
-    %WaitSecs(trigger_delay);
-    send_triggerIO64(stimulus_trigger1);
-    if eyetracking 
-        % RK (24/09/24) Send message to EDF file
-        Eyelink('Message', [syncKeyWord ' ' num2str(stimulus_trigger1)]);
-    end
-    WaitSecs(multi_trigger_delay)% how long to wait between two triggers?
-    send_triggerIO64(stimulus_trigger2) 
-    if eyetracking 
-        % RK (24/09/24) Send message to EDF file
-        Eyelink('Message', [syncKeyWord ' ' num2str(stimulus_trigger2)]);
-    end
-    fprintf(num2str(stimulus_trigger2))
-    
-end
+send_triggerIO64(stimulus_trigger1);
+% RK (24/09/24) Send message to EDF file
+Eyelink('Message', [syncKeyWord ' ' num2str(stimulus_trigger1)]);
+% Wait between the two triggers
+WaitSecs(multi_trigger_delay)% how long to wait between two triggers?
+% Send trigger 2
+send_triggerIO64(stimulus_trigger2) 
+% RK (24/09/24) Send message to EDF file
+Eyelink('Message', [syncKeyWord ' ' num2str(stimulus_trigger2)]);
+fprintf(num2str(stimulus_trigger2))
 
 timeRealFlip = [timeRealFlip,  vbl - startTime];
 timeExpectedFlip = [timeExpectedFlip, expectedTime];
@@ -287,15 +240,10 @@ if ~isCatch % If it's not catch
     Screen('DrawDots', myWin, screenCenter, fixRadius,  fixColor, [], 2);
     Screen('DrawingFinished', myWin);
     vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
-    % RK (20/09/24)
-    if send_eeg_triggers
-        %WaitSecs(trigger_delay);
-        send_triggerIO64(fixation_trigger);
-        if eyetracking 
-            % RK (24/09/24)
-            Eyelink('Message', [syncKeyWord ' ' num2str(fixation_trigger)]);
-        end 
-    end
+    % Send EEG trigger
+    send_triggerIO64(fixation_trigger);
+    % Send ET trigger
+    Eyelink('Message', [syncKeyWord ' ' num2str(fixation_trigger)]);
 
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
@@ -307,15 +255,10 @@ else % If it is a catch trial
     Screen('DrawDots', myWin, screenCenter, fixRadius,  fixColor, [], 2);
     Screen('DrawingFinished', myWin);
     vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
-    % RK (20/09/24)
-    if send_eeg_triggers
-        %WaitSecs(trigger_delay);
-        send_triggerIO64(fixation_trigger);
-        if eyetracking 
-            % RK (24/09/24)
-            Eyelink('Message', [syncKeyWord ' ' num2str(fixation_trigger)]);
-        end 
-    end
+    % Send EEG trigger
+    send_triggerIO64(fixation_trigger);
+    % Send ET trigger
+    Eyelink('Message', [syncKeyWord ' ' num2str(fixation_trigger)]);
    
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
@@ -327,15 +270,11 @@ else % If it is a catch trial
     Screen('DrawTextures', myWin, texturePointersPrompt, [], destinationRectsPrompt); % Prompt screen
     Screen('DrawingFinished', myWin);
     vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
-    % RK (20/09/24)
-    if send_eeg_triggers
-        %WaitSecs(trigger_delay);
-        send_triggerIO64(probe_trigger);
-        if eyetracking 
-            % RK (24/09/24)
-            Eyelink('Message', [syncKeyWord ' ' num2str(probe_trigger)]);
-        end 
-    end    
+    % Send EEG trigger
+    send_triggerIO64(probe_trigger);
+    % Send ET trigger
+    Eyelink('Message', [syncKeyWord ' ' num2str(probe_trigger)]);
+    
     timeRealFlip = [timeRealFlip,  vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'promptScreen'}];
@@ -356,7 +295,7 @@ else % If it is a catch trial
      pressed = 0;
      %t0 = GetSecs();
      % here respTime defines the maximal RT
-     while 1 & (GetSecs() - responseStartTime < respTime)
+     while (GetSecs() - responseStartTime < respTime)
         [pressed, firstPress]=KbQueueCheck([]);
         if pressed
             key = min(find(firstPress));
@@ -368,17 +307,11 @@ else % If it is a catch trial
      KbQueueStop([]);
      KbQueueFlush([]);
     
-     % RK (23/09/24)
-    if send_eeg_triggers & pressed
-        %WaitSecs(trigger_delay);
-        send_triggerIO64(response_trigger);
-        if eyetracking 
-            % RK (24/09/24)
-            Eyelink('Message', [syncKeyWord ' ' num2str(response_trigger)]);
-        end 
-    end
-    
     if pressed
+        % Send EEG trigger
+        send_triggerIO64(response_trigger);
+        % Send ET trigger
+        Eyelink('Message', [syncKeyWord ' ' num2str(response_trigger)]);
         if key == responseLeft
             response = "left";
             resprect = destinationRectsPrompt(:,2);
@@ -430,13 +363,11 @@ else % If it is a catch trial
         Screen('DrawingFinished', myWin);
         vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi); % After response time is out show feedback
 
-        if send_eeg_triggers
-            %WaitSecs(trigger_delay);
-            send_triggerIO64(feedback_trigger);
-            if eyetracking 
-                Eyelink('Message', [syncKeyWord ' ' num2str(feedback_trigger)]);
-            end 
-        end
+        % Send EEG trigger
+        send_triggerIO64(feedback_trigger);
+        % Send ET trigger
+        Eyelink('Message', [syncKeyWord ' ' num2str(feedback_trigger)]);
+        
         timeRealFlip = [timeRealFlip,  vbl - startTime];
         timeExpectedFlip = [timeExpectedFlip, NaN];
         whichObject = [whichObject, {'feedback'}];
@@ -452,14 +383,11 @@ else % If it is a catch trial
     Screen('DrawDots', myWin, screenCenter, fixRadius,  fixColor, [], 2);
     Screen('DrawingFinished', myWin);
     vbl = Screen('Flip', myWin, startTime + expectedTime - halfifi);
-    % RK (23/09/24)
-    if send_eeg_triggers
-        %WaitSecs(trigger_delay);
-        send_triggerIO64(fixation_trigger);
-        if eyetracking 
-            Eyelink('Message', [syncKeyWord ' ' num2str(fixation_trigger)]);
-        end 
-    end
+    % Send EEG trigger
+    send_triggerIO64(fixation_trigger);
+    % Send ET trigger
+    Eyelink('Message', [syncKeyWord ' ' num2str(fixation_trigger)]);
+    
     timeRealFlip = [timeRealFlip, vbl - startTime];
     timeExpectedFlip = [timeExpectedFlip, expectedTime];
     whichObject = [whichObject, {'fixation'}];

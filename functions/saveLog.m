@@ -1,5 +1,5 @@
 function Experiment = saveLog(Experiment, usecase)
-
+% TODO: SET BETTER FILE NAMES (FOR EACH RUN) 
 switch usecase
     
     case 'timing_data'
