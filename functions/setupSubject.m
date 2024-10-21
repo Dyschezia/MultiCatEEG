@@ -10,6 +10,7 @@ switch Experiment.Mode.mode
         run = 1;
         age = '21';
         sex = 'female';
+        eye = 'R';
         
         ok = [];
         while ~strcmp(ok,'y')
@@ -18,6 +19,7 @@ switch Experiment.Mode.mode
             fprintf(['\nRun: ' num2str(run)]);
             fprintf(['\nAge: ' age]);
             fprintf(['\nSex: ' sex]);
+            fprintf(['\nEye: ' eye]);
             ok = input('\nContinue? Y/N.  ','s'); ok = lower(ok);
         end
     case 'experiment'
@@ -28,6 +30,7 @@ switch Experiment.Mode.mode
             run = input('Run:  ');
             age = input('Age:  ');
             sex = input('Sex:  ','s');
+            eye = input('Tracked eye:  ', 's');
 
             ok = input('\nContinue? Y/N.  ','s'); ok = lower(ok);
         end
@@ -38,3 +41,4 @@ Experiment.Subject.WhichSet = set;
 Experiment.Subject.WhichRun = run;
 Experiment.Subject.Age = age;
 Experiment.Subject.Sex = sex;
+Experiment.Subject.Eye = eye;

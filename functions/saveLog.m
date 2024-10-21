@@ -114,8 +114,8 @@ switch usecase
         warning('off',id)
         
         % Log table
-        varTypes = ["cell","cell","cell"];
-        varNames = ["Subject","Age","Sex"];
+        varTypes = ["cell","cell","cell", "cell"];
+        varNames = ["Subject","Age","Sex", "Eye"];
         sz = [1, length(varNames)];
         log = table('Size',sz,'VariableTypes',varTypes,'VariableNames',varNames);
         
@@ -131,12 +131,10 @@ switch usecase
         subjectID = Experiment.Subject.ID;
         subjectAge = Experiment.Subject.Age;
         subjectSex = Experiment.Subject.Sex;
+        subjectEye = Experiment.Subject.Eye;
         
         idx = 1;
         for run = first_run:nRuns
-            % RK (18/09/24): switched a few places where the run scheme was
-            % called to the use of runTrials... just make sure it doesn't
-            % fuck anything. 
             nTrials = Experiment.Session(session).Set(set).RunShuffled(run).TrialsN;
             runTrials = Experiment.Session(session).Set(set).RunShuffled(run);
             for trial = 1:nTrials
@@ -145,6 +143,7 @@ switch usecase
                 log.Subject(idx)  = {subjectID};
                 log.Age(idx)  = {subjectAge};
                 log.Sex(idx)  = {subjectSex};
+                log.Eye(idx)  = {subjectEye};
                 
                 % Experiment information
                 log.Session(idx) = session;
