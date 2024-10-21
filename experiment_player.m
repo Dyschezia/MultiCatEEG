@@ -47,13 +47,13 @@ TmpExperiment.Mode.mode = 'experiment'; % 'test' or 'experiment'
 % For reliable  timing, this should be 0. But on multi-display setup, this
 % may not work. 1 shortens the tests for timing, 2 disables all
 % calibration.
-%{
-if strcmp(TmpExperiment.Mode.mode, 'test')
+
+if strcmp(environment, 'home')
     Screen('Preference', 'SkipSyncTests', 1); 
 else
     Screen('Preference', 'SkipSyncTests', 0);
 end
-%}
+
 
 % Set main directory
 TmpExperiment.Paths.MainPath = pwd();
