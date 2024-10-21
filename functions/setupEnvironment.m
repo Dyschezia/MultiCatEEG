@@ -104,14 +104,12 @@ Experiment.Time.AfterProbeGapFrames = round(Experiment.Time.AfterProbeGap / IFI)
 Experiment.Time.RespWaitFrames = round(Experiment.Time.RespWait / IFI);
 
 % Set the pregenerated random ITIs to be multiples of the IFI
-session = Experiment.Subject.WhichSession;
-firstSet = Experiment.Subject.WhichSet;
-firstRun = Experiment.Subject.WhichRun;
-nSets = length(Experiment.Session(session).Set);
+nSessions = Experiment.Task.SessionsN;
+nSets = Experiment.Task.SetsN / nSessions;
+nRuns = Experiment.Task.RunsN;
 
-for set = firstSet:nSets
-    nRuns = length(Experiment.Session(session).Set(set).RunShuffled);
-    for run = firstRun:nRuns
+for set = 1:nSets
+    for run = 1:nRuns
         Experiment.Session(session).Set(set).RunShuffled(run).ITIsFrames = round(Experiment.Session(session).Set(set).RunShuffled(run).ITIs / IFI);
     end
 end

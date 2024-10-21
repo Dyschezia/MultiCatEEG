@@ -10,7 +10,7 @@ end
 
 % Set file name (SXX_session_runOfTotal)
 session = Experiment.Subject.WhichSession;
-set = Experiment.Subject.WhichSet;
+set = Experiment.Log.CurrentSet;
 run = Experiment.Log.CurrentRun;
 totalRuns = length(Experiment.Session(session).Set(set).RunShuffled);
 runOfTotal = totalRuns * (set-1) + run;

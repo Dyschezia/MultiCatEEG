@@ -9,7 +9,7 @@ switch usecase
     
         whichTrial = repelem(Experiment.Log.CurrentTrial, trial_length);
         whichRun = repelem(Experiment.Log.CurrentRun, trial_length);
-        whichSet = repelem(Experiment.Subject.WhichSet, trial_length);
+        whichSet = repelem(Experiment.Log.CurrentSet, trial_length);
         whichSession = repelem(Experiment.Subject.WhichSession, trial_length);
         is1array = repelem(Experiment.Log.IsSingle, trial_length);
         isCatch = repelem(Experiment.Log.IsCatch, trial_length);
@@ -23,7 +23,7 @@ switch usecase
         
         logData = Experiment.Log.log;
         session = Experiment.Subject.WhichSession;
-        set = Experiment.Subject.WhichSet;
+        set = Experiment.Log.CurrentSet;
         run = Experiment.Log.CurrentRun;
         trial = Experiment.Log.CurrentTrial;
         
@@ -102,7 +102,7 @@ switch usecase
         % Create out file
         handle =  ['Sub_', num2str(Experiment.Subject.ID), ...
                    '_Session_', num2str(Experiment.Subject.WhichSession), ...
-                   '_Set_', num2str(Experiment.Subject.WhichSet)];
+                   '_Set_', num2str(Experiment.Log.CurrentSet)];
         dt = datetime();
         dt.Format = 'dd-MMM-uuuu_HH-mm-ss';
         timestamp = char(dt);
@@ -121,8 +121,12 @@ switch usecase
         
         % Variables
         session = Experiment.Subject.WhichSession;
-        set = Experiment.Subject.WhichSet;
-        first_run = Experiment.Subject.WhichRun;
+        set = Experiment.Log.CurrentSet;
+        if set == Experiment.Subject.WhichSet % Is this the first set of the session?
+            first_run = Experiment.Subject.WhichRun; % then start from the chosen run
+        else % If not, start from run 1
+            first_run = 1;
+        end
         nRuns = length(Experiment.Session(session).Set(set).RunShuffled);
         subjectID = Experiment.Subject.ID;
         subjectAge = Experiment.Subject.Age;

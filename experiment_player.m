@@ -9,6 +9,11 @@
 
 %%
 % RK (18/09/24) TODO: 
+
+% Add collect tracked eye
+% - in experiment player (setup subject)
+% - in setup log 
+
 % 7. Make sure calculations in visualAngleCalculation.m and
 % visangle2stimsize.m are correct (run some precalculated values). 
 % 13. Maybe show performance measure 
@@ -31,8 +36,7 @@ Photodiode = 1;
 
 % Add directory with functions to Matlab path
 addpath(genpath('functions')); 
-addpath(genpath('functions\eeg trigger functions')); 
-addpath(genpath('functions\eeg trigger functions')); 
+\addpath(genpath('functions\eeg trigger functions')); 
 
 % Main path
 TmpExperiment = struct();
@@ -145,12 +149,13 @@ if Photodiode
     Experiment = setupPhotodiode(Experiment);
 end
 
-%% The log files for two sets are stored separately
+%% The log files for each set are stored separately
 Experiment.Log.Exit = 0;
 n_sets = Experiment.Task.SetsN/Experiment.Task.SessionsN; %RK (19/09/24) was hardcoded
 first_set = Experiment.Subject.WhichSet; % RK(19/09/24) set can now be set in setupSubject.m
 for i_set = first_set:n_sets
-    Experiment.Subject.WhichSet = i_set;
+    %Experiment.Subject.WhichSet = i_set;
+    Experiment.Log.CurrentSet = i_set;
     
     if Experiment.Log.Exit == 1
         break;
@@ -164,33 +169,6 @@ for i_set = first_set:n_sets
     %------------------------------------------------------------------------
     Experiment = runExperiment(Experiment);
 end
-
-%% ----------------------------------------------------------
-%                       Run localizer
-%------------------------------------------------------------------
-% if ~Experiment.Log.Exit
-%     
-%      fprintf('\n\nPRESS ENTER TO CONTINUE NEXT RUN\n\n');
-%      Keys = Experiment.Keys;
-%      keysOfInterest = zeros(1,256);
-%      keysOfInterest(Keys.ControlKeys) = 1;
-%      KbQueueCreate([],keysOfInterest);
-%      KbQueueStart([]);
-%      t0 = KbQueueWait([]); % Wait for the trigger
-%      KbQueueStop([]);
-%      KbQueueFlush([]);
-%     
-%     % Create localizer blocks
-%     Experiment = createLocalizer(Experiment);
-%     
-%     % Load localizer images as textures
-%     Experiment.Mode.imagemode = 'localizer';
-%     Experiment = loadImagesAsTextures(Experiment);   
-%     
-%     % Run localizer blocks
-%     Experiment = runLocalizer(Experiment); 
-%     
-% end
 
 %% Close window
 % RK (24/09/24)

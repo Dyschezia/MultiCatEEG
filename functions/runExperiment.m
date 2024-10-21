@@ -1,13 +1,17 @@
 function Experiment = runExperiment(Experiment)
 %% TODO
-% RECORD EYE MOVEMENTS DURING DRIFT CHECKS for future accuracy/precision
-% calculation. 
-% Can start start and end sync triggers a few times just in case 
+% Allow to run runTrialSelfPaced on dummy mode so that I can still use
+% training to run the function for the first time without calibrating the
+% ET?
 
 %% Data
 session = Experiment.Subject.WhichSession;
-set = Experiment.Subject.WhichSet;
-first_run = Experiment.Subject.WhichRun;
+set = Experiment.Log.CurrentSet;
+if set == Experiment.Subject.WhichSet % is current set first set of session?
+    first_run = Experiment.Subject.WhichRun; % then start from initial chosen run
+else % if not
+    first_run = 1; % Start from first run
+end
 allRuns = Experiment.Session(session).Set(set).RunShuffled;
 nRuns = length(allRuns);
 totalRuns = Experiment.Task.SetsN/Experiment.Task.SessionsN*nRuns;
@@ -66,15 +70,6 @@ for run = first_run:nRuns
     %% Setup or drift check eyelink
     %dummy_mode = 1; % should eyelink connection be initiated? if not, set 1
     if ETing
-        %{
-        if run == first_run
-            % open EDF file, setup calibration settings, and calibrate
-            Experiment = InitiateEyeTracking(Experiment);
-        else
-            EyelinkDoTrackerSetup(Experiment.Eyetracking.el);            
-        end
-        %}
-        % Now splitting ET files by run 
         Experiment = InitiateEyeTracking(Experiment);
     end
     
@@ -110,18 +105,24 @@ for run = first_run:nRuns
     Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'startSyncTrigger'},NaN,0);
     
     % Show initial fixation
-    Screen('DrawDots', Experiment.Display.window, [Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY], Experiment.Stim.FixationPixels, Experiment.Stim.FixationColour, [], 2);
-    vbl = Screen('Flip', Experiment.Display.window); 
-    Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'fixation'},NaN,0);
-    Experiment.Log.ExpectedTime = startGap; % Show next object after initial wait
-    
-    if eeg
-        %WaitSecs(trigger_delay);
+    if eeg & ETing
+        Screen('DrawDots', Experiment.Display.window, [Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY], Experiment.Stim.FixationPixels, Experiment.Stim.FixationColour, [], 2);
+        vbl = Screen('Flip', Experiment.Display.window); 
         send_triggerIO64(Experiment.Triggers.Fixation);
-        if ETing
-            % RK (24/09/24)
-            Eyelink('Message', [syncKeyWord ' ' num2str(Experiment.Triggers.Fixation)])
-        end 
+        Eyelink('Message', [syncKeyWord ' ' num2str(Experiment.Triggers.Fixation)])
+        Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'fixation'},NaN,0);
+        Experiment.Log.ExpectedTime = startGap; % Show next object after initial wait
+    elseif eeg & ~(ETing)
+        Screen('DrawDots', Experiment.Display.window, [Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY], Experiment.Stim.FixationPixels, Experiment.Stim.FixationColour, [], 2);
+        vbl = Screen('Flip', Experiment.Display.window); 
+        send_triggerIO64(Experiment.Triggers.Fixation);
+        Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'fixation'},NaN,0);
+        Experiment.Log.ExpectedTime = startGap; % Show next object after initial wait
+    elseif ~eeg & ~ETing
+        Screen('DrawDots', Experiment.Display.window, [Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY], Experiment.Stim.FixationPixels, Experiment.Stim.FixationColour, [], 2);
+        vbl = Screen('Flip', Experiment.Display.window); 
+        Experiment.Log.timing(end+1,:) = table(session, set, run, 0, NaN, NaN, {'fixation'},NaN,0);
+        Experiment.Log.ExpectedTime = startGap; % Show next object after initial wait
     end
     
     % Draw graphics on the EyeLink Host PC display. See COMMANDS.INI in the Host PC's exe folder for a list of commands
@@ -150,8 +151,15 @@ for run = first_run:nRuns
         
         % Run the trial
         Experiment.Log.CurrentTrial = thisTrial;
-        Experiment = runTrialSelfPaced(Experiment);
-
+        
+        if eeg & ETing
+            Experiment = runTrialSelfPaced(Experiment);
+        elseif eeg & ~ETing
+            Experiment = runTrialSelfPacedNoET(Experiment);
+        elseif ~eeg & ~ETing
+            Experiment = runTrialSelfPacedNoEEGAndET(Experiment);
+        end
+            
         fprintf(repmat('\b',1,output))
         output=fprintf('run %d/%d - trial: %d ', run, nRuns, thisTrial);
         

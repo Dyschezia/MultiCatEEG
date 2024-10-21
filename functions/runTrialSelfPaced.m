@@ -37,7 +37,7 @@ screenCenter = [Experiment.Env.ScreenCenterX, Experiment.Env.ScreenCenterY];
 
 % Locate the session, set, run, trial
 session = Experiment.Subject.WhichSession;
-set = Experiment.Subject.WhichSet;
+set = Experiment.Log.CurrentSet;
 run = Experiment.Log.CurrentRun;
 trial = Experiment.Log.CurrentTrial;
 
@@ -206,7 +206,8 @@ if isSingle
 else
     Screen('DrawTextures', myWin, texturePointers, [], destinationRects); % Stimulus
 end
-% If photodiode, draw photodiode square 
+
+% If photodiode, draw photodiode square
 if photodiode
     Screen('FillRect', myWin, photodiodeColor, photodiodeRect);
 end
@@ -223,7 +224,6 @@ WaitSecs(multi_trigger_delay)% how long to wait between two triggers?
 send_triggerIO64(stimulus_trigger2) 
 % RK (24/09/24) Send message to EDF file
 Eyelink('Message', [syncKeyWord ' ' num2str(stimulus_trigger2)]);
-fprintf(num2str(stimulus_trigger2))
 
 timeRealFlip = [timeRealFlip,  vbl - startTime];
 timeExpectedFlip = [timeExpectedFlip, expectedTime];

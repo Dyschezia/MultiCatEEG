@@ -3,7 +3,7 @@ function Experiment = runShortBreak(Experiment)
 
 % Get necassary values
 session = Experiment.Subject.WhichSession;
-set = Experiment.Subject.WhichSet;
+set = Experiment.Log.CurrentSet;
 run = Experiment.Log.CurrentRun;
 
 window = Experiment.Display.window; 
