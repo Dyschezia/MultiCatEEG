@@ -107,6 +107,7 @@ Experiment.Time.RespWaitFrames = round(Experiment.Time.RespWait / IFI);
 nSessions = Experiment.Task.SessionsN;
 nSets = Experiment.Task.SetsN / nSessions;
 nRuns = Experiment.Task.RunsN;
+session = Experiment.Subject.WhichSession;
 
 for set = 1:nSets
     for run = 1:nRuns

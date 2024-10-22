@@ -10,10 +10,6 @@
 %%
 % RK (18/09/24) TODO: 
 
-% Add collect tracked eye
-% - in experiment player (setup subject)
-% - in setup log 
-
 % 7. Make sure calculations in visualAngleCalculation.m and
 % visangle2stimsize.m are correct (run some precalculated values). 
 % 13. Maybe show performance measure 
